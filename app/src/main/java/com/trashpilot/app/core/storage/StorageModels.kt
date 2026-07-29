@@ -1,6 +1,7 @@
 package com.trashpilot.app.core.storage
 
 import android.net.Uri
+import com.trashpilot.app.core.quickclean.DisposableCandidate
 
 enum class FileCategory {
     IMAGES,
@@ -15,7 +16,8 @@ enum class FileCategory {
 data class ScannedFile(
     val name: String,
     val sizeBytes: Long,
-    val uri: Uri,
+    val lastModifiedMillis: Long,
+    val uri: String,
     val category: FileCategory
 )
 
@@ -24,10 +26,15 @@ data class StorageScanResult(
     val usedBytes: Long,
     val freeBytes: Long,
     val categoryBytes: Map<FileCategory, Long>,
-    val largestFiles: List<ScannedFile>,
+    val files: List<ScannedFile>,
+    val disposableCandidates: List<DisposableCandidate>,
     val scannedFileCount: Int,
-    val selectedRootName: String
-)
+    val selectedRootName: String,
+    val scanDurationMillis: Long = 0
+) {
+    val largestFiles: List<ScannedFile>
+        get() = files.sortedByDescending(ScannedFile::sizeBytes).take(10)
+}
 
 interface StorageScanner {
     suspend fun scan(treeUri: Uri): StorageScanResult

@@ -1,8 +1,7 @@
 package com.trashpilot.app.features.scanner
 
-import android.content.Intent
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -42,6 +41,11 @@ import androidx.compose.ui.unit.dp
 import com.trashpilot.app.R
 import com.trashpilot.app.core.storage.DocumentTreeStorageScanner
 import com.trashpilot.app.core.storage.StorageScanResult
+import com.trashpilot.app.ui.components.TrashPilotTopAppBar
+import com.trashpilot.app.ui.components.TrashPilotCard
+import com.trashpilot.app.ui.components.TrashPilotPrimaryButton
+import com.trashpilot.app.ui.theme.TrashPilotRadii
+import com.trashpilot.app.ui.theme.TrashPilotSpacing
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,39 +59,35 @@ fun ScannerScreen(
     val scope = rememberCoroutineScope()
     var state by remember { mutableStateOf<ScannerUiState>(ScannerUiState.Ready) }
     val folderLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.OpenDocumentTree()
-    ) { treeUri ->
-        if (treeUri == null) return@rememberLauncherForActivityResult
+        contract = OpenDocumentTreeWithFlags()
+    ) { selection ->
+        if (selection == null) return@rememberLauncherForActivityResult
         state = ScannerUiState.Scanning
         scope.launch {
             state = runCatching {
                 context.contentResolver.takePersistableUriPermission(
-                    treeUri,
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    selection.uri,
+                    selection.persistableFlags
                 )
-                scanner.scan(treeUri)
+                scanner.scan(selection.uri)
             }.fold(
                 onSuccess = {
                     onScanComplete(it)
                     ScannerUiState.Ready
                 },
-                onFailure = { ScannerUiState.Error(it.message) }
+                onFailure = { ScannerUiState.Error }
             )
         }
     }
 
+    BackHandler(enabled = state is ScannerUiState.Scanning) { }
+
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.scanner_title)) },
-                navigationIcon = {
-                    IconButton(onClick = onBack, enabled = state !is ScannerUiState.Scanning) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                            contentDescription = stringResource(R.string.navigate_back)
-                        )
-                    }
-                }
+            TrashPilotTopAppBar(
+                title = stringResource(R.string.scanner_title),
+                onBack = onBack,
+                navigationEnabled = state !is ScannerUiState.Scanning
             )
         }
     ) { contentPadding ->
@@ -95,7 +95,10 @@ fun ScannerScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(contentPadding)
-                .padding(horizontal = 24.dp, vertical = 32.dp),
+                .padding(
+                    horizontal = TrashPilotSpacing.Screen,
+                    vertical = TrashPilotSpacing.ExtraLarge
+                ),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -106,39 +109,39 @@ fun ScannerScreen(
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary
                     )
-                    Spacer(Modifier.height(24.dp))
+                    Spacer(Modifier.height(TrashPilotSpacing.Screen))
                     Text(
                         text = stringResource(R.string.scanner_choose_title),
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Center
                     )
-                    Spacer(Modifier.height(12.dp))
+                    Spacer(Modifier.height(TrashPilotSpacing.Standard))
                     Text(
                         text = stringResource(R.string.scanner_choose_body),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center
                     )
-                    Spacer(Modifier.height(32.dp))
-                    Button(
+                    Spacer(Modifier.height(TrashPilotSpacing.ExtraLarge))
+                    TrashPilotPrimaryButton(
+                        text = stringResource(R.string.scanner_choose_action),
                         onClick = { folderLauncher.launch(null) },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(stringResource(R.string.scanner_choose_action))
-                    }
-                    Spacer(Modifier.height(24.dp))
+                        modifier = Modifier.fillMaxWidth(),
+                        height = null
+                    )
+                    Spacer(Modifier.height(TrashPilotSpacing.Screen))
                     PrivacyAssurance()
                 }
 
                 ScannerUiState.Scanning -> {
                     CircularProgressIndicator()
-                    Spacer(Modifier.height(24.dp))
+                    Spacer(Modifier.height(TrashPilotSpacing.Screen))
                     Text(
                         text = stringResource(R.string.scanner_scanning),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.SemiBold
                     )
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(TrashPilotSpacing.Medium))
                     Text(
                         text = stringResource(R.string.scanner_scanning_body),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -146,29 +149,28 @@ fun ScannerScreen(
                     )
                 }
 
-                is ScannerUiState.Error -> {
+                ScannerUiState.Error -> {
                     Text(
                         text = stringResource(R.string.scanner_error_title),
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.SemiBold
                     )
-                    Spacer(Modifier.height(8.dp))
+                    Spacer(Modifier.height(TrashPilotSpacing.Medium))
                     Text(
-                        text = currentState.message
-                            ?: stringResource(R.string.scanner_error_generic),
+                        text = stringResource(R.string.scanner_error_generic),
                         color = MaterialTheme.colorScheme.error,
                         textAlign = TextAlign.Center
                     )
-                    Spacer(Modifier.height(24.dp))
-                    Button(
+                    Spacer(Modifier.height(TrashPilotSpacing.Screen))
+                    TrashPilotPrimaryButton(
+                        text = stringResource(R.string.scanner_retry),
                         onClick = {
                             state = ScannerUiState.Ready
                             folderLauncher.launch(null)
                         },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(stringResource(R.string.scanner_retry))
-                    }
+                        modifier = Modifier.fillMaxWidth(),
+                        height = null
+                    )
                 }
             }
         }
@@ -177,15 +179,15 @@ fun ScannerScreen(
 
 @Composable
 private fun PrivacyAssurance() {
-    Card(
+    TrashPilotCard(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
+        shape = TrashPilotRadii.CardShape,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerLow
         )
     ) {
         Column(
-            modifier = Modifier.padding(20.dp),
+            modifier = Modifier.padding(TrashPilotSpacing.Card),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(
@@ -193,7 +195,7 @@ private fun PrivacyAssurance() {
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary
             )
-            Spacer(Modifier.height(10.dp))
+            Spacer(Modifier.height(TrashPilotSpacing.MediumLarge))
             Text(
                 text = stringResource(R.string.scanner_privacy_note),
                 style = MaterialTheme.typography.bodyMedium,
@@ -206,5 +208,5 @@ private fun PrivacyAssurance() {
 private sealed interface ScannerUiState {
     data object Ready : ScannerUiState
     data object Scanning : ScannerUiState
-    data class Error(val message: String?) : ScannerUiState
+    data object Error : ScannerUiState
 }

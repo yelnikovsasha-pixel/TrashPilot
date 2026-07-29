@@ -3,8 +3,12 @@ package com.trashpilot.app.core.storage
 import android.content.ContentResolver
 import android.net.Uri
 import android.os.Environment
+import android.os.SystemClock
 import android.os.StatFs
 import android.provider.DocumentsContract
+import com.trashpilot.app.core.quickclean.DisposableCandidate
+import com.trashpilot.app.core.quickclean.DisposableCategory
+import com.trashpilot.app.core.quickclean.DisposableClassifier
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
@@ -15,11 +19,13 @@ class DocumentTreeStorageScanner(
 ) : StorageScanner {
 
     override suspend fun scan(treeUri: Uri): StorageScanResult = withContext(Dispatchers.IO) {
+        val scanStartedAt = SystemClock.elapsedRealtime()
         val rootDocumentId = DocumentsContract.getTreeDocumentId(treeUri)
         val rootUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, rootDocumentId)
         val rootName = queryDisplayName(rootUri).orEmpty().ifBlank { "Selected storage" }
         val categoryBytes = FileCategory.entries.associateWith { 0L }.toMutableMap()
-        val largestFiles = mutableListOf<ScannedFile>()
+        val files = mutableListOf<ScannedFile>()
+        val disposableCandidates = mutableListOf<DisposableCandidate>()
         var scannedFileCount = 0
 
         val pendingDirectories = ArrayDeque(
@@ -32,6 +38,8 @@ class DocumentTreeStorageScanner(
                 treeUri,
                 directory.documentId
             )
+            var directoryWasReadable = false
+            var hasChildren = false
             contentResolver.query(
                 childrenUri,
                 DOCUMENT_PROJECTION,
@@ -39,13 +47,18 @@ class DocumentTreeStorageScanner(
                 null,
                 null
             )?.use { cursor ->
+                directoryWasReadable = true
                 val idIndex = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID)
                 val nameIndex = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DISPLAY_NAME)
                 val mimeIndex = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_MIME_TYPE)
                 val sizeIndex = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_SIZE)
+                val modifiedIndex = cursor.getColumnIndexOrThrow(
+                    DocumentsContract.Document.COLUMN_LAST_MODIFIED
+                )
 
                 while (cursor.moveToNext()) {
                     coroutineContext.ensureActive()
+                    hasChildren = true
                     val documentId = cursor.getString(idIndex)
                     val name = cursor.getString(nameIndex).orEmpty().ifBlank { "Unnamed file" }
                     val mimeType = cursor.getString(mimeIndex)
@@ -56,6 +69,8 @@ class DocumentTreeStorageScanner(
                     }
 
                     val sizeBytes = if (cursor.isNull(sizeIndex)) 0L else cursor.getLong(sizeIndex)
+                    val lastModifiedMillis =
+                        if (cursor.isNull(modifiedIndex)) 0L else cursor.getLong(modifiedIndex)
                     val category = FileCategorizer.categorize(name, mimeType, childPath)
                     categoryBytes[category] = categoryBytes.getValue(category) + sizeBytes
                     scannedFileCount += 1
@@ -63,15 +78,42 @@ class DocumentTreeStorageScanner(
                     val scannedFile = ScannedFile(
                         name = name,
                         sizeBytes = sizeBytes,
-                        uri = DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId),
+                        lastModifiedMillis = lastModifiedMillis,
+                        uri = DocumentsContract.buildDocumentUriUsingTree(
+                            treeUri,
+                            documentId
+                        ).toString(),
                         category = category
                     )
-                    largestFiles += scannedFile
-                    largestFiles.sortByDescending(ScannedFile::sizeBytes)
-                    if (largestFiles.size > MAX_LARGEST_FILES) {
-                        largestFiles.removeAt(largestFiles.lastIndex)
+                    files += scannedFile
+                    DisposableClassifier.classify(name, childPath, category)?.let {
+                        disposableCandidates += DisposableCandidate(
+                            uri = scannedFile.uri,
+                            name = name,
+                            relativePath = childPath.joinToString("/"),
+                            sizeBytes = sizeBytes,
+                            category = it,
+                            isDirectory = false
+                        )
                     }
                 }
+            }
+            if (
+                directoryWasReadable &&
+                !hasChildren &&
+                directory.pathSegments.size > 1
+            ) {
+                disposableCandidates += DisposableCandidate(
+                    uri = DocumentsContract.buildDocumentUriUsingTree(
+                        treeUri,
+                        directory.documentId
+                    ).toString(),
+                    name = directory.pathSegments.last(),
+                    relativePath = directory.pathSegments.joinToString("/"),
+                    sizeBytes = 0L,
+                    category = DisposableCategory.EMPTY_FOLDERS,
+                    isDirectory = true
+                )
             }
         }
 
@@ -81,9 +123,11 @@ class DocumentTreeStorageScanner(
             usedBytes = storage.usedBytes,
             freeBytes = storage.freeBytes,
             categoryBytes = categoryBytes.toMap(),
-            largestFiles = largestFiles.toList(),
+            files = files.toList(),
+            disposableCandidates = disposableCandidates.toList(),
             scannedFileCount = scannedFileCount,
-            selectedRootName = rootName
+            selectedRootName = rootName,
+            scanDurationMillis = SystemClock.elapsedRealtime() - scanStartedAt
         )
     }
 
@@ -122,12 +166,12 @@ class DocumentTreeStorageScanner(
     )
 
     private companion object {
-        const val MAX_LARGEST_FILES = 10
         val DOCUMENT_PROJECTION = arrayOf(
             DocumentsContract.Document.COLUMN_DOCUMENT_ID,
             DocumentsContract.Document.COLUMN_DISPLAY_NAME,
             DocumentsContract.Document.COLUMN_MIME_TYPE,
-            DocumentsContract.Document.COLUMN_SIZE
+            DocumentsContract.Document.COLUMN_SIZE,
+            DocumentsContract.Document.COLUMN_LAST_MODIFIED
         )
     }
 }

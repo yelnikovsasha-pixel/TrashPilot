@@ -18,6 +18,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.trashpilot.app.R
+import com.trashpilot.app.ui.components.TrashPilotTopAppBar
+import com.trashpilot.app.ui.components.TrashPilotTextButton
+import com.trashpilot.app.ui.theme.TrashPilotSpacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,12 +31,13 @@ fun PlaceholderDestinationScreen(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(title)) },
-                navigationIcon = {
-                    TextButton(onClick = onBack) {
-                        Text(stringResource(R.string.navigate_back))
-                    }
+            TrashPilotTopAppBar(
+                title = stringResource(title),
+                navigationContent = {
+                    TrashPilotTextButton(
+                        text = stringResource(R.string.navigate_back),
+                        onClick = onBack
+                    )
                 }
             )
         }
@@ -42,7 +46,7 @@ fun PlaceholderDestinationScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(contentPadding)
-                .padding(24.dp),
+                .padding(TrashPilotSpacing.Screen),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

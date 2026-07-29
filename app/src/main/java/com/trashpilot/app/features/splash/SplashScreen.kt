@@ -20,19 +20,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.trashpilot.app.R
+import com.trashpilot.app.ui.theme.TrashPilotColors
+import com.trashpilot.app.ui.theme.TrashPilotComponentSizes
+import com.trashpilot.app.ui.theme.TrashPilotMotion
+import com.trashpilot.app.ui.theme.TrashPilotRadii
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(onFinished: () -> Unit) {
     LaunchedEffect(Unit) {
-        delay(2_000)
+        delay(TrashPilotMotion.SplashHoldMillis)
         onFinished()
     }
 
-    Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
+    Surface(modifier = Modifier.fillMaxSize(), color = TrashPilotColors.White) {
         AnimatedVisibility(
             visible = true,
-            enter = fadeIn(animationSpec = tween(durationMillis = 700))
+            enter = fadeIn(animationSpec = tween(durationMillis = TrashPilotMotion.SplashFadeMillis))
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -41,15 +47,15 @@ fun SplashScreen(onFinished: () -> Unit) {
             ) {
                 TrashPilotLogo()
                 Text(
-                    text = "TrashPilot",
+                    text = stringResource(R.string.app_name),
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color(0xFF17212B)
+                    color = TrashPilotColors.SplashInk
                 )
                 Text(
-                    text = "Your device. Your control.",
+                    text = stringResource(R.string.splash_tagline),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Color(0xFF66727D),
+                    color = TrashPilotColors.SplashTextSecondary,
                     textAlign = TextAlign.Center
                 )
             }
@@ -59,15 +65,18 @@ fun SplashScreen(onFinished: () -> Unit) {
 
 @Composable
 private fun TrashPilotLogo() {
-    Box(modifier = Modifier.size(88.dp), contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier.size(TrashPilotComponentSizes.SplashMark),
+        contentAlignment = Alignment.Center
+    ) {
         Surface(
-            modifier = Modifier.size(88.dp),
-            shape = RoundedCornerShape(28.dp),
-            color = Color(0xFF17212B)
+            modifier = Modifier.size(TrashPilotComponentSizes.SplashMark),
+            shape = TrashPilotRadii.LargeShape,
+            color = TrashPilotColors.SplashInk
         ) {}
         Text(
-            text = "TP",
-            color = Color.White,
+            text = stringResource(R.string.brand_monogram),
+            color = TrashPilotColors.White,
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )

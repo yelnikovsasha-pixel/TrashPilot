@@ -3,6 +3,9 @@
 - Build a minimal privacy-first offline-first Android cleaner; avoid fake optimization claims and use one primary action per screen.
 ## Architecture rules
 - Use Kotlin, Compose, and Material 3; keep shared code in core, features in features, visual tokens in ui/theme, navigation in AppNavigation, and setup in MainActivity.
+## Mandatory UI documentation
+- Before making any UI changes, always read `docs/UI_BIBLE.md`, `docs/DESIGN_SYSTEM.md`, and `docs/BRAND_GUIDELINES.md`.
+- These documents override personal assumptions about the TrashPilot UI.
 ## Kotlin and Jetpack Compose conventions: Use idiomatic Kotlin, immutable state by default, state hoisting where practical, MaterialTheme tokens, Compose Modifiers, and string resources for new user-facing copy.
 ## Figma workflow: Inspect relevant pages, components, styles, and variables before work; reuse system tokens and components; validate meaningful visual changes with screenshots.
 ## Default Figma design source
