@@ -135,6 +135,8 @@ approved component specification.
 - Use 18 or 20 dp internal padding only when the approved screen requires the denser data-card
   pattern.
 - Label/value alignment must remain readable under localization and font scaling.
+- Scan Results summary metrics and category cards reuse the Home card shell and Home color roles;
+  they do not define a separate Results style.
 
 ### Primary actions
 

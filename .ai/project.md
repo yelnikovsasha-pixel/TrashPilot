@@ -7,7 +7,9 @@
 - The evolved Home keeps the approved blue hero identity and uses a compact real-data Storage card,
   a two-by-two Quick Clean/Trash DNA/Privacy Monitor/Reports action grid, and a concise trust card.
 - Compose Material Icons Extended supplies monochrome icons for Home cards and navigation.
-- `core/storage` owns read-only document-tree scanning, file categorization, byte formatting, and immutable scan models. Scanner and Results UI live in focused feature packages.
+- `core/storage` owns immediate read-only MediaStore scanning, fallback document-tree scanning,
+  file categorization, byte formatting, and immutable scan models. Scanner and Results UI live
+  in focused feature packages.
 - Scan metadata now retains every readable file URI string, size, category, and last-modified
   timestamp in memory for the active session; no file content is retained or uploaded.
 - `features/results` owns explicit loading, empty, success, and error UI states, sorting, and
@@ -32,7 +34,7 @@
   picker flows for diagnostics, backup, and restore.
 - Preferences DataStore 1.2.1 stores the selected locale and migrates the legacy
   `trashpilot-settings` SharedPreferences language key on upgrade.
-- Android resources provide complete 344-key catalogs for all 25 supported app languages.
+- Android resources provide complete 381-key catalogs for all 25 supported app languages.
   `tools/generate_locale_drafts.mjs` reproduces the automated draft catalogs and
   `tools/verify_locales.mjs` checks XML structure, exact key parity, formatting-token parity,
   and probable long English fallbacks.
@@ -50,3 +52,7 @@
 
 - `ui/components/TrashPilotComponents.kt` owns the reusable `TrashPilotAmbientMessage`; timing and Home spacing remain centralized in semantic motion/Home tokens.
 - Ambient Message copy is present in all 25 key-identical locale catalogs as automated release-candidate draft localization.
+- `ui/components/TrashPilotComponents.kt` also owns the shared Home-family brand header, outlined
+  card shell, and feature card used by Home and Scan Results.
+- Scan Results displays only active-scan metrics, classifies accessible social/messenger media
+  from stored relative paths, and runs SHA-256 duplicate comparison only on explicit user action.

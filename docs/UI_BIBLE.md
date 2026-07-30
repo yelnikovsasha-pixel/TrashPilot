@@ -43,6 +43,24 @@ node `1:65` (`Android Compact - 1`). Older Home nodes and purple references are 
 - Feature cards form one vertical list with 5 dp gaps and 32 dp blue circular icon containers.
 - Real storage progress and totals appear only when real scan data exists.
 
+## Scan Results reference
+
+- Scan Results extends the Home blue-and-white visual language without creating new styles.
+- It reuses the shared brand header, 20 dp outlined Home cards, blue circular icons, 24 dp page
+  gutters, 5 dp card gaps, and Home bottom navigation.
+- The summary and category values come only from the active `StorageScanResult`.
+- Duplicate analysis is an explicit, user-triggered local operation; no estimate or sample value
+  is shown before it runs.
+- `Clean Selected` is the only dominant action, remains disabled until at least one removable
+  category is selected, and opens the existing manual review flow with that selection.
+- Social & Messenger Media is derived only from accessible media paths for supported apps and
+  opens a read-only file list. An empty match is shown as
+  `No social or messenger media found`.
+- Scanning uses the shared brand treatment and reports only real analysis stages without a fake
+  percentage or time estimate. Back remains available and cancels composition-bound scan work.
+- A successful scan with no removable or reviewable items uses a positive empty state with one
+  secondary Scan again action; the Results card layout is not rendered with rows of zero values.
+
 ## Component rules
 
 ### App shell

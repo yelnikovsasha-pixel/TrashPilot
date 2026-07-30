@@ -1,6 +1,6 @@
 package com.trashpilot.app.features.results
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,300 +11,373 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
+import androidx.compose.material.icons.outlined.CleaningServices
+import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material.icons.outlined.Description
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material.icons.outlined.FolderOff
+import androidx.compose.material.icons.outlined.Forum
+import androidx.compose.material.icons.outlined.VisibilityOff
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.trashpilot.app.R
+import com.trashpilot.app.core.quickclean.DisposableCategory
 import com.trashpilot.app.core.storage.FileCategory
+import com.trashpilot.app.core.storage.DuplicateAnalysis
+import com.trashpilot.app.core.storage.DuplicateAnalyzer
 import com.trashpilot.app.core.storage.ScannedFile
+import com.trashpilot.app.core.storage.SocialMediaAnalyzer
 import com.trashpilot.app.core.storage.StorageScanResult
 import com.trashpilot.app.core.storage.formatBytes
-import com.trashpilot.app.ui.components.TrashPilotTopAppBar
-import com.trashpilot.app.ui.components.TrashPilotCard
-import com.trashpilot.app.ui.components.TrashPilotOutlinedButton
+import com.trashpilot.app.ui.components.TrashPilotBrandHeader
+import com.trashpilot.app.ui.components.TrashPilotFeatureCard
+import com.trashpilot.app.ui.components.TrashPilotHomeCard
 import com.trashpilot.app.ui.components.TrashPilotPrimaryButton
-import com.trashpilot.app.ui.components.TrashPilotSectionHeader
+import com.trashpilot.app.ui.components.TrashPilotOutlinedButton
+import com.trashpilot.app.ui.theme.TrashPilotColors
+import com.trashpilot.app.ui.theme.TrashPilotHomeTokens
 import com.trashpilot.app.ui.theme.TrashPilotRadii
 import com.trashpilot.app.ui.theme.TrashPilotSpacing
 import java.text.DateFormat
 import java.util.Date
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ResultsScreen(
+fun ImprovedResultsScreen(
     state: ResultsUiState,
     onBack: () -> Unit,
     onScanAgain: () -> Unit,
-    onQuickClean: () -> Unit,
-    onOpenCategory: (FileCategory) -> Unit
+    onQuickClean: (Set<String>) -> Unit,
+    @Suppress("UNUSED_PARAMETER") onOpenCategory: (FileCategory) -> Unit,
+    onOpenSocialMedia: () -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            TrashPilotTopAppBar(
-                title = stringResource(R.string.results_screen_title),
-                onBack = onBack
-            )
-        }
-    ) { padding ->
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ) {
         when (state) {
-            ResultsUiState.Loading -> ResultsStateMessage(
-                Modifier.padding(padding),
-                stringResource(R.string.results_loading_title),
-                stringResource(R.string.results_loading_body),
+            ResultsUiState.Scanning -> ResultsStateMessage(
+                title = stringResource(R.string.results_loading_title),
+                body = stringResource(R.string.results_loading_body),
+                onBack = onBack,
                 loading = true
             )
-            ResultsUiState.Empty -> ResultsStateMessage(
-                Modifier.padding(padding),
-                stringResource(R.string.results_empty_title),
-                stringResource(R.string.results_missing),
-                stringResource(R.string.results_scan_again),
-                onScanAgain
+            is ResultsUiState.NothingFound -> ResultsStateMessage(
+                title = stringResource(R.string.results_nothing_found_title),
+                body = stringResource(R.string.results_nothing_found_body),
+                onBack = onBack,
+                actionLabel = stringResource(R.string.results_scan_again),
+                onAction = onScanAgain,
+                secondaryAction = true
             )
             is ResultsUiState.Error -> ResultsStateMessage(
-                Modifier.padding(padding),
-                stringResource(R.string.results_error_title),
-                state.message ?: stringResource(R.string.results_error_body),
-                stringResource(R.string.results_scan_again),
-                onScanAgain
+                title = stringResource(R.string.results_error_title),
+                body = state.message ?: stringResource(R.string.results_error_body),
+                onBack = onBack,
+                actionLabel = stringResource(R.string.results_scan_again),
+                onAction = onScanAgain
             )
-            is ResultsUiState.Success -> SuccessContent(
-                Modifier.padding(padding),
-                state.result,
-                onScanAgain,
-                onQuickClean,
-                onOpenCategory
+            is ResultsUiState.Results -> ResultsContent(
+                result = state.result,
+                onBack = onBack,
+                onQuickClean = onQuickClean,
+                onOpenSocialMedia = onOpenSocialMedia
             )
         }
     }
 }
 
 @Composable
-private fun SuccessContent(
-    modifier: Modifier,
+private fun ResultsContent(
     result: StorageScanResult,
-    onScanAgain: () -> Unit,
-    onQuickClean: () -> Unit,
-    onOpenCategory: (FileCategory) -> Unit
+    onBack: () -> Unit,
+    onQuickClean: (Set<String>) -> Unit,
+    onOpenSocialMedia: () -> Unit
 ) {
-    var sort by remember { mutableStateOf(FileSortOption.SIZE) }
-    val displayedFiles = remember(result.files, sort) { result.largestFiles.sortedFor(sort) }
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(
-            TrashPilotSpacing.Screen,
-            TrashPilotSpacing.Large,
-            TrashPilotSpacing.Screen,
-            TrashPilotSpacing.Screen
-        ),
-        verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Large)
-    ) {
-        item {
-            Column(verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Compact)) {
-                Text(
-                    result.selectedRootName,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold
-                )
-                Text(
-                    stringResource(R.string.results_files_scanned, result.scannedFileCount),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
-        item { ImprovedStorageCard(result) }
-        item {
-            ImprovedSectionTitle(stringResource(R.string.results_categories))
-            Spacer(Modifier.height(TrashPilotSpacing.MediumLarge))
-            TrashPilotCard(
-                modifier = Modifier.fillMaxWidth(),
-                shape = TrashPilotRadii.CardShape,
-                colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surfaceContainerLow)
-            ) {
-                FileCategory.entries.forEach { category ->
-                    ImprovedCategoryRow(
-                        category,
-                        result.categoryBytes[category] ?: 0L,
-                        { onOpenCategory(category) }
-                    )
-                }
-            }
-        }
-        item {
-            ImprovedSectionTitle(stringResource(R.string.results_largest_files))
-            Spacer(Modifier.height(TrashPilotSpacing.Medium))
-            Row(horizontalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Medium)) {
-                FileSortOption.entries.forEach { option ->
-                    FilterChip(
-                        selected = sort == option,
-                        onClick = { sort = option },
-                        label = { Text(stringResource(option.labelResource())) }
-                    )
-                }
-            }
-        }
-        if (displayedFiles.isEmpty()) {
-            item {
-                ImprovedListCard {
-                    Text(
-                        stringResource(R.string.results_no_files),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
+    val overview = remember(result) { result.toResultsOverview() }
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val duplicateAnalyzer = remember(context) { DuplicateAnalyzer(context.contentResolver) }
+    val listState = remember(result) { LazyListState() }
+    var duplicateState by remember(result) {
+        mutableStateOf<DuplicateUiState>(DuplicateUiState.NotStarted)
+    }
+    var selectedUris by remember(result) { mutableStateOf(emptySet<String>()) }
+    fun toggleCandidates(candidates: List<com.trashpilot.app.core.quickclean.DisposableCandidate>) {
+        val uris = candidates.mapTo(mutableSetOf()) { it.uri }
+        selectedUris = if (uris.isNotEmpty() && uris.all(selectedUris::contains)) {
+            selectedUris - uris
         } else {
-            items(displayedFiles, key = { it.uri.toString() }) { ImprovedFileRow(it) }
+            selectedUris + uris
         }
+    }
+    val duplicateValue = when (val current = duplicateState) {
+        DuplicateUiState.NotStarted -> stringResource(R.string.results_run_duplicate_analysis)
+        DuplicateUiState.Loading -> stringResource(R.string.results_duplicate_analyzing)
+        is DuplicateUiState.Complete -> stringResource(
+            R.string.results_duplicate_result,
+            current.result.duplicateFileCount,
+            formatBytes(current.result.duplicateBytes)
+        )
+    }
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        state = listState,
+        contentPadding = PaddingValues(
+            top = TrashPilotHomeTokens.ScreenTop,
+            bottom = TrashPilotSpacing.Screen
+        )
+    ) {
+        item { TrashPilotBrandHeader(onBack = onBack) }
         item {
-            Text(
-                stringResource(R.string.results_read_only_note),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+            Spacer(Modifier.height(TrashPilotSpacing.Standard))
+            ScanSummaryCard(
+                rootName = result.selectedRootName,
+                overview = overview,
+                duplicateValue = duplicateValue,
+                modifier = Modifier.padding(
+                    horizontal = TrashPilotHomeTokens.CardHorizontalPadding
+                )
             )
-        }
-        item {
-            TrashPilotOutlinedButton(
-                text = stringResource(R.string.results_quick_clean),
-                onClick = onQuickClean,
-                modifier = Modifier.fillMaxWidth(),
-                shape = TrashPilotRadii.PillShape,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
-        item {
+            Spacer(Modifier.height(TrashPilotSpacing.Standard))
             TrashPilotPrimaryButton(
-                text = stringResource(R.string.results_scan_again),
-                onClick = onScanAgain,
-                modifier = Modifier.fillMaxWidth(),
-                shape = TrashPilotRadii.PillShape,
-                fontWeight = FontWeight.SemiBold
+                text = stringResource(R.string.results_clean_selected),
+                onClick = { onQuickClean(selectedUris) },
+                enabled = selectedUris.isNotEmpty(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = TrashPilotHomeTokens.CardHorizontalPadding),
+                shape = TrashPilotRadii.ControlShape,
+                fontWeight = FontWeight.SemiBold,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = TrashPilotColors.HomeBlue,
+                    contentColor = Color.White
+                )
+            )
+            Spacer(Modifier.height(TrashPilotSpacing.Standard))
+        }
+        item {
+            ResultCategoryCard(
+                icon = Icons.Outlined.CleaningServices,
+                title = stringResource(R.string.quick_clean_cache),
+                subtitle = stringResource(R.string.results_local_category_subtitle),
+                value = formatBytes(overview.cacheBytes),
+                selected = overview.cacheCandidates.isNotEmpty() &&
+                    overview.cacheCandidates.all { it.uri in selectedUris },
+                selectionEnabled = overview.cacheCandidates.isNotEmpty(),
+                showChevron = false,
+                onClick = if (overview.cacheCandidates.isEmpty()) {
+                    null
+                } else {
+                    { toggleCandidates(overview.cacheCandidates) }
+                }
             )
         }
-    }
-}
-
-@Composable
-private fun ImprovedStorageCard(result: StorageScanResult) {
-    TrashPilotCard(
-        modifier = Modifier.fillMaxWidth(),
-        shape = TrashPilotRadii.CardShape,
-        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
-    ) {
-        Column(
-            modifier = Modifier.padding(
-                horizontal = TrashPilotSpacing.Card,
-                vertical = TrashPilotSpacing.CardDense
-            ),
-            verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.MediumLarge)
-        ) {
+        item {
+            ResultCategoryCard(
+                icon = Icons.Outlined.Description,
+                title = stringResource(R.string.results_large_files),
+                subtitle = stringResource(R.string.results_local_category_subtitle),
+                value = fileCountText(overview.largeFileCount),
+                showChevron = false
+            )
+        }
+        item {
+            ResultCategoryCard(
+                icon = Icons.Outlined.VisibilityOff,
+                title = stringResource(R.string.results_hidden_files),
+                subtitle = stringResource(R.string.results_local_category_subtitle),
+                value = formatBytes(overview.hiddenBytes),
+                showChevron = false
+            )
+        }
+        item {
+            ResultCategoryCard(
+                icon = Icons.Outlined.ContentCopy,
+                title = stringResource(R.string.results_duplicates),
+                subtitle = stringResource(R.string.results_tap_duplicate_analysis),
+                value = duplicateValue,
+                onClick = {
+                    if (duplicateState !is DuplicateUiState.Loading) {
+                        duplicateState = DuplicateUiState.Loading
+                        scope.launch {
+                            duplicateState = DuplicateUiState.Complete(
+                                duplicateAnalyzer.analyze(result.files)
+                            )
+                        }
+                    }
+                }
+            )
+        }
+        item {
+            ResultCategoryCard(
+                icon = Icons.Outlined.Forum,
+                title = stringResource(R.string.results_social_media),
+                subtitle = if (overview.socialFiles.isEmpty()) {
+                    stringResource(R.string.results_no_social_media)
+                } else {
+                    stringResource(R.string.results_social_media_description)
+                },
+                value = if (overview.socialFiles.isEmpty()) {
+                    ""
+                } else {
+                    stringResource(
+                        R.string.results_count_and_size,
+                        fileCountText(overview.socialFiles.size),
+                        formatBytes(overview.socialBytes)
+                    )
+                },
+                titleMaxLines = 2,
+                bodyMaxLines = 4,
+                showChevron = overview.socialFiles.isNotEmpty(),
+                onClick = onOpenSocialMedia.takeIf { overview.socialFiles.isNotEmpty() }
+            )
+        }
+        item {
+            ResultCategoryCard(
+                icon = Icons.Outlined.FolderOff,
+                title = stringResource(R.string.quick_clean_empty_folders),
+                subtitle = stringResource(R.string.results_local_category_subtitle),
+                value = folderCountText(overview.emptyFolderCount),
+                selected = overview.emptyFolderCandidates.isNotEmpty() &&
+                    overview.emptyFolderCandidates.all { it.uri in selectedUris },
+                selectionEnabled = overview.emptyFolderCandidates.isNotEmpty(),
+                showChevron = false,
+                onClick = if (overview.emptyFolderCandidates.isEmpty()) {
+                    null
+                } else {
+                    { toggleCandidates(overview.emptyFolderCandidates) }
+                }
+            )
+        }
+        item {
             Text(
-                stringResource(R.string.results_storage),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold
+                text = stringResource(R.string.results_local_analysis_reminder),
+                modifier = Modifier.padding(
+                    start = TrashPilotHomeTokens.CardHorizontalPadding,
+                    top = TrashPilotSpacing.Standard,
+                    end = TrashPilotHomeTokens.CardHorizontalPadding
+                ),
+                color = TrashPilotColors.HomeTextSecondary,
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center
             )
-            ImprovedMetric(stringResource(R.string.results_total_storage), formatBytes(result.totalBytes))
-            ImprovedMetric(stringResource(R.string.results_used_storage), formatBytes(result.usedBytes))
-            ImprovedMetric(stringResource(R.string.results_free_storage), formatBytes(result.freeBytes))
         }
     }
 }
 
 @Composable
-private fun ImprovedMetric(label: String, value: String) {
-    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-        Text(label, style = MaterialTheme.typography.bodyMedium)
-        Text(value, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
-    }
-}
-
-@Composable
-private fun ImprovedCategoryRow(
-    category: FileCategory,
-    size: Long,
-    onClick: () -> Unit
+private fun ScanSummaryCard(
+    rootName: String,
+    overview: ResultsOverview,
+    duplicateValue: String,
+    modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(
-                horizontal = TrashPilotSpacing.CardDense,
-                vertical = TrashPilotSpacing.MediumLarge
-            ),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            stringResource(category.improvedLabelResource()),
-            modifier = Modifier.weight(1f),
-            style = MaterialTheme.typography.bodyMedium
-        )
-        Text(
-            formatBytes(size),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            fontWeight = FontWeight.Medium
-        )
-        Icon(
-            Icons.AutoMirrored.Outlined.KeyboardArrowRight,
-            stringResource(R.string.results_open_category),
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+    TrashPilotHomeCard(modifier = modifier) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(TrashPilotSpacing.Large),
+            verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Medium)
+        ) {
+            Text(
+                text = rootName,
+                color = TrashPilotColors.HomeInk,
+                style = TrashPilotHomeTokens.FeatureTitleStyle,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            SummaryMetric(
+                stringResource(R.string.results_total_scanned_storage),
+                formatBytes(overview.scannedBytes)
+            )
+            SummaryMetric(
+                stringResource(R.string.quick_clean_cache),
+                formatBytes(overview.cacheBytes)
+            )
+            SummaryMetric(
+                stringResource(R.string.results_large_files),
+                fileCountText(overview.largeFileCount)
+            )
+            SummaryMetric(
+                stringResource(R.string.results_hidden_files),
+                formatBytes(overview.hiddenBytes)
+            )
+            SummaryMetric(
+                stringResource(R.string.results_duplicates),
+                duplicateValue
+            )
+            SummaryMetric(
+                stringResource(R.string.quick_clean_empty_folders),
+                folderCountText(overview.emptyFolderCount)
+            )
+        }
     }
 }
 
 @Composable
-internal fun ImprovedFileRow(file: ScannedFile) {
-    ImprovedListCard {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(TrashPilotSpacing.HomeCard)
+private fun SummaryMetric(label: String, value: String) {
+    val largeText = LocalDensity.current.fontScale >= 1.5f
+    if (largeText) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Compact)
         ) {
-            Icon(Icons.Outlined.Description, null, tint = MaterialTheme.colorScheme.primary)
-            Column(Modifier.weight(1f)) {
-                Text(
-                    file.name,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium
-                )
-                Text(
-                    file.modifiedDate(),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
             Text(
-                formatBytes(file.sizeBytes),
+                text = label,
+                color = TrashPilotColors.HomeTextSecondary,
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Text(
+                text = value,
+                modifier = Modifier.fillMaxWidth(),
+                color = TrashPilotColors.HomeInk,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold,
+                textAlign = TextAlign.End
+            )
+        }
+    } else {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = label,
+                modifier = Modifier.weight(1f),
+                color = TrashPilotColors.HomeTextSecondary,
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Text(
+                text = value,
+                color = TrashPilotColors.HomeInk,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.SemiBold
             )
@@ -313,62 +386,199 @@ internal fun ImprovedFileRow(file: ScannedFile) {
 }
 
 @Composable
-private fun ImprovedListCard(content: @Composable () -> Unit) {
-    TrashPilotCard(
-        modifier = Modifier.fillMaxWidth(),
-        shape = TrashPilotRadii.CompactCardShape,
-        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surfaceContainerLow)
-    ) {
-        Box(
-            Modifier.padding(
-                horizontal = TrashPilotSpacing.CardDense,
-                vertical = TrashPilotSpacing.Large
-            )
-        ) { content() }
-    }
+private fun ResultCategoryCard(
+    icon: ImageVector,
+    title: String,
+    subtitle: String,
+    value: String,
+    selected: Boolean = false,
+    selectionEnabled: Boolean = false,
+    titleMaxLines: Int = 2,
+    bodyMaxLines: Int = 3,
+    showChevron: Boolean = true,
+    onClick: (() -> Unit)? = null
+) {
+    TrashPilotFeatureCard(
+        title = title,
+        body = subtitle,
+        icon = icon,
+        modifier = Modifier.padding(
+            horizontal = TrashPilotHomeTokens.CardHorizontalPadding
+        ),
+        onClick = onClick,
+        titleMaxLines = titleMaxLines,
+        bodyMaxLines = bodyMaxLines,
+        trailingContent = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Compact)
+            ) {
+                if (value.isNotEmpty()) {
+                    Text(
+                        text = value,
+                        color = TrashPilotColors.HomeTextSecondary,
+                        style = MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+                if (selectionEnabled) {
+                    Checkbox(
+                        checked = selected,
+                        onCheckedChange = { onClick?.invoke() }
+                    )
+                } else if (showChevron) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+                        contentDescription = null,
+                        modifier = Modifier.size(TrashPilotSpacing.Screen),
+                        tint = TrashPilotColors.HomeTextSecondary
+                    )
+                }
+            }
+        }
+    )
+    Spacer(Modifier.height(TrashPilotHomeTokens.FeatureCardGap))
 }
 
 @Composable
 private fun ResultsStateMessage(
-    modifier: Modifier,
     title: String,
     body: String,
+    onBack: () -> Unit,
     actionLabel: String? = null,
     onAction: (() -> Unit)? = null,
-    loading: Boolean = false
+    loading: Boolean = false,
+    secondaryAction: Boolean = false
 ) {
-    Column(
-        modifier.fillMaxSize().padding(TrashPilotSpacing.Screen),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        if (loading) {
-            CircularProgressIndicator()
-            Spacer(Modifier.height(TrashPilotSpacing.Screen))
-        }
-        Text(
-            title,
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.SemiBold,
-            textAlign = TextAlign.Center
+    Column(Modifier.fillMaxSize()) {
+        TrashPilotBrandHeader(
+            modifier = Modifier.padding(top = TrashPilotHomeTokens.ScreenTop),
+            onBack = onBack
         )
-        Spacer(Modifier.height(TrashPilotSpacing.Medium))
-        Text(body, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
-        if (actionLabel != null && onAction != null) {
-            Spacer(Modifier.height(TrashPilotSpacing.Screen))
-            TrashPilotPrimaryButton(
-                text = actionLabel,
-                onClick = onAction,
-                modifier = Modifier.fillMaxWidth(),
-                height = null
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(TrashPilotSpacing.Screen),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            if (loading) {
+                CircularProgressIndicator(color = TrashPilotColors.HomeBlue)
+                Spacer(Modifier.height(TrashPilotSpacing.Screen))
+            }
+            Text(
+                text = title,
+                color = TrashPilotColors.HomeInk,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.SemiBold,
+                textAlign = TextAlign.Center
             )
+            Spacer(Modifier.height(TrashPilotSpacing.Medium))
+            Text(
+                text = body,
+                color = TrashPilotColors.HomeTextSecondary,
+                textAlign = TextAlign.Center
+            )
+            if (actionLabel != null && onAction != null) {
+                Spacer(Modifier.height(TrashPilotSpacing.Screen))
+                if (secondaryAction) {
+                    TrashPilotOutlinedButton(
+                        text = actionLabel,
+                        onClick = onAction,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                } else {
+                    TrashPilotPrimaryButton(
+                        text = actionLabel,
+                        onClick = onAction,
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = TrashPilotColors.HomeBlue,
+                            contentColor = Color.White
+                        )
+                    )
+                }
+            }
         }
     }
 }
 
+internal data class ResultsOverview(
+    val scannedBytes: Long,
+    val cacheBytes: Long,
+    val largeFileCount: Int,
+    val hiddenBytes: Long,
+    val emptyFolderCount: Int,
+    val cacheCandidates: List<com.trashpilot.app.core.quickclean.DisposableCandidate>,
+    val emptyFolderCandidates: List<com.trashpilot.app.core.quickclean.DisposableCandidate>,
+    val socialFiles: List<ScannedFile>,
+    val socialBytes: Long
+)
+
+internal fun StorageScanResult.toResultsOverview(): ResultsOverview {
+    val cacheCandidates = disposableCandidates.filter {
+        it.category == DisposableCategory.APP_CACHE
+    }
+    val emptyFolderCandidates = disposableCandidates.filter {
+        it.category == DisposableCategory.EMPTY_FOLDERS
+    }
+    val socialFiles = SocialMediaAnalyzer.filesInSupportedFolders(files)
+    return ResultsOverview(
+        scannedBytes = files.sumOf(ScannedFile::sizeBytes),
+        cacheBytes = cacheCandidates.sumOf { it.sizeBytes },
+        largeFileCount = files.count { it.sizeBytes >= LARGE_FILE_MIN_BYTES },
+        hiddenBytes = files
+            .filter { file ->
+                file.relativePath.replace('\\', '/').split('/').any { it.startsWith(".") }
+            }
+            .sumOf(ScannedFile::sizeBytes),
+        emptyFolderCount = emptyFolderCandidates.size,
+        cacheCandidates = cacheCandidates,
+        emptyFolderCandidates = emptyFolderCandidates,
+        socialFiles = socialFiles,
+        socialBytes = socialFiles.sumOf(ScannedFile::sizeBytes)
+    )
+}
+
+private const val LARGE_FILE_MIN_BYTES = 100L * 1024L * 1024L
+
+private sealed interface DuplicateUiState {
+    data object NotStarted : DuplicateUiState
+    data object Loading : DuplicateUiState
+    data class Complete(val result: DuplicateAnalysis) : DuplicateUiState
+}
+
 @Composable
-private fun ImprovedSectionTitle(text: String) {
-    TrashPilotSectionHeader(text)
+private fun fileCountText(count: Int): String =
+    if (count == 1) {
+        stringResource(R.string.results_one_file)
+    } else {
+        stringResource(R.string.results_file_count_value, count)
+    }
+
+@Composable
+private fun folderCountText(count: Int): String =
+    if (count == 1) {
+        stringResource(R.string.results_one_folder)
+    } else {
+        stringResource(R.string.results_folder_count_value, count)
+    }
+
+@Composable
+internal fun ImprovedFileRow(file: ScannedFile) {
+    TrashPilotFeatureCard(
+        title = file.name,
+        body = file.modifiedDate(),
+        icon = Icons.Outlined.Description,
+        modifier = Modifier.fillMaxWidth(),
+        trailingContent = {
+            Text(
+                formatBytes(file.sizeBytes),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
+    )
 }
 
 @Composable
@@ -384,10 +594,4 @@ internal fun FileCategory.improvedLabelResource(): Int = when (this) {
     FileCategory.APK_FILES -> R.string.category_apk
     FileCategory.DOWNLOADS -> R.string.category_downloads
     FileCategory.OTHER -> R.string.category_other
-}
-
-private fun FileSortOption.labelResource(): Int = when (this) {
-    FileSortOption.SIZE -> R.string.results_sort_size
-    FileSortOption.NAME -> R.string.results_sort_name
-    FileSortOption.DATE -> R.string.results_sort_date
 }

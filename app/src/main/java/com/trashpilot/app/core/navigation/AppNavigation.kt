@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import android.util.Log
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,9 +22,11 @@ import com.trashpilot.app.features.placeholder.PlaceholderDestinationScreen
 import com.trashpilot.app.features.settings.SettingsScreen
 import com.trashpilot.app.features.splash.SplashScreen
 import com.trashpilot.app.core.storage.StorageScanResult
-import com.trashpilot.app.features.results.ResultsScreen
+import com.trashpilot.app.features.results.ImprovedResultsScreen
 import com.trashpilot.app.features.results.ResultsUiState
+import com.trashpilot.app.features.results.hasReviewableItems
 import com.trashpilot.app.features.results.CategoryFilesScreen
+import com.trashpilot.app.features.results.SocialMediaFilesScreen
 import com.trashpilot.app.core.storage.FileCategory
 import com.trashpilot.app.features.scanner.ScannerScreen
 import com.trashpilot.app.features.quickclean.QuickCleanScreen
@@ -44,6 +47,7 @@ fun AppNavigation() {
     val scope = rememberCoroutineScope()
     var latestScan by remember { mutableStateOf<StorageScanResult?>(null) }
     var selectedCategory by remember { mutableStateOf<FileCategory?>(null) }
+    var selectedCleanUris by remember { mutableStateOf(emptySet<String>()) }
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
 
@@ -77,7 +81,10 @@ fun AppNavigation() {
         composable("home") {
             HomeScreen(
                 onScan = { navController.navigate("scanner") },
-                onOpenQuickClean = { navController.navigate("quick-clean") },
+                onOpenQuickClean = {
+                    selectedCleanUris = emptySet()
+                    navController.navigate("quick-clean")
+                },
                 onOpenTrashDna = { navController.navigate("trash-dna") },
                 onOpenPrivacy = { navController.navigate("privacy") },
                 onOpenSettings = { navController.navigate("settings") },
@@ -88,6 +95,11 @@ fun AppNavigation() {
             ScannerScreen(
                 onBack = { navController.popBackStack() },
                 onScanComplete = { result ->
+                    Log.d(
+                        "TrashPilotScan",
+                        "Navigation received files=${result.scannedFileCount} " +
+                            "bytes=${result.files.sumOf { it.sizeBytes }}; opening results"
+                    )
                     latestScan = result
                     scope.launch { historyRepository.recordScan(result) }
                     navController.navigate("results") {
@@ -97,15 +109,33 @@ fun AppNavigation() {
             )
         }
         composable("results") {
-            ResultsScreen(
-                state = latestScan?.let(ResultsUiState::Success) ?: ResultsUiState.Empty,
+            ImprovedResultsScreen(
+                state = latestScan?.let { result ->
+                    val reviewable = result.hasReviewableItems()
+                    Log.d(
+                        "TrashPilotScan",
+                        "Results model files=${result.files.size} " +
+                            "bytes=${result.files.sumOf { it.sizeBytes }} " +
+                            "candidates=${result.disposableCandidates.size} " +
+                            "reviewable=$reviewable"
+                    )
+                    if (reviewable) {
+                        ResultsUiState.Results(result)
+                    } else {
+                        ResultsUiState.NothingFound(result)
+                    }
+                } ?: ResultsUiState.Error(),
                 onBack = { navController.popBackStack("home", inclusive = false) },
                 onScanAgain = { navController.navigate("scanner") },
-                onQuickClean = { navController.navigate("quick-clean") },
+                onQuickClean = { selectedUris ->
+                    selectedCleanUris = selectedUris
+                    navController.navigate("quick-clean")
+                },
                 onOpenCategory = { category ->
                     selectedCategory = category
                     navController.navigate("category-files")
-                }
+                },
+                onOpenSocialMedia = { navController.navigate("social-media-files") }
             )
         }
         composable("quick-clean") {
@@ -115,6 +145,7 @@ fun AppNavigation() {
                     scanResult = result,
                     onBack = { navController.popBackStack() },
                     onDone = { navController.popBackStack("results", inclusive = false) },
+                    initialSelectedUris = selectedCleanUris,
                     onCleaningComplete = { report ->
                         scope.launch { historyRepository.recordCleanup(result, report) }
                     }
@@ -139,6 +170,21 @@ fun AppNavigation() {
             } else {
                 PlaceholderDestinationScreen(
                     title = R.string.results_screen_title,
+                    message = R.string.results_missing,
+                    onBack = { navController.popBackStack() }
+                )
+            }
+        }
+        composable("social-media-files") {
+            val result = latestScan
+            if (result != null) {
+                SocialMediaFilesScreen(
+                    result = result,
+                    onBack = { navController.popBackStack() }
+                )
+            } else {
+                PlaceholderDestinationScreen(
+                    title = R.string.results_social_media,
                     message = R.string.results_missing,
                     onBack = { navController.popBackStack() }
                 )

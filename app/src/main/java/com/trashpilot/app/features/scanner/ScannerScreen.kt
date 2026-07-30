@@ -1,7 +1,10 @@
 package com.trashpilot.app.features.scanner
 
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import android.content.pm.PackageManager
+import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,22 +12,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FolderOpen
 import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,16 +35,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.trashpilot.app.R
 import com.trashpilot.app.core.storage.DocumentTreeStorageScanner
+import com.trashpilot.app.core.storage.MediaStoreStorageScanner
+import com.trashpilot.app.core.storage.ScanStage
+import com.trashpilot.app.core.storage.StorageAccessRequiredException
 import com.trashpilot.app.core.storage.StorageScanResult
-import com.trashpilot.app.ui.components.TrashPilotTopAppBar
+import com.trashpilot.app.core.storage.requiredScanPermissions
+import com.trashpilot.app.ui.components.TrashPilotBrandHeader
 import com.trashpilot.app.ui.components.TrashPilotCard
 import com.trashpilot.app.ui.components.TrashPilotPrimaryButton
 import com.trashpilot.app.ui.theme.TrashPilotRadii
 import com.trashpilot.app.ui.theme.TrashPilotSpacing
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,40 +59,100 @@ fun ScannerScreen(
     onScanComplete: (StorageScanResult) -> Unit
 ) {
     val context = LocalContext.current
-    val scanner = remember(context) { DocumentTreeStorageScanner(context.contentResolver) }
+    val fallbackRootName = stringResource(R.string.reports_selected_storage)
+    val unknownFileName = stringResource(R.string.reports_result_unknown)
+    val folderScanner = remember(context, fallbackRootName, unknownFileName) {
+        DocumentTreeStorageScanner(
+            contentResolver = context.contentResolver,
+            fallbackRootName = fallbackRootName,
+            unknownFileName = unknownFileName
+        )
+    }
+    val sharedStorageName = stringResource(R.string.results_storage)
+    val automaticScanner = remember(context, sharedStorageName, unknownFileName) {
+        MediaStoreStorageScanner(
+            contentResolver = context.contentResolver,
+            rootName = sharedStorageName,
+            unknownFileName = unknownFileName
+        )
+    }
     val scope = rememberCoroutineScope()
-    var state by remember { mutableStateOf<ScannerUiState>(ScannerUiState.Ready) }
+    var state by remember {
+        mutableStateOf<ScannerUiState>(ScannerUiState.Scanning(ScanStage.STORAGE))
+    }
+    suspend fun reportStage(stage: ScanStage) {
+        withContext(Dispatchers.Main.immediate) {
+            state = ScannerUiState.Scanning(stage)
+        }
+    }
+    fun startAutomaticScan() {
+        Log.d(SCAN_TAG, "Starting automatic MediaStore scan")
+        state = ScannerUiState.Scanning(ScanStage.STORAGE)
+        scope.launch {
+            try {
+                val result = automaticScanner.scan(::reportStage)
+                Log.d(
+                    SCAN_TAG,
+                    "ScannerScreen result files=${result.scannedFileCount} " +
+                        "bytes=${result.files.sumOf { it.sizeBytes }}"
+                )
+                onScanComplete(result)
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (_: StorageAccessRequiredException) {
+                state = ScannerUiState.AccessRequired
+            } catch (_: SecurityException) {
+                state = ScannerUiState.AccessRequired
+            } catch (_: Exception) {
+                state = ScannerUiState.Error
+            }
+        }
+    }
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { grants ->
+        if (grants.values.any { it }) {
+            startAutomaticScan()
+        } else {
+            state = ScannerUiState.AccessRequired
+        }
+    }
     val folderLauncher = rememberLauncherForActivityResult(
         contract = OpenDocumentTreeWithFlags()
     ) { selection ->
         if (selection == null) return@rememberLauncherForActivityResult
-        state = ScannerUiState.Scanning
+        state = ScannerUiState.Scanning(ScanStage.STORAGE)
         scope.launch {
-            state = runCatching {
+            try {
                 context.contentResolver.takePersistableUriPermission(
                     selection.uri,
                     selection.persistableFlags
                 )
-                scanner.scan(selection.uri)
-            }.fold(
-                onSuccess = {
-                    onScanComplete(it)
-                    ScannerUiState.Ready
-                },
-                onFailure = { ScannerUiState.Error }
-            )
+                onScanComplete(folderScanner.scan(selection.uri, ::reportStage))
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (_: Exception) {
+                state = ScannerUiState.Error
+            }
         }
     }
 
-    BackHandler(enabled = state is ScannerUiState.Scanning) { }
+    LaunchedEffect(Unit) {
+        val permissions = requiredScanPermissions()
+        val hasGrantedAccess = permissions.any { permission ->
+            ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+        }
+        if (hasGrantedAccess) {
+            startAutomaticScan()
+        } else {
+            permissionLauncher.launch(permissions.toTypedArray())
+        }
+    }
 
     Scaffold(
+        containerColor = androidx.compose.ui.graphics.Color.White,
         topBar = {
-            TrashPilotTopAppBar(
-                title = stringResource(R.string.scanner_title),
-                onBack = onBack,
-                navigationEnabled = state !is ScannerUiState.Scanning
-            )
+            TrashPilotBrandHeader(onBack = onBack)
         }
     ) { contentPadding ->
         Column(
@@ -103,7 +167,7 @@ fun ScannerScreen(
             verticalArrangement = Arrangement.Center
         ) {
             when (val currentState = state) {
-                ScannerUiState.Ready -> {
+                ScannerUiState.AccessRequired -> {
                     Icon(
                         imageVector = Icons.Outlined.FolderOpen,
                         contentDescription = null,
@@ -133,7 +197,7 @@ fun ScannerScreen(
                     PrivacyAssurance()
                 }
 
-                ScannerUiState.Scanning -> {
+                is ScannerUiState.Scanning -> {
                     CircularProgressIndicator()
                     Spacer(Modifier.height(TrashPilotSpacing.Screen))
                     Text(
@@ -143,8 +207,15 @@ fun ScannerScreen(
                     )
                     Spacer(Modifier.height(TrashPilotSpacing.Medium))
                     Text(
+                        text = stringResource(currentState.stage.labelResource()),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(Modifier.height(TrashPilotSpacing.Medium))
+                    Text(
                         text = stringResource(R.string.scanner_scanning_body),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        style = MaterialTheme.typography.bodySmall,
                         textAlign = TextAlign.Center
                     )
                 }
@@ -163,10 +234,9 @@ fun ScannerScreen(
                     )
                     Spacer(Modifier.height(TrashPilotSpacing.Screen))
                     TrashPilotPrimaryButton(
-                        text = stringResource(R.string.scanner_retry),
+                        text = stringResource(R.string.trash_dna_retry),
                         onClick = {
-                            state = ScannerUiState.Ready
-                            folderLauncher.launch(null)
+                            startAutomaticScan()
                         },
                         modifier = Modifier.fillMaxWidth(),
                         height = null
@@ -176,6 +246,8 @@ fun ScannerScreen(
         }
     }
 }
+
+private const val SCAN_TAG = "TrashPilotScan"
 
 @Composable
 private fun PrivacyAssurance() {
@@ -206,7 +278,16 @@ private fun PrivacyAssurance() {
 }
 
 private sealed interface ScannerUiState {
-    data object Ready : ScannerUiState
-    data object Scanning : ScannerUiState
+    data class Scanning(val stage: ScanStage) : ScannerUiState
+    data object AccessRequired : ScannerUiState
     data object Error : ScannerUiState
+}
+
+private fun ScanStage.labelResource(): Int = when (this) {
+    ScanStage.STORAGE -> R.string.storage_title
+    ScanStage.LARGE_FILES -> R.string.results_large_files
+    ScanStage.HIDDEN_FILES -> R.string.results_hidden_files
+    ScanStage.SOCIAL_MEDIA -> R.string.results_social_media
+    ScanStage.EMPTY_FOLDERS -> R.string.quick_clean_empty_folders
+    ScanStage.FINALIZING -> R.string.scanner_stage_finalizing
 }

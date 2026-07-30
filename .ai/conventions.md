@@ -9,7 +9,9 @@
   single-line navigation destinations in an 80 dp bar.
 - Home excludes Motivation and Settings cards. Settings remains in bottom navigation; Quick Clean
   is a secondary Home action and remains honest when no scan data exists.
-- Storage access must use explicit user-selected document trees. Do not request broad storage access or scan in the background.
+- Default storage analysis uses foreground MediaStore queries with scoped Android media
+  permissions. Explicit user-selected document trees are fallback-only; never request broad
+  all-files access or scan in the background.
 - Scan results remain local. Quick Clean may delete only explicitly selected conservative
   disposable candidates after confirmation; it must never auto-select or delete personal media.
 - Quick Clean candidate rules are intentionally narrow: temporary extensions, files directly
@@ -50,8 +52,8 @@
   and direct Material card/button/top-app-bar construction belong only in the design-system layer.
 - Home evolution values belong to `TrashPilotHomeTokens`; preserve the approved brand header,
   circular SCAN control, palette, and navigation when refining Home composition.
-- Nested feature pages must intercept system back consistently with their app-bar back action.
-  Scanner blocks back only while a local traversal is actively running.
+- Nested feature pages must handle system back consistently with their app-bar back action.
+  Scanner Back remains available and leaving composition cancels its active local traversal.
 - SAF selection requests and persists both read and write grants. Scanning remains read-only;
   the write grant is consumed only by confirmed Quick Clean deletion of explicitly selected
   disposable documents.

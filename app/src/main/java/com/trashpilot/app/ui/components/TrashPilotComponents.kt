@@ -5,6 +5,9 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +17,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.clickable
@@ -47,14 +51,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.trashpilot.app.R
 import com.trashpilot.app.ui.theme.TrashPilotComponentSizes
 import com.trashpilot.app.ui.theme.TrashPilotElevation
@@ -64,6 +71,165 @@ import com.trashpilot.app.ui.theme.TrashPilotMotion
 import com.trashpilot.app.ui.theme.TrashPilotRadii
 import com.trashpilot.app.ui.theme.TrashPilotSpacing
 import com.trashpilot.app.ui.theme.TrashPilotColors
+
+@Composable
+fun TrashPilotBrandHeader(
+    modifier: Modifier = Modifier,
+    onBack: (() -> Unit)? = null
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = TrashPilotHomeTokens.HeaderHeight)
+            .padding(horizontal = TrashPilotHomeTokens.HeaderHorizontalPadding),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Medium)
+    ) {
+        if (onBack != null) {
+            IconButton(onClick = onBack) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                    contentDescription = stringResource(R.string.navigate_back),
+                    modifier = Modifier.size(TrashPilotIconSizes.Standard),
+                    tint = TrashPilotColors.HomeInk
+                )
+            }
+        }
+        Box(
+            modifier = Modifier
+                .size(36.dp)
+                .background(TrashPilotColors.HomeBlue, CircleShape)
+                .border(3.dp, Color.White.copy(alpha = 0.45f), CircleShape),
+            contentAlignment = Alignment.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(24.dp)
+                    .border(2.dp, Color.White, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Box(
+                    Modifier
+                        .size(8.dp)
+                        .background(Color.White, CircleShape)
+                )
+            }
+        }
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = stringResource(R.string.app_name),
+                color = Color.Black,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.SemiBold,
+                maxLines = 1,
+                overflow = TextOverflow.Clip
+            )
+            Text(
+                text = stringResource(R.string.home_subtitle),
+                color = Color.Black,
+                style = MaterialTheme.typography.bodyLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Clip
+            )
+        }
+    }
+}
+
+@Composable
+fun TrashPilotHomeCard(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    TrashPilotCard(
+        modifier = modifier
+            .fillMaxWidth()
+            .defaultMinSize(minHeight = TrashPilotHomeTokens.FeatureCardHeight)
+            .shadow(
+                elevation = TrashPilotHomeTokens.CardShadow,
+                shape = TrashPilotRadii.CompactCardShape,
+                ambientColor = Color.Black.copy(alpha = 0.08f),
+                spotColor = Color.Black.copy(alpha = 0.08f)
+            ),
+        shape = TrashPilotRadii.CompactCardShape,
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = TrashPilotElevation.None)
+    ) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .defaultMinSize(minHeight = TrashPilotHomeTokens.FeatureCardHeight),
+            shape = TrashPilotRadii.CompactCardShape,
+            color = Color.White,
+            border = BorderStroke(1.dp, TrashPilotColors.HomeOutline)
+        ) {
+            content()
+        }
+    }
+}
+
+@Composable
+fun TrashPilotFeatureCard(
+    title: String,
+    body: String,
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
+    titleMaxLines: Int = 1,
+    bodyMaxLines: Int = 2,
+    trailingContent: (@Composable () -> Unit)? = null
+) {
+    val actionModifier = if (onClick != null) {
+        Modifier.clickable(
+            role = Role.Button,
+            onClickLabel = title,
+            onClick = onClick
+        )
+    } else {
+        Modifier
+    }
+
+    TrashPilotHomeCard(modifier = modifier.then(actionModifier)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .defaultMinSize(minHeight = TrashPilotHomeTokens.FeatureCardHeight)
+                .padding(horizontal = TrashPilotSpacing.Large),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(TrashPilotHomeTokens.FeatureContentGap)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(TrashPilotHomeTokens.FeatureIconContainer)
+                    .background(TrashPilotColors.HomeBlue, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(TrashPilotHomeTokens.FeatureIcon),
+                    tint = Color.White
+                )
+            }
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = title,
+                    color = TrashPilotColors.HomeInk,
+                    style = TrashPilotHomeTokens.FeatureTitleStyle,
+                    maxLines = titleMaxLines,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    text = body,
+                    color = TrashPilotColors.HomeTextSecondary,
+                    style = TrashPilotHomeTokens.FeatureBodyStyle,
+                    maxLines = bodyMaxLines,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+            trailingContent?.invoke()
+        }
+    }
+}
 
 @Composable
 fun TrashPilotPrimaryButton(

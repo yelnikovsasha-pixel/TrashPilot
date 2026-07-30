@@ -8,16 +8,22 @@
   factual and never imply background scanning or automatic deletion.
 - Bottom navigation exposes the planned Home, Privacy, Reports, and Settings information architecture; unfinished destinations use clear placeholder copy.
 - Keep AndroidX dependencies on API 36.1-compatible versions until the project intentionally adopts compile SDK 37.
-- Scanner MVP uses Android Storage Access Framework folder selection instead of `MANAGE_EXTERNAL_STORAGE`; persisted read permission is used only for the selected tree.
-- The folder picker retains the exact read flag returned by DocumentsUI and persists that
-  grant before scanning. Picker completion resumes the existing MainActivity task, scans
-  locally, and navigates from Scanner to Results.
+- Scanner starts immediately with a foreground MediaStore query of the shared-storage records
+  Android exposes to TrashPilot; it does not request `MANAGE_EXTERNAL_STORAGE`.
+- Scanner requests only Android's scoped image, video, audio, or legacy read permissions when no
+  supported media access exists. A partial grant is scanned as-is and is not repeatedly prompted.
+- Storage Access Framework selection is a fallback only when Android blocks direct access to a
+  location. The picker retains the exact read flag returned by DocumentsUI and persists that
+  grant before the fallback scan.
 - Completed scan results are kept in memory for the active app session and contain metadata only.
   Quick Clean is the sole deletion path and operates only on manually selected disposable URIs.
 - Results keeps all accessible file metadata for category drill-down, while deriving the ten
   largest files on demand. File URIs are stored as strings to keep sorting logic platform-neutral.
-- Results uses explicit loading, empty, success, and error models. The current navigation emits
-  success or empty; loading/error remain available for lifecycle and future state-holder wiring.
+- The scan/results flow has explicit Scanning, Results, Nothing Found, and genuine Error states.
+  A successful scan reaches Results only after finalization; zero-attention scans use the positive
+  Nothing Found presentation rather than rendering zero-valued category cards.
+- Scanner work is owned by a composition coroutine. Both visible and system Back leave the
+  foreground scan safely and cancel ongoing traversal instead of trapping the user.
 - Quick Clean starts Review with nothing selected, requires a separate confirmation dialog, and
   reports reclaimed bytes, successful counts by category, and every failed deletion honestly.
 - Trash DNA uses a private on-device Room database with no account, network, cloud, analytics,

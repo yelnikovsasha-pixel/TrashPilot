@@ -15,7 +15,9 @@
 - Splash implementation: white Material 3 surface with centered TP mark, TrashPilot wordmark, and tagline; fades in over 700ms and routes to Home after 2 seconds.
 - Settings is an accessible placeholder route with a top app bar, back navigation, and temporary explanatory copy.
 - Home shows Storage as `Not scanned yet` until real on-device scan data exists; no percentages or illustrative storage values are displayed.
-- Scan opens an explicit system folder picker, recursively inspects readable files offline, and navigates to Results.
+- Scan immediately analyzes shared-storage records Android exposes through MediaStore, shows
+  foreground progress, and navigates to Results. The system folder picker remains only as a
+  fallback when Android requires explicit access to a location.
 - Results show device total, used, and free storage; category totals; and up to ten largest accessible files.
 - Scanning is read-only. TrashPilot does not upload, collect, automatically delete, or modify files.
 - Home cards are Storage, Trash DNA, Privacy Monitor, and Reports. Settings remains in bottom navigation only.
@@ -53,7 +55,7 @@
   version information, and an honest unavailable Pro preview.
 - Settings Language node `60:4` supports 25 locales plus System language, native-name search,
   immediate locale application, and DataStore-backed selection.
-- The complete UI string catalog now contains 344 identical keys in English plus 24 localized
+- The complete UI string catalog now contains 381 identical keys in English plus 24 localized
   resource directories: Spanish, Brazilian Portuguese, French, German, Italian, Polish,
   Ukrainian, Russian, Turkish, Arabic, Hindi, Bengali, Indonesian, Vietnamese, Thai, Japanese,
   Korean, Simplified Chinese, Traditional Chinese, Dutch, Swedish, Czech, Romanian, and Greek.
@@ -67,10 +69,10 @@
 ## Stabilization status
 
 - Release-candidate stabilization completed on 2026-07-29 against a 412 × 917 emulator.
-- Main navigation, nested system-back behavior, real SAF scanning, Results, Quick Clean,
+- Main navigation, nested system-back behavior, real storage scanning, Results, Quick Clean,
   Trash DNA, Privacy Monitor, Reports, Settings, and light/dark/system theme persistence were
   exercised without an observed runtime crash.
-- The selected SAF tree retains read and write grants across app restart. Scan results remain
+- A user-selected fallback SAF tree retains read and write grants across app restart. Scan results remain
   intentionally in memory and require a new scan after process recreation.
 - Remaining release blocker: automated Compose navigation/UI coverage is not yet present;
   the current screen and back-stack validation is manual. Platform-induced database, package
@@ -103,3 +105,23 @@
 - A reusable non-interactive Ambient Message sits beneath SCAN and crossfades localized phrases.
 - Compact validation passed at 412 × 917 for English, German, and Arabic; German remains
   scrollable without clipped controls at 200% font scale.
+
+## Scan Results Home-language implementation
+
+- Scan Results reuses `TrashPilotBrandHeader`, `TrashPilotHomeCard`,
+  `TrashPilotFeatureCard`, Home color roles, and the Home bottom-navigation treatment.
+- Total scanned bytes, accessible cache, files at least 100 MB, hidden-path bytes, and readable
+  empty-folder count are derived from the active scan only.
+- Social & Messenger Media uses accessible media paths for supported messaging/social apps and
+  opens a read-only detail list. Duplicate hashing is a separate explicit local operation.
+- Results selection is limited to discovered removable cache and empty-folder candidates;
+  `Clean Selected` stays disabled until a candidate category is selected and carries that
+  selection into the existing Quick Clean review.
+- `Clean Selected` is the sole primary action and enters the existing manual Quick Clean review.
+- The foreground scanner reports only stages when their real local analysis begins. Leaving the
+  scanner cancels its composition-bound coroutine; Back is never blocked.
+- The default scanner requests Android scoped media-read permissions when no supported media
+  access has been granted. Partial grants are respected without repeated prompting; broad
+  all-files access is never requested.
+- A completed scan with no removable candidates, large files, hidden paths, or supported social
+  media uses the positive `Your storage is already clean` state instead of zero-valued cards.

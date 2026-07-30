@@ -6,6 +6,7 @@ import android.os.Environment
 import android.os.SystemClock
 import android.os.StatFs
 import android.provider.DocumentsContract
+import android.util.Log
 import com.trashpilot.app.core.quickclean.DisposableCandidate
 import com.trashpilot.app.core.quickclean.DisposableCategory
 import com.trashpilot.app.core.quickclean.DisposableClassifier
@@ -15,14 +16,22 @@ import kotlinx.coroutines.withContext
 import kotlin.coroutines.coroutineContext
 
 class DocumentTreeStorageScanner(
-    private val contentResolver: ContentResolver
+    private val contentResolver: ContentResolver,
+    private val fallbackRootName: String,
+    private val unknownFileName: String
 ) : StorageScanner {
 
-    override suspend fun scan(treeUri: Uri): StorageScanResult = withContext(Dispatchers.IO) {
+    override suspend fun scan(treeUri: Uri): StorageScanResult = scan(treeUri) {}
+
+    suspend fun scan(
+        treeUri: Uri,
+        onStage: suspend (ScanStage) -> Unit
+    ): StorageScanResult = withContext(Dispatchers.IO) {
         val scanStartedAt = SystemClock.elapsedRealtime()
+        onStage(ScanStage.STORAGE)
         val rootDocumentId = DocumentsContract.getTreeDocumentId(treeUri)
         val rootUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, rootDocumentId)
-        val rootName = queryDisplayName(rootUri).orEmpty().ifBlank { "Selected storage" }
+        val rootName = queryDisplayName(rootUri).orEmpty().ifBlank { fallbackRootName }
         val categoryBytes = FileCategory.entries.associateWith { 0L }.toMutableMap()
         val files = mutableListOf<ScannedFile>()
         val disposableCandidates = mutableListOf<DisposableCandidate>()
@@ -60,7 +69,7 @@ class DocumentTreeStorageScanner(
                     coroutineContext.ensureActive()
                     hasChildren = true
                     val documentId = cursor.getString(idIndex)
-                    val name = cursor.getString(nameIndex).orEmpty().ifBlank { "Unnamed file" }
+                    val name = cursor.getString(nameIndex).orEmpty().ifBlank { unknownFileName }
                     val mimeType = cursor.getString(mimeIndex)
                     val childPath = directory.pathSegments + name
                     if (mimeType == DocumentsContract.Document.MIME_TYPE_DIR) {
@@ -83,7 +92,8 @@ class DocumentTreeStorageScanner(
                             treeUri,
                             documentId
                         ).toString(),
-                        category = category
+                        category = category,
+                        relativePath = childPath.joinToString("/")
                     )
                     files += scannedFile
                     DisposableClassifier.classify(name, childPath, category)?.let {
@@ -117,7 +127,24 @@ class DocumentTreeStorageScanner(
             }
         }
 
+        onStage(ScanStage.LARGE_FILES)
+        files.count { it.sizeBytes >= LARGE_FILE_MIN_BYTES }
+        onStage(ScanStage.HIDDEN_FILES)
+        files.count { file ->
+            file.relativePath.replace('\\', '/').split('/').any { it.startsWith(".") }
+        }
+        onStage(ScanStage.SOCIAL_MEDIA)
+        SocialMediaAnalyzer.filesInSupportedFolders(files)
+        onStage(ScanStage.EMPTY_FOLDERS)
+        disposableCandidates.count { it.category == DisposableCategory.EMPTY_FOLDERS }
+        onStage(ScanStage.FINALIZING)
         val storage = deviceStorage()
+        Log.d(
+            TAG,
+            "Document tree complete files=$scannedFileCount " +
+                "bytes=${files.sumOf(ScannedFile::sizeBytes)} " +
+                "candidates=${disposableCandidates.size} categories=$categoryBytes"
+        )
         StorageScanResult(
             totalBytes = storage.totalBytes,
             usedBytes = storage.usedBytes,
@@ -166,6 +193,8 @@ class DocumentTreeStorageScanner(
     )
 
     private companion object {
+        const val TAG = "TrashPilotScan"
+        const val LARGE_FILE_MIN_BYTES = 100L * 1024L * 1024L
         val DOCUMENT_PROJECTION = arrayOf(
             DocumentsContract.Document.COLUMN_DOCUMENT_ID,
             DocumentsContract.Document.COLUMN_DISPLAY_NAME,

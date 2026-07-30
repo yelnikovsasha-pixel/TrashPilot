@@ -18,7 +18,8 @@ data class ScannedFile(
     val sizeBytes: Long,
     val lastModifiedMillis: Long,
     val uri: String,
-    val category: FileCategory
+    val category: FileCategory,
+    val relativePath: String = ""
 )
 
 data class StorageScanResult(

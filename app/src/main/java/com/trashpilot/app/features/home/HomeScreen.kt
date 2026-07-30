@@ -49,7 +49,9 @@ import com.trashpilot.app.R
 import com.trashpilot.app.core.storage.StorageScanResult
 import com.trashpilot.app.core.storage.formatBytes
 import com.trashpilot.app.ui.components.TrashPilotAmbientMessage
-import com.trashpilot.app.ui.components.TrashPilotCard
+import com.trashpilot.app.ui.components.TrashPilotBrandHeader
+import com.trashpilot.app.ui.components.TrashPilotFeatureCard
+import com.trashpilot.app.ui.components.TrashPilotHomeCard
 import com.trashpilot.app.ui.components.TrashPilotScanButton
 import com.trashpilot.app.ui.theme.TrashPilotColors
 import com.trashpilot.app.ui.theme.TrashPilotHomeTokens
@@ -74,7 +76,7 @@ fun HomeScreen(
             bottom = TrashPilotHomeTokens.ScreenBottom
         )
     ) {
-        item { BrandHeader() }
+        item { TrashPilotBrandHeader() }
         item {
             Spacer(Modifier.height(TrashPilotHomeTokens.HeaderToHeroSpace))
             ScanAction(onScan)
@@ -99,7 +101,7 @@ fun HomeScreen(
             Spacer(Modifier.height(TrashPilotHomeTokens.FeatureCardGap))
         }
         item {
-            FeatureCard(
+            HomeFeatureCard(
                 title = stringResource(R.string.quick_clean_title),
                 body = stringResource(R.string.home_quick_clean_body),
                 icon = Icons.Outlined.CleaningServices,
@@ -107,7 +109,7 @@ fun HomeScreen(
             )
         }
         item {
-            FeatureCard(
+            HomeFeatureCard(
                 title = stringResource(R.string.trash_dna_title),
                 body = stringResource(R.string.home_trash_dna_body),
                 icon = Icons.Outlined.AutoAwesome,
@@ -115,7 +117,7 @@ fun HomeScreen(
             )
         }
         item {
-            FeatureCard(
+            HomeFeatureCard(
                 title = stringResource(R.string.privacy_monitor_title),
                 body = stringResource(R.string.home_privacy_body),
                 icon = Icons.Outlined.Security,
@@ -123,73 +125,18 @@ fun HomeScreen(
             )
         }
         item {
-            FeatureCard(
+            HomeFeatureCard(
                 title = stringResource(R.string.home_motivation_title),
                 body = stringResource(R.string.home_motivation_body),
                 icon = Icons.Outlined.Lightbulb
             )
         }
         item {
-            FeatureCard(
+            HomeFeatureCard(
                 title = stringResource(R.string.nav_settings),
                 body = stringResource(R.string.home_settings_body),
                 icon = Icons.Outlined.Settings,
                 onClick = onOpenSettings
-            )
-        }
-    }
-}
-
-@Composable
-private fun BrandHeader() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(min = TrashPilotHomeTokens.HeaderHeight)
-            .padding(horizontal = TrashPilotHomeTokens.HeaderHorizontalPadding),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Medium)
-    ) {
-        BrandMark()
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = stringResource(R.string.app_name),
-                color = Color.Black,
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.SemiBold,
-                maxLines = 1,
-                overflow = TextOverflow.Clip
-            )
-            Text(
-                text = stringResource(R.string.home_subtitle),
-                color = Color.Black,
-                style = MaterialTheme.typography.bodyLarge,
-                maxLines = 1,
-                overflow = TextOverflow.Clip
-            )
-        }
-    }
-}
-
-@Composable
-private fun BrandMark() {
-    Box(
-        modifier = Modifier
-            .size(36.dp)
-            .background(TrashPilotColors.HomeBlue, CircleShape)
-            .border(3.dp, Color.White.copy(alpha = 0.45f), CircleShape),
-        contentAlignment = Alignment.Center
-    ) {
-        Box(
-            modifier = Modifier
-                .size(24.dp)
-                .border(2.dp, Color.White, CircleShape),
-            contentAlignment = Alignment.Center
-        ) {
-            Box(
-                Modifier
-                    .size(8.dp)
-                    .background(Color.White, CircleShape)
             )
         }
     }
@@ -215,7 +162,7 @@ private fun StorageCard(
         ?.let { (it.usedBytes.toFloat() / it.totalBytes.toFloat()).coerceIn(0f, 1f) }
     val percent = progress?.let { (it * 100f).toInt() }
 
-    HomeCard(modifier = modifier) {
+    TrashPilotHomeCard(modifier = modifier) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
@@ -300,96 +247,19 @@ private fun StorageIcon() {
 }
 
 @Composable
-private fun FeatureCard(
+private fun HomeFeatureCard(
     title: String,
     body: String,
     icon: ImageVector,
     onClick: (() -> Unit)? = null
 ) {
-    val actionModifier = if (onClick != null) {
-        Modifier.clickable(
-            role = Role.Button,
-            onClickLabel = title,
-            onClick = onClick
-        )
-    } else {
-        Modifier.semantics(mergeDescendants = true) {}
-    }
-
-    HomeCard(
+    TrashPilotFeatureCard(
+        title = title,
+        body = body,
+        icon = icon,
         modifier = Modifier
-            .padding(horizontal = TrashPilotHomeTokens.CardHorizontalPadding)
-            .then(actionModifier)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(TrashPilotHomeTokens.FeatureContentGap)
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(TrashPilotHomeTokens.FeatureIconContainer)
-                    .background(TrashPilotColors.HomeBlue, CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(TrashPilotHomeTokens.FeatureIcon),
-                    tint = Color.White
-                )
-            }
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = title,
-                    color = TrashPilotColors.HomeInk,
-                    style = TrashPilotHomeTokens.FeatureTitleStyle,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    text = body,
-                    color = TrashPilotColors.HomeTextSecondary,
-                    style = TrashPilotHomeTokens.FeatureBodyStyle,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-        }
-    }
+            .padding(horizontal = TrashPilotHomeTokens.CardHorizontalPadding),
+        onClick = onClick
+    )
     Spacer(Modifier.height(TrashPilotHomeTokens.FeatureCardGap))
-}
-
-@Composable
-private fun HomeCard(
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
-) {
-    TrashPilotCard(
-        modifier = modifier
-            .fillMaxWidth()
-            .defaultMinSize(minHeight = TrashPilotHomeTokens.FeatureCardHeight)
-            .shadow(
-                elevation = TrashPilotHomeTokens.CardShadow,
-                shape = TrashPilotRadii.CompactCardShape,
-                ambientColor = Color.Black.copy(alpha = 0.08f),
-                spotColor = Color.Black.copy(alpha = 0.08f)
-            ),
-        shape = TrashPilotRadii.CompactCardShape,
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
-    ) {
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .defaultMinSize(minHeight = TrashPilotHomeTokens.FeatureCardHeight),
-            shape = TrashPilotRadii.CompactCardShape,
-            color = Color.White,
-            border = BorderStroke(1.dp, TrashPilotColors.HomeOutline)
-        ) {
-            content()
-        }
-    }
 }

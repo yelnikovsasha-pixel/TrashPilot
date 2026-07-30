@@ -60,8 +60,9 @@ Rules:
 - SCAN is the principal brand interaction.
 - It is a 200 dp double-ring blue action with a 168 dp inner circle and white label.
 - Do not add an icon, progress percentage, gradient, alternate label, or competing primary action.
-- Pressing SCAN begins an explicit user-controlled storage-selection flow; it must not imply
-  background or unrestricted scanning.
+- Pressing SCAN immediately begins a foreground, on-device analysis of storage Android already
+  exposes to TrashPilot. Folder selection appears only as a user-controlled fallback when Android
+  requires explicit access; the UI must not imply background or unrestricted scanning.
 
 ## Privacy language
 

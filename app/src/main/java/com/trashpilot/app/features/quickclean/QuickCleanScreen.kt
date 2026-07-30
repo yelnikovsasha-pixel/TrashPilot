@@ -40,13 +40,16 @@ fun QuickCleanScreen(
     scanResult: StorageScanResult,
     onBack: () -> Unit,
     onDone: () -> Unit,
+    initialSelectedUris: Set<String> = emptySet(),
     onCleaningComplete: (CleaningReport) -> Unit = {}
 ) {
     val context = LocalContext.current
     val cleaner = remember(context) { DocumentTreeCleaner(context.contentResolver) }
     val scope = rememberCoroutineScope()
     var step by remember { mutableStateOf(Step.OVERVIEW) }
-    var selectedUris by remember { mutableStateOf(emptySet<String>()) }
+    var selectedUris by remember(initialSelectedUris) {
+        mutableStateOf(initialSelectedUris.intersect(scanResult.disposableCandidates.map { it.uri }.toSet()))
+    }
     var report by remember { mutableStateOf<CleaningReport?>(null) }
     var showDialog by remember { mutableStateOf(false) }
     var cleaning by remember { mutableStateOf(false) }

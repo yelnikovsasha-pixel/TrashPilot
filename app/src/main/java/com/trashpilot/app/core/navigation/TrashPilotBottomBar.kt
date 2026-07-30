@@ -52,8 +52,8 @@ fun TrashPilotBottomBar(
     currentRoute: String?,
     onNavigate: (String) -> Unit
 ) {
-    if (currentRoute == "home") {
-        HomeBottomBar(onNavigate = onNavigate)
+    if (currentRoute == "home" || currentRoute == "results") {
+        HomeBottomBar(currentRoute = currentRoute, onNavigate = onNavigate)
         return
     }
 
@@ -113,7 +113,10 @@ fun TrashPilotBottomBar(
 }
 
 @Composable
-private fun HomeBottomBar(onNavigate: (String) -> Unit) {
+private fun HomeBottomBar(
+    currentRoute: String?,
+    onNavigate: (String) -> Unit
+) {
     androidx.compose.foundation.layout.Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -133,7 +136,8 @@ private fun HomeBottomBar(onNavigate: (String) -> Unit) {
             windowInsets = WindowInsets(0, 0, 0, 0)
         ) {
             bottomDestinations.forEach { destination ->
-                val selected = destination.route == "home"
+                val selected = destination.route == "home" &&
+                    currentRoute in setOf("home", "results")
                 NavigationBarItem(
                     modifier = Modifier.weight(1f),
                     selected = selected,
