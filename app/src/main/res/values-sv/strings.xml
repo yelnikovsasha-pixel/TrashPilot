@@ -17,6 +17,9 @@
     <string name="home_trust_local">Bearbetas lokalt</string>
     <string name="home_trust_control">Du behåller kontrollen</string>
     <string name="home_trust_manual">Inget raderas automatiskt</string>
+    <string name="ambient_message_clear_mind">Rent utrymme. Klart sinne.</string>
+    <string name="ambient_message_better_habits">Små steg. Bättre vanor.</string>
+    <string name="ambient_message_your_control">Din telefon. Din kontroll.</string>
     <string name="storage_scanned_value">%1$s av %2$s använd</string>
     <string name="scanner_title">Lagringsskanner</string>
     <string name="scanner_choose_title">Välj vad som ska skannas</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">Enhet: %1$s %2$s</string>
     <string name="settings_diagnostics_history">Lokalhistoriska poster: %1$d</string>
     <string name="settings_diagnostics_excluded">Personliga filnamn, sökvägar, URI:er och innehåll är undantagna.</string>
+    <string name="home_phone_storage">Telefonlagring</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">använt</string>
+    <string name="home_storage_free_total">%1$s ledigt av totalt %2$s</string>
+    <string name="home_quick_clean_body">Ta bort onödiga filer</string>
+    <string name="home_trash_dna_body">Analysera rensningsvanor</string>
+    <string name="home_privacy_body">Granska appbehörigheter</string>
+    <string name="home_motivation_title">Motivation</string>
+    <string name="home_motivation_body">Daglig inspiration</string>
+    <string name="home_settings_body">Anpassa TrashPilot</string>
 </resources>

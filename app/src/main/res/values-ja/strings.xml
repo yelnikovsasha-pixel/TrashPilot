@@ -17,6 +17,9 @@
     <string name="home_trust_local">ローカルで処理される</string>
     <string name="home_trust_control">あなたはコントロールを維持します</string>
     <string name="home_trust_manual">自動的に削除されるものはありません</string>
+    <string name="ambient_message_clear_mind">クリーンな空間。明晰な心。</string>
+    <string name="ambient_message_better_habits">小さな一歩。より良い習慣。</string>
+    <string name="ambient_message_your_control">あなたの電話。あなたのコントロール。</string>
     <string name="storage_scanned_value">%2$s の %1$s を使用</string>
     <string name="scanner_title">ストレージスキャナー</string>
     <string name="scanner_choose_title">スキャンするものを選択する</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">デバイス: %1$s %2$s</string>
     <string name="settings_diagnostics_history">ローカル履歴エントリ: %1$d</string>
     <string name="settings_diagnostics_excluded">個人的なファイル名、パス、URI、コンテンツは除外されます。</string>
+    <string name="home_phone_storage">スマートフォンのストレージ</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">使用済み</string>
+    <string name="home_storage_free_total">合計%2$sのうち%1$s空き</string>
+    <string name="home_quick_clean_body">不要なファイルを削除</string>
+    <string name="home_trash_dna_body">クリーニング習慣を分析</string>
+    <string name="home_privacy_body">アプリの権限を確認</string>
+    <string name="home_motivation_title">モチベーション</string>
+    <string name="home_motivation_body">毎日のインスピレーション</string>
+    <string name="home_settings_body">TrashPilotをカスタマイズ</string>
 </resources>

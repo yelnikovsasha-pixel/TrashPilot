@@ -17,6 +17,9 @@
     <string name="home_trust_local">Обробляється локально</string>
     <string name="home_trust_control">Ви залишаєтесь під контролем</string>
     <string name="home_trust_manual">Автоматично нічого не видалено</string>
+    <string name="ambient_message_clear_mind">Чистий простір. Ясний розум.</string>
+    <string name="ambient_message_better_habits">Маленькі кроки. Кращі звички.</string>
+    <string name="ambient_message_your_control">Ваш телефон. Ваш контроль.</string>
     <string name="storage_scanned_value">%1$s з %2$s використано</string>
     <string name="scanner_title">Сканер зберігання</string>
     <string name="scanner_choose_title">Виберіть, що сканувати</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">Пристрій: %1$s %2$s</string>
     <string name="settings_diagnostics_history">Краєзнавчі записи: %1$d</string>
     <string name="settings_diagnostics_excluded">Назви особистих файлів, шляхи, URI та вміст виключаються.</string>
+    <string name="home_phone_storage">Пам’ять телефона</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">використано</string>
+    <string name="home_storage_free_total">Вільно %1$s із %2$s</string>
+    <string name="home_quick_clean_body">Видаліть непотрібні файли</string>
+    <string name="home_trash_dna_body">Аналізуйте звички очищення</string>
+    <string name="home_privacy_body">Перевірте дозволи застосунків</string>
+    <string name="home_motivation_title">Мотивація</string>
+    <string name="home_motivation_body">Щоденне натхнення</string>
+    <string name="home_settings_body">Налаштуйте TrashPilot</string>
 </resources>

@@ -17,6 +17,9 @@
     <string name="home_trust_local">Обрабатывается локально</string>
     <string name="home_trust_control">Вы остаетесь под контролем</string>
     <string name="home_trust_manual">Ничего не удаляется автоматически</string>
+    <string name="ambient_message_clear_mind">Чистое пространство. Ясный разум.</string>
+    <string name="ambient_message_better_habits">Маленькие шаги. Лучшие привычки.</string>
+    <string name="ambient_message_your_control">Ваш телефон. Ваш контроль.</string>
     <string name="storage_scanned_value">%1$s из %2$s использовано</string>
     <string name="scanner_title">Сканер хранилища</string>
     <string name="scanner_choose_title">Выберите, что сканировать</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">Устройство: %1$s %2$s</string>
     <string name="settings_diagnostics_history">Записи местной истории: %1$d</string>
     <string name="settings_diagnostics_excluded">Личные имена файлов, пути, URI и содержимое исключаются.</string>
+    <string name="home_phone_storage">Память телефона</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">занято</string>
+    <string name="home_storage_free_total">Свободно %1$s из %2$s</string>
+    <string name="home_quick_clean_body">Удалите ненужные файлы</string>
+    <string name="home_trash_dna_body">Анализируйте привычки очистки</string>
+    <string name="home_privacy_body">Проверьте разрешения приложений</string>
+    <string name="home_motivation_title">Мотивация</string>
+    <string name="home_motivation_body">Ежедневное вдохновение</string>
+    <string name="home_settings_body">Настройте TrashPilot</string>
 </resources>

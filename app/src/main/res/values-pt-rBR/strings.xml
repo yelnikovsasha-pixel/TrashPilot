@@ -17,6 +17,9 @@
     <string name="home_trust_local">Processado localmente</string>
     <string name="home_trust_control">Você permanece no controle</string>
     <string name="home_trust_manual">Nada excluído automaticamente</string>
+    <string name="ambient_message_clear_mind">Espaço limpo. Mente clara.</string>
+    <string name="ambient_message_better_habits">Pequenos passos. Melhores hábitos.</string>
+    <string name="ambient_message_your_control">Seu telefone. Seu controle.</string>
     <string name="storage_scanned_value">%1$s de %2$s usado</string>
     <string name="scanner_title">Scanner de armazenamento</string>
     <string name="scanner_choose_title">Escolha o que digitalizar</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">Dispositivo: %1$s %2$s</string>
     <string name="settings_diagnostics_history">Entradas do histórico local: %1$d</string>
     <string name="settings_diagnostics_excluded">Nomes de arquivos pessoais, caminhos, URIs e conteúdos são excluídos.</string>
+    <string name="home_phone_storage">Armazenamento do celular</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">usado</string>
+    <string name="home_storage_free_total">%1$s livres de %2$s no total</string>
+    <string name="home_quick_clean_body">Remova arquivos desnecessários</string>
+    <string name="home_trash_dna_body">Analise hábitos de limpeza</string>
+    <string name="home_privacy_body">Revise permissões de apps</string>
+    <string name="home_motivation_title">Motivação</string>
+    <string name="home_motivation_body">Inspiração diária</string>
+    <string name="home_settings_body">Personalize o TrashPilot</string>
 </resources>

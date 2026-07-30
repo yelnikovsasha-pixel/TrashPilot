@@ -17,6 +17,9 @@
     <string name="home_trust_local">Procesat local</string>
     <string name="home_trust_control">Tu rămâi în control</string>
     <string name="home_trust_manual">Nimic nu s-a șters automat</string>
+    <string name="ambient_message_clear_mind">Spațiu curat. Mintea limpede.</string>
+    <string name="ambient_message_better_habits">Pași mici. Obiceiuri mai bune.</string>
+    <string name="ambient_message_your_control">Telefonul dvs. Controlul tău.</string>
     <string name="storage_scanned_value">%1$s din %2$s folosit</string>
     <string name="scanner_title">Scaner de stocare</string>
     <string name="scanner_choose_title">Alegeți ce să scanați</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">Dispozitiv: %1$s %2$s</string>
     <string name="settings_diagnostics_history">Intrări în istoricul local: %1$d</string>
     <string name="settings_diagnostics_excluded">Numele de fișiere personale, căile, URI-urile și conținutul sunt excluse.</string>
+    <string name="home_phone_storage">Stocarea telefonului</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">utilizat</string>
+    <string name="home_storage_free_total">%1$s liberi din %2$s în total</string>
+    <string name="home_quick_clean_body">Elimină fișierele inutile</string>
+    <string name="home_trash_dna_body">Analizează obiceiurile de curățare</string>
+    <string name="home_privacy_body">Verifică permisiunile aplicațiilor</string>
+    <string name="home_motivation_title">Motivație</string>
+    <string name="home_motivation_body">Inspirație zilnică</string>
+    <string name="home_settings_body">Personalizează TrashPilot</string>
 </resources>

@@ -1,8 +1,10 @@
 # project
 - Single-module Android app (com.trashpilot.app) using Kotlin, Jetpack Compose, Material 3, and Navigation Compose; min SDK 24, compile/target SDK 36. MainActivity applies TrashPilotTheme and AppNavigation currently displays SplashScreen.
 - Navigation uses Navigation Compose with splash as the start destination, followed by Home, Scanner, Results, Privacy, Reports, and Settings destinations.
-- Home is a Material 3 screen with a TrashPilot/Smart Cleaner header, one 168 dp circular Scan action, rounded Storage, Trash DNA, Privacy Monitor, and Reports cards, offline/privacy assurance, and bottom navigation.
-- The evolved Home keeps the approved hero identity and uses a compact real-data Storage card,
+- Home is a Material 3 screen sourced only from Figma `XyDczeNnzEw5DmApIXuXTz` node `1:65`,
+  with a blue concentric brand lockup, one 200 dp double-ring SCAN action, a real-data phone
+  storage card, five vertical feature cards, and persistent bottom navigation.
+- The evolved Home keeps the approved blue hero identity and uses a compact real-data Storage card,
   a two-by-two Quick Clean/Trash DNA/Privacy Monitor/Reports action grid, and a concise trust card.
 - Compose Material Icons Extended supplies monochrome icons for Home cards and navigation.
 - `core/storage` owns read-only document-tree scanning, file categorization, byte formatting, and immutable scan models. Scanner and Results UI live in focused feature packages.
@@ -45,3 +47,6 @@
   values. `core/navigation/TrashPilotBottomBar.kt` owns the persistent app-wide navigation bar.
 - `ui/components/TrashPilotComponents.kt` owns shared buttons, cards, top bars, icon containers,
   section headers, and loading/empty/error state primitives.
+
+- `ui/components/TrashPilotComponents.kt` owns the reusable `TrashPilotAmbientMessage`; timing and Home spacing remain centralized in semantic motion/Home tokens.
+- Ambient Message copy is present in all 25 key-identical locale catalogs as automated release-candidate draft localization.

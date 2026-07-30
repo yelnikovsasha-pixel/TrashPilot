@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -20,6 +21,11 @@ object TrashPilotColors {
     val Card: Color = TrashPilotCard
     val AccentSurface: Color = TrashPilotAccentSurface
     val Outline: Color = TrashPilotOutline
+    val HomeBlue: Color = TrashPilotHomeBlue
+    val HomeInk: Color = TrashPilotHomeInk
+    val HomeTextSecondary: Color = TrashPilotHomeTextSecondary
+    val HomeOutline: Color = TrashPilotHomeOutline
+    val HomeNavigation: Color = TrashPilotHomeNavigation
     val SplashInk = Color(0xFF17212B)
     val SplashTextSecondary = Color(0xFF66727D)
     val White = Color(0xFFFFFFFF)
@@ -102,25 +108,56 @@ object TrashPilotComponentSizes {
 }
 
 object TrashPilotHomeTokens {
-    val HeaderToHeroSpace = 20.dp
-    val HeroToStorageSpace = 20.dp
-    val SectionSpace = 20.dp
-    val SectionTitleToContentSpace = 10.dp
-    val QuickActionGap = 10.dp
-    val QuickActionHeight = 84.dp
-    val QuickActionIconContainer = 40.dp
-    val QuickActionIcon = 22.dp
-    val StorageCardHeight = 92.dp
-    val StorageProgressHeight = 4.dp
-    val StorageProgressTopSpace = 6.dp
-    val TrustCardPadding = 12.dp
-    val TrustItemGap = 6.dp
-    val TrustIcon = 20.dp
+    val ScreenTop = 12.dp
+    val ScreenBottom = 14.dp
+    val HeaderHorizontalPadding = 14.dp
+    val HeaderHeight = 43.dp
+    val HeaderToHeroSpace = 27.dp
+    val HeroToAmbientSpace = 27.dp
+    val AmbientMessageMinimumHeight = 30.dp
+    val AmbientToStorageSpace = 26.dp
+    val CardHorizontalPadding = 24.dp
+    val StorageCardHeight = 72.dp
+    val StorageProgressHeight = 5.dp
+    val StorageProgressWidth = 150.dp
+    val FeatureCardHeight = 72.dp
+    val FeatureCardGap = 5.dp
+    val FeatureIconContainer = 32.dp
+    val FeatureIcon = 22.dp
+    val FeatureContentGap = 17.dp
+    val CardRadius = 20.dp
+    val CardShadow = 4.dp
+    val ScanButtonOuter = 200.dp
+    val ScanButtonInner = 168.dp
+    val ScanRing = 6.dp
+
+    val AmbientTextStyle = TextStyle(
+        fontWeight = FontWeight.Light,
+        fontStyle = FontStyle.Italic,
+        fontSize = 24.sp
+    )
+    val FeatureTitleStyle = TextStyle(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp,
+        lineHeight = 22.sp
+    )
+    val FeatureBodyStyle = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        lineHeight = 20.sp
+    )
+    val StorageDetailStyle = TextStyle(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 10.sp,
+        lineHeight = 12.sp
+    )
 }
 
 object TrashPilotMotion {
     const val SplashFadeMillis = 700
     const val SplashHoldMillis = 2_000L
+    const val AmbientMessageFadeMillis = 600
+    const val AmbientMessageVisibleMillis = 6_500L
 }
 
 object TrashPilotTypography {

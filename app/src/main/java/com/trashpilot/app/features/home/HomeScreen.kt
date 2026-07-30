@@ -1,5 +1,8 @@
 package com.trashpilot.app.features.home
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -7,21 +10,23 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Assessment
 import androidx.compose.material.icons.outlined.AutoAwesome
 import androidx.compose.material.icons.outlined.CleaningServices
-import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material.icons.outlined.Folder
-import androidx.compose.material.icons.outlined.PhoneAndroid
+import androidx.compose.material.icons.outlined.Lightbulb
 import androidx.compose.material.icons.outlined.Security
-import androidx.compose.material.icons.outlined.TouchApp
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -31,20 +36,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import com.trashpilot.app.R
 import com.trashpilot.app.core.storage.StorageScanResult
 import com.trashpilot.app.core.storage.formatBytes
+import com.trashpilot.app.ui.components.TrashPilotAmbientMessage
 import com.trashpilot.app.ui.components.TrashPilotCard
-import com.trashpilot.app.ui.components.TrashPilotIconContainer
 import com.trashpilot.app.ui.components.TrashPilotScanButton
-import com.trashpilot.app.ui.theme.TrashPilotComponentSizes
-import com.trashpilot.app.ui.theme.TrashPilotDimensions
+import com.trashpilot.app.ui.theme.TrashPilotColors
 import com.trashpilot.app.ui.theme.TrashPilotHomeTokens
 import com.trashpilot.app.ui.theme.TrashPilotRadii
 import com.trashpilot.app.ui.theme.TrashPilotSpacing
@@ -55,40 +62,80 @@ fun HomeScreen(
     onOpenQuickClean: () -> Unit,
     onOpenTrashDna: () -> Unit,
     onOpenPrivacy: () -> Unit,
-    onOpenReports: () -> Unit,
+    onOpenSettings: () -> Unit,
     latestScan: StorageScanResult? = null
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White),
         contentPadding = PaddingValues(
-            start = TrashPilotDimensions.ScreenPadding,
-            top = TrashPilotDimensions.ContentTopPadding,
-            end = TrashPilotDimensions.ScreenPadding,
-            bottom = TrashPilotSpacing.Large
-        ),
-        verticalArrangement = Arrangement.Top
+            top = TrashPilotHomeTokens.ScreenTop,
+            bottom = TrashPilotHomeTokens.ScreenBottom
+        )
     ) {
         item { BrandHeader() }
         item {
             Spacer(Modifier.height(TrashPilotHomeTokens.HeaderToHeroSpace))
-            ScanAction(onScan = onScan)
-            Spacer(Modifier.height(TrashPilotHomeTokens.HeroToStorageSpace))
+            ScanAction(onScan)
+            Spacer(Modifier.height(TrashPilotHomeTokens.HeroToAmbientSpace))
+            TrashPilotAmbientMessage(
+                messages = listOf(
+                    stringResource(R.string.ambient_message_clear_mind),
+                    stringResource(R.string.ambient_message_better_habits),
+                    stringResource(R.string.ambient_message_your_control)
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = TrashPilotHomeTokens.CardHorizontalPadding)
+            )
+            Spacer(Modifier.height(TrashPilotHomeTokens.AmbientToStorageSpace))
         }
-        item { StorageCard(latestScan = latestScan) }
         item {
-            HomeSection(title = stringResource(R.string.home_quick_actions)) {
-                QuickActions(
-                    onOpenQuickClean = onOpenQuickClean,
-                    onOpenTrashDna = onOpenTrashDna,
-                    onOpenPrivacy = onOpenPrivacy,
-                    onOpenReports = onOpenReports
-                )
-            }
+            StorageCard(
+                latestScan = latestScan,
+                modifier = Modifier.padding(horizontal = TrashPilotHomeTokens.CardHorizontalPadding)
+            )
+            Spacer(Modifier.height(TrashPilotHomeTokens.FeatureCardGap))
         }
         item {
-            HomeSection(title = stringResource(R.string.home_trust_title)) {
-                TrustCard()
-            }
+            FeatureCard(
+                title = stringResource(R.string.quick_clean_title),
+                body = stringResource(R.string.home_quick_clean_body),
+                icon = Icons.Outlined.CleaningServices,
+                onClick = onOpenQuickClean
+            )
+        }
+        item {
+            FeatureCard(
+                title = stringResource(R.string.trash_dna_title),
+                body = stringResource(R.string.home_trash_dna_body),
+                icon = Icons.Outlined.AutoAwesome,
+                onClick = onOpenTrashDna
+            )
+        }
+        item {
+            FeatureCard(
+                title = stringResource(R.string.privacy_monitor_title),
+                body = stringResource(R.string.home_privacy_body),
+                icon = Icons.Outlined.Security,
+                onClick = onOpenPrivacy
+            )
+        }
+        item {
+            FeatureCard(
+                title = stringResource(R.string.home_motivation_title),
+                body = stringResource(R.string.home_motivation_body),
+                icon = Icons.Outlined.Lightbulb
+            )
+        }
+        item {
+            FeatureCard(
+                title = stringResource(R.string.nav_settings),
+                body = stringResource(R.string.home_settings_body),
+                icon = Icons.Outlined.Settings,
+                onClick = onOpenSettings
+            )
         }
     }
 }
@@ -96,42 +143,28 @@ fun HomeScreen(
 @Composable
 private fun BrandHeader() {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = TrashPilotHomeTokens.HeaderHeight)
+            .padding(horizontal = TrashPilotHomeTokens.HeaderHorizontalPadding),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(TrashPilotSpacing.HomeCard)
+        horizontalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Medium)
     ) {
-        Surface(
-            modifier = Modifier.size(TrashPilotComponentSizes.BrandMark),
-            shape = TrashPilotRadii.BrandShape,
-            color = MaterialTheme.colorScheme.primary
-        ) {
-            Box(contentAlignment = Alignment.Center) {
-                Text(
-                    text = stringResource(R.string.brand_monogram),
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
-        Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Hairline)
-        ) {
+        BrandMark()
+        Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = stringResource(R.string.app_name),
+                color = Color.Black,
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1,
-                softWrap = false,
                 overflow = TextOverflow.Clip
             )
             Text(
                 text = stringResource(R.string.home_subtitle),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = Color.Black,
+                style = MaterialTheme.typography.bodyLarge,
                 maxLines = 1,
-                softWrap = false,
                 overflow = TextOverflow.Clip
             )
         }
@@ -139,11 +172,32 @@ private fun BrandHeader() {
 }
 
 @Composable
-private fun ScanAction(onScan: () -> Unit) {
+private fun BrandMark() {
     Box(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .size(36.dp)
+            .background(TrashPilotColors.HomeBlue, CircleShape)
+            .border(3.dp, Color.White.copy(alpha = 0.45f), CircleShape),
         contentAlignment = Alignment.Center
     ) {
+        Box(
+            modifier = Modifier
+                .size(24.dp)
+                .border(2.dp, Color.White, CircleShape),
+            contentAlignment = Alignment.Center
+        ) {
+            Box(
+                Modifier
+                    .size(8.dp)
+                    .background(Color.White, CircleShape)
+            )
+        }
+    }
+}
+
+@Composable
+private fun ScanAction(onScan: () -> Unit) {
+    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
         TrashPilotScanButton(
             text = stringResource(R.string.scan_action),
             onClick = onScan
@@ -152,55 +206,77 @@ private fun ScanAction(onScan: () -> Unit) {
 }
 
 @Composable
-private fun StorageCard(latestScan: StorageScanResult?) {
-    val storageProgress = latestScan
+private fun StorageCard(
+    latestScan: StorageScanResult?,
+    modifier: Modifier = Modifier
+) {
+    val progress = latestScan
         ?.takeIf { it.totalBytes > 0L }
         ?.let { (it.usedBytes.toFloat() / it.totalBytes.toFloat()).coerceIn(0f, 1f) }
+    val percent = progress?.let { (it * 100f).toInt() }
 
-    TrashPilotCard(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(TrashPilotHomeTokens.StorageCardHeight),
-        shape = TrashPilotDimensions.CardShape,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-        )
-    ) {
+    HomeCard(modifier = modifier) {
         Row(
-            modifier = Modifier.padding(TrashPilotDimensions.CardPadding),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(TrashPilotSpacing.HomeCard)
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            TrashPilotIconContainer(icon = Icons.Outlined.Folder)
+            StorageIcon()
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.XSmall)
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
-                    text = stringResource(R.string.storage_title),
-                    style = MaterialTheme.typography.titleMedium
+                    text = stringResource(R.string.home_phone_storage),
+                    color = TrashPilotColors.HomeInk,
+                    style = TrashPilotHomeTokens.FeatureTitleStyle,
+                    maxLines = 1
                 )
-                Text(
-                    text = latestScan?.let {
-                        stringResource(
-                            R.string.storage_scanned_value,
-                            formatBytes(it.usedBytes),
-                            formatBytes(it.totalBytes)
-                        )
-                    } ?: stringResource(R.string.storage_not_scanned),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Medium
-                )
-                storageProgress?.let { progress ->
+                if (progress != null) {
                     LinearProgressIndicator(
                         progress = { progress },
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = TrashPilotHomeTokens.StorageProgressTopSpace)
+                            .width(TrashPilotHomeTokens.StorageProgressWidth)
                             .height(TrashPilotHomeTokens.StorageProgressHeight),
-                        color = MaterialTheme.colorScheme.primary,
-                        trackColor = MaterialTheme.colorScheme.secondaryContainer
+                        color = TrashPilotColors.HomeBlue,
+                        trackColor = TrashPilotColors.HomeOutline
+                    )
+                } else {
+                    Text(
+                        text = stringResource(R.string.storage_not_scanned),
+                        color = TrashPilotColors.HomeTextSecondary,
+                        style = TrashPilotHomeTokens.FeatureBodyStyle,
+                        maxLines = 1
+                    )
+                }
+            }
+            if (latestScan != null && percent != null) {
+                Column(horizontalAlignment = Alignment.End) {
+                    Row(verticalAlignment = Alignment.Bottom) {
+                        Text(
+                            text = stringResource(R.string.home_storage_percent, percent),
+                            color = Color.Black,
+                            style = TrashPilotHomeTokens.FeatureTitleStyle
+                        )
+                        Spacer(Modifier.width(6.dp))
+                        Text(
+                            text = stringResource(R.string.home_storage_used),
+                            color = TrashPilotColors.HomeTextSecondary,
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                    Text(
+                        text = stringResource(
+                            R.string.home_storage_free_total,
+                            formatBytes((latestScan.totalBytes - latestScan.usedBytes).coerceAtLeast(0L)),
+                            formatBytes(latestScan.totalBytes)
+                        ),
+                        color = TrashPilotColors.HomeTextSecondary,
+                        style = TrashPilotHomeTokens.StorageDetailStyle,
+                        maxLines = 1
                     )
                 }
             }
@@ -209,168 +285,111 @@ private fun StorageCard(latestScan: StorageScanResult?) {
 }
 
 @Composable
-private fun HomeSection(
-    title: String,
-    content: @Composable () -> Unit
-) {
-    Spacer(Modifier.height(TrashPilotHomeTokens.SectionSpace))
-    Text(
-        text = title,
-        style = MaterialTheme.typography.titleSmall,
-        color = MaterialTheme.colorScheme.onSurface
-    )
-    Spacer(Modifier.height(TrashPilotHomeTokens.SectionTitleToContentSpace))
-    content()
-}
-
-@Composable
-private fun QuickActions(
-    onOpenQuickClean: () -> Unit,
-    onOpenTrashDna: () -> Unit,
-    onOpenPrivacy: () -> Unit,
-    onOpenReports: () -> Unit
-) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(TrashPilotHomeTokens.QuickActionGap)
+private fun StorageIcon() {
+    Box(
+        modifier = Modifier.size(32.dp),
+        contentAlignment = Alignment.Center
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(TrashPilotHomeTokens.QuickActionGap)
-        ) {
-            QuickActionCard(
-                title = stringResource(R.string.quick_clean_title),
-                icon = Icons.Outlined.CleaningServices,
-                onClick = onOpenQuickClean,
-                modifier = Modifier.weight(1f)
-            )
-            QuickActionCard(
-                title = stringResource(R.string.trash_dna_title),
-                icon = Icons.Outlined.AutoAwesome,
-                onClick = onOpenTrashDna,
-                modifier = Modifier.weight(1f)
-            )
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(TrashPilotHomeTokens.QuickActionGap)
-        ) {
-            QuickActionCard(
-                title = stringResource(R.string.privacy_monitor_title),
-                icon = Icons.Outlined.Security,
-                onClick = onOpenPrivacy,
-                modifier = Modifier.weight(1f)
-            )
-            QuickActionCard(
-                title = stringResource(R.string.reports_title),
-                icon = Icons.Outlined.Assessment,
-                onClick = onOpenReports,
-                modifier = Modifier.weight(1f)
-            )
-        }
+        Icon(
+            imageVector = Icons.Outlined.Folder,
+            contentDescription = null,
+            modifier = Modifier.size(28.dp),
+            tint = TrashPilotColors.HomeBlue
+        )
     }
 }
 
 @Composable
-private fun QuickActionCard(
+private fun FeatureCard(
     title: String,
+    body: String,
     icon: ImageVector,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onClick: (() -> Unit)? = null
 ) {
-    TrashPilotCard(
-        modifier = modifier
-            .height(TrashPilotHomeTokens.QuickActionHeight)
-            .clickable(
-                onClick = onClick,
-                role = Role.Button,
-                onClickLabel = title
-            ),
-        shape = TrashPilotRadii.CompactCardShape,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+    val actionModifier = if (onClick != null) {
+        Modifier.clickable(
+            role = Role.Button,
+            onClickLabel = title,
+            onClick = onClick
         )
+    } else {
+        Modifier.semantics(mergeDescendants = true) {}
+    }
+
+    HomeCard(
+        modifier = Modifier
+            .padding(horizontal = TrashPilotHomeTokens.CardHorizontalPadding)
+            .then(actionModifier)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(TrashPilotSpacing.Standard),
+                .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(TrashPilotSpacing.MediumLarge)
+            horizontalArrangement = Arrangement.spacedBy(TrashPilotHomeTokens.FeatureContentGap)
         ) {
-            TrashPilotIconContainer(
-                icon = icon,
-                containerSize = TrashPilotHomeTokens.QuickActionIconContainer,
-                iconSize = TrashPilotHomeTokens.QuickActionIcon,
-                shape = TrashPilotRadii.SmallShape
-            )
-            Text(
-                text = title,
-                modifier = Modifier.weight(1f),
-                style = MaterialTheme.typography.titleSmall,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
+            Box(
+                modifier = Modifier
+                    .size(TrashPilotHomeTokens.FeatureIconContainer)
+                    .background(TrashPilotColors.HomeBlue, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(TrashPilotHomeTokens.FeatureIcon),
+                    tint = Color.White
+                )
+            }
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = title,
+                    color = TrashPilotColors.HomeInk,
+                    style = TrashPilotHomeTokens.FeatureTitleStyle,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    text = body,
+                    color = TrashPilotColors.HomeTextSecondary,
+                    style = TrashPilotHomeTokens.FeatureBodyStyle,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
+    Spacer(Modifier.height(TrashPilotHomeTokens.FeatureCardGap))
 }
 
 @Composable
-private fun TrustCard() {
+private fun HomeCard(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
     TrashPilotCard(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .defaultMinSize(minHeight = TrashPilotHomeTokens.FeatureCardHeight)
+            .shadow(
+                elevation = TrashPilotHomeTokens.CardShadow,
+                shape = TrashPilotRadii.CompactCardShape,
+                ambientColor = Color.Black.copy(alpha = 0.08f),
+                spotColor = Color.Black.copy(alpha = 0.08f)
+            ),
         shape = TrashPilotRadii.CompactCardShape,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer
-        )
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
-        Row(
+        Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(TrashPilotHomeTokens.TrustCardPadding),
-            horizontalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Medium),
-            verticalAlignment = Alignment.Top
+                .defaultMinSize(minHeight = TrashPilotHomeTokens.FeatureCardHeight),
+            shape = TrashPilotRadii.CompactCardShape,
+            color = Color.White,
+            border = BorderStroke(1.dp, TrashPilotColors.HomeOutline)
         ) {
-            TrustItem(
-                icon = Icons.Outlined.PhoneAndroid,
-                text = stringResource(R.string.home_trust_local),
-                modifier = Modifier.weight(1f)
-            )
-            TrustItem(
-                icon = Icons.Outlined.TouchApp,
-                text = stringResource(R.string.home_trust_control),
-                modifier = Modifier.weight(1f)
-            )
-            TrustItem(
-                icon = Icons.Outlined.DeleteOutline,
-                text = stringResource(R.string.home_trust_manual),
-                modifier = Modifier.weight(1f)
-            )
+            content()
         }
-    }
-}
-
-@Composable
-private fun TrustItem(
-    icon: ImageVector,
-    text: String,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier.semantics(mergeDescendants = true) {},
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(TrashPilotHomeTokens.TrustItemGap)
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            modifier = Modifier.size(TrashPilotHomeTokens.TrustIcon),
-            tint = MaterialTheme.colorScheme.primary
-        )
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            maxLines = 3
-        )
     }
 }

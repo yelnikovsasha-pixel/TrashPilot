@@ -17,6 +17,9 @@
     <string name="home_trust_local">Diproses secara lokal</string>
     <string name="home_trust_control">Anda tetap memegang kendali</string>
     <string name="home_trust_manual">Tidak ada yang terhapus secara otomatis</string>
+    <string name="ambient_message_clear_mind">Ruang bersih. Pikiran jernih.</string>
+    <string name="ambient_message_better_habits">Langkah kecil. Kebiasaan yang lebih baik.</string>
+    <string name="ambient_message_your_control">Telepon Anda. Kendali Anda.</string>
     <string name="storage_scanned_value">%1$s dari %2$s digunakan</string>
     <string name="scanner_title">Pemindai Penyimpanan</string>
     <string name="scanner_choose_title">Pilih apa yang akan dipindai</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">Perangkat: %1$s %2$s</string>
     <string name="settings_diagnostics_history">Entri sejarah lokal: %1$d</string>
     <string name="settings_diagnostics_excluded">Nama file pribadi, jalur, URI, dan konten tidak termasuk.</string>
+    <string name="home_phone_storage">Penyimpanan ponsel</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">digunakan</string>
+    <string name="home_storage_free_total">%1$s kosong dari total %2$s</string>
+    <string name="home_quick_clean_body">Hapus file yang tidak diperlukan</string>
+    <string name="home_trash_dna_body">Analisis kebiasaan pembersihan</string>
+    <string name="home_privacy_body">Tinjau izin aplikasi</string>
+    <string name="home_motivation_title">Motivasi</string>
+    <string name="home_motivation_body">Inspirasi harian</string>
+    <string name="home_settings_body">Sesuaikan TrashPilot</string>
 </resources>

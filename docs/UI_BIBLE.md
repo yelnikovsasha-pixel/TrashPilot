@@ -7,17 +7,17 @@ TrashPilot UI work. Read all three before changing UI. They describe the approve
 they do not authorize redesign. When implementation and documentation differ, record the
 difference and obtain approval before changing production code.
 
-The approved Home screen is the visual reference for every other screen. Validation target:
-412 × 917 px at 160 dpi. The configured Figma source is the TrashPilot Design System file
-`GIpl7h9YLIvYnAavxMoGGz`; Home is node `21:2`.
+The approved Home screen is the visual reference for Home only. Validation target:
+412 × 917 px at 160 dpi. Its sole Figma source is file `XyDczeNnzEw5DmApIXuXTz`,
+node `1:65` (`Android Compact - 1`). Older Home nodes and purple references are obsolete.
 
 ## Design philosophy
 
 - Minimal, calm, privacy-first, and offline-first.
 - One visually dominant primary action per screen.
 - Never claim optimization, danger, savings, or cleanup results without real device data.
-- Use generous whitespace, soft rounded surfaces, restrained elevation, and one blue-violet
-  palette.
+- Use generous whitespace, soft rounded surfaces, restrained elevation, and the approved
+  blue-and-white Home palette.
 - Preserve a light, near-white canvas. Do not introduce dark mode, dynamic device colors,
   gradients, decorative colors, or alternate layouts without approval.
 - Keep navigation predictable and always visible.
@@ -36,19 +36,12 @@ The approved Home screen is the visual reference for every other screen. Validat
 
 ## Home reference geometry
 
-- Brand logo: 52 × 52 dp, 18 dp corner radius.
-- Brand header gap: 14 dp.
-- Space from header to SCAN region: 20 dp.
-- SCAN button: 168 × 168 dp circular action.
-- Space after SCAN: 20 dp.
-- Storage card: 92 dp high; real scan progress appears only when real totals exist.
-- Home sections use 20 dp separation and a 10 dp title-to-content gap.
-- Quick actions use a two-column grid with 10 dp gaps and 84 dp cards.
-- Trust is a single compact accent-surface card with three factual assurances.
-- Card padding: 14 dp.
-- Card icon container: 48 × 48 dp, 16 dp radius.
-- Card icon: 24 × 24 dp.
-- Card corner radius: 24 dp.
+- Brand logo: 36 dp concentric blue circle with white rings.
+- SCAN treatment: 200 dp outer circle with a blue 6 dp ring and 168 dp blue inner circle.
+- Ambient Message: centered directly below SCAN, 24 sp light italic copy.
+- Storage and feature cards: 364 dp wide, at least 72 dp high, 20 dp radius.
+- Feature cards form one vertical list with 5 dp gaps and 32 dp blue circular icon containers.
+- Real storage progress and totals appear only when real scan data exists.
 
 ## Component rules
 
@@ -81,7 +74,7 @@ implementation. Do not add screen-local bottom bars.
 - Primary rectangular action: 52 dp high, 18 dp radius in the token set.
 - Current feature flows commonly render 52 dp actions with a 26 dp pill radius. Treat this as an
   implementation exception pending approval, not a new token.
-- Home SCAN is the only 168 dp circular primary action.
+- Home SCAN is the only dominant circular primary action and uses the approved double-ring treatment.
 - Use one dominant filled action per screen.
 - Secondary actions may be outlined or text actions.
 - Destructive actions require explicit confirmation and descriptive labels.

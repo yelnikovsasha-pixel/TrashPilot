@@ -80,7 +80,7 @@ fun AppNavigation() {
                 onOpenQuickClean = { navController.navigate("quick-clean") },
                 onOpenTrashDna = { navController.navigate("trash-dna") },
                 onOpenPrivacy = { navController.navigate("privacy") },
-                onOpenReports = { navController.navigate("reports") },
+                onOpenSettings = { navController.navigate("settings") },
                 latestScan = latestScan
             )
         }

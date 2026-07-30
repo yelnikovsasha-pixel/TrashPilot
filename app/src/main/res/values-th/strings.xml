@@ -17,6 +17,9 @@
     <string name="home_trust_local">ประมวลผลในท้องถิ่น</string>
     <string name="home_trust_control">คุณอยู่ในการควบคุม</string>
     <string name="home_trust_manual">ไม่มีอะไรถูกลบโดยอัตโนมัติ</string>
+    <string name="ambient_message_clear_mind">พื้นที่สะอาด. จิตใจแจ่มใส.</string>
+    <string name="ambient_message_better_habits">ขั้นตอนเล็กๆ นิสัยที่ดีขึ้น</string>
+    <string name="ambient_message_your_control">โทรศัพท์ของคุณ การควบคุมของคุณ</string>
     <string name="storage_scanned_value">%1$s จาก %2$s ใช้แล้ว</string>
     <string name="scanner_title">เครื่องสแกนการจัดเก็บ</string>
     <string name="scanner_choose_title">เลือกสิ่งที่จะสแกน</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">อุปกรณ์: %1$s %2$s</string>
     <string name="settings_diagnostics_history">รายการประวัติศาสตร์ท้องถิ่น: %1$d</string>
     <string name="settings_diagnostics_excluded">ไม่รวมชื่อไฟล์ส่วนบุคคล เส้นทาง URI และเนื้อหา</string>
+    <string name="home_phone_storage">พื้นที่เก็บข้อมูลโทรศัพท์</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">ใช้แล้ว</string>
+    <string name="home_storage_free_total">ว่าง %1$s จากทั้งหมด %2$s</string>
+    <string name="home_quick_clean_body">ลบไฟล์ที่ไม่จำเป็น</string>
+    <string name="home_trash_dna_body">วิเคราะห์นิสัยการล้างข้อมูล</string>
+    <string name="home_privacy_body">ตรวจสอบสิทธิ์ของแอป</string>
+    <string name="home_motivation_title">แรงบันดาลใจ</string>
+    <string name="home_motivation_body">แรงบันดาลใจประจำวัน</string>
+    <string name="home_settings_body">ปรับแต่ง TrashPilot</string>
 </resources>

@@ -17,6 +17,9 @@
     <string name="home_trust_local">Yerel olarak işlendi</string>
     <string name="home_trust_control">Kontrol sizde olsun</string>
     <string name="home_trust_manual">Hiçbir şey otomatik olarak silinmedi</string>
+    <string name="ambient_message_clear_mind">Alanı temizleyin. Zihnini temizle.</string>
+    <string name="ambient_message_better_habits">Küçük adımlar. Daha iyi alışkanlıklar.</string>
+    <string name="ambient_message_your_control">Telefonunuz. Senin kontrolün.</string>
     <string name="storage_scanned_value">%1$s / %2$s kullanıldı</string>
     <string name="scanner_title">Depolama Tarayıcısı</string>
     <string name="scanner_choose_title">Neyin taranacağını seçin</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">Cihaz: %1$s %2$s</string>
     <string name="settings_diagnostics_history">Yerel tarih girişleri: %1$d</string>
     <string name="settings_diagnostics_excluded">Kişisel dosya adları, yollar, URI\'ler ve içerikler hariç tutulur.</string>
+    <string name="home_phone_storage">Telefon depolama alanı</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">kullanıldı</string>
+    <string name="home_storage_free_total">Toplam %2$s alanın %1$s kadarı boş</string>
+    <string name="home_quick_clean_body">Gereksiz dosyaları kaldırın</string>
+    <string name="home_trash_dna_body">Temizleme alışkanlıklarını analiz edin</string>
+    <string name="home_privacy_body">Uygulama izinlerini inceleyin</string>
+    <string name="home_motivation_title">Motivasyon</string>
+    <string name="home_motivation_body">Günlük ilham</string>
+    <string name="home_settings_body">TrashPilot’ı özelleştirin</string>
 </resources>

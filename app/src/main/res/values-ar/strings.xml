@@ -17,6 +17,9 @@
     <string name="home_trust_local">معالجتها محليا</string>
     <string name="home_trust_control">يمكنك البقاء في السيطرة</string>
     <string name="home_trust_manual">لا شيء يتم حذفه تلقائيا</string>
+    <string name="ambient_message_clear_mind">مساحة نظيفة. عقل واضح.</string>
+    <string name="ambient_message_better_habits">خطوات صغيرة. عادات أفضل.</string>
+    <string name="ambient_message_your_control">هاتفك. سيطرتك.</string>
     <string name="storage_scanned_value">%1$s من %2$s المستخدمة</string>
     <string name="scanner_title">ماسحة التخزين</string>
     <string name="scanner_choose_title">اختر ما تريد مسحه ضوئيًا</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">الجهاز: %1$s %2$s</string>
     <string name="settings_diagnostics_history">إدخالات التاريخ المحلي: %1$d</string>
     <string name="settings_diagnostics_excluded">يتم استبعاد أسماء الملفات الشخصية والمسارات وعناوين URI والمحتويات.</string>
+    <string name="home_phone_storage">مساحة تخزين الهاتف</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">مستخدم</string>
+    <string name="home_storage_free_total">%1$s متاح من إجمالي %2$s</string>
+    <string name="home_quick_clean_body">إزالة الملفات غير الضرورية</string>
+    <string name="home_trash_dna_body">تحليل عادات التنظيف</string>
+    <string name="home_privacy_body">مراجعة أذونات التطبيقات</string>
+    <string name="home_motivation_title">التحفيز</string>
+    <string name="home_motivation_body">إلهام يومي</string>
+    <string name="home_settings_body">تخصيص TrashPilot</string>
 </resources>

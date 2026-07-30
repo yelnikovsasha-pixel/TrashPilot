@@ -8,8 +8,8 @@
 
 ## Design scope
 
-- Default Figma implementation target: Home / Compose Sync, file key `GIpl7h9YLIvYnAavxMoGGz`, node `21:2` on page `18:2` (`04_Screens`).
-- Source URL: https://www.figma.com/design/GIpl7h9YLIvYnAavxMoGGz/TrashPilot-Design-System?node-id=21-2
+- Home visual source of truth: file key `XyDczeNnzEw5DmApIXuXTz`, node `1:65`
+  (`Android Compact - 1`). Ignore all older Home files, nodes, and purple references.
 - Figma design system covers foundations, components, patterns, screens, and prototype flows.
 - Planned screens: Splash, Home, Scanner, Results, Privacy, and Settings.
 - Splash implementation: white Material 3 surface with centered TP mark, TrashPilot wordmark, and tagline; fades in over 700ms and routes to Home after 2 seconds.
@@ -94,3 +94,12 @@
   whitespace, and persistent navigation while presenting Storage compactly, four secondary quick
   actions, and three factual local-control assurances.
 
+
+
+## Home Ambient Message modernization
+
+- Home uses the approved blue concentric logo, 200 dp double-ring SCAN hero, real-data phone
+  storage card, five vertical feature cards, and Home-only icon navigation treatment.
+- A reusable non-interactive Ambient Message sits beneath SCAN and crossfades localized phrases.
+- Compact validation passed at 412 × 917 for English, German, and Arabic; German remains
+  scrollable without clipped controls at 200% font scale.

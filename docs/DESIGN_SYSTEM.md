@@ -18,6 +18,10 @@ UI Bible audit; they are not additional design tokens.
 | Card | `#F5F2F9` | Standard low-emphasis cards |
 | Accent Surface | `#E9E2F7` | Icon containers, selected indicator, highlighted cards |
 | Outline | `#D8D2E2` | Approved borders and outlines |
+| Home Blue | `#0EA5E9` | Home logo, SCAN, progress and feature icon circles |
+| Home Ink | `#111827` | Home titles |
+| Home Secondary | `#6B7280` | Home supporting copy |
+| Home Outline | `#E5E7EB` | Home card and navigation dividers |
 
 Rules:
 
@@ -110,9 +114,8 @@ approved component specification.
 
 ### Brand mark
 
-- Home mark: 52 dp square, 18 dp radius, Primary background.
-- `TP`: bold 16 sp/24 sp, On Primary.
-- Large splash/about variants must use the same colors unless separately approved.
+- Home mark: 36 dp blue concentric circle with white ring and center.
+- The TrashPilot and Smart Cleaner lockup follows Figma node `1:65`.
 
 ### Feature card
 
@@ -139,7 +142,7 @@ approved component specification.
 - Rectangular action: full content width where specified, 52 dp height.
 - Label: `labelLarge`.
 - One filled primary action per screen.
-- SCAN is a unique 168 dp circle with bold 22 sp/28 sp label.
+- SCAN is a unique 200 dp double-ring circle with a 168 dp blue inner action.
 
 ### Secondary actions
 

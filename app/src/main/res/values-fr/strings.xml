@@ -17,6 +17,9 @@
     <string name="home_trust_local">Traité localement</string>
     <string name="home_trust_control">Vous gardez le contrôle</string>
     <string name="home_trust_manual">Rien n\'est supprimé automatiquement</string>
+    <string name="ambient_message_clear_mind">Espace propre. Esprit clair.</string>
+    <string name="ambient_message_better_habits">Des petits pas. De meilleures habitudes.</string>
+    <string name="ambient_message_your_control">Votre téléphone. Votre contrôle.</string>
     <string name="storage_scanned_value">%1$s sur %2$s utilisé</string>
     <string name="scanner_title">Scanner de stockage</string>
     <string name="scanner_choose_title">Choisissez ce que vous souhaitez numériser</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">Appareil : %1$s %2$s</string>
     <string name="settings_diagnostics_history">Entrées de l\'histoire locale : %1$d</string>
     <string name="settings_diagnostics_excluded">Les noms de fichiers personnels, les chemins, les URI et le contenu sont exclus.</string>
+    <string name="home_phone_storage">Stockage du téléphone</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">utilisé</string>
+    <string name="home_storage_free_total">%1$s libres sur %2$s au total</string>
+    <string name="home_quick_clean_body">Supprimer les fichiers inutiles</string>
+    <string name="home_trash_dna_body">Analyser les habitudes de nettoyage</string>
+    <string name="home_privacy_body">Vérifier les autorisations des applis</string>
+    <string name="home_motivation_title">Motivation</string>
+    <string name="home_motivation_body">Inspiration quotidienne</string>
+    <string name="home_settings_body">Personnaliser TrashPilot</string>
 </resources>

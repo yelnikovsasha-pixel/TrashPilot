@@ -17,6 +17,9 @@
     <string name="home_trust_local">Được xử lý cục bộ</string>
     <string name="home_trust_control">Bạn luôn kiểm soát</string>
     <string name="home_trust_manual">Không có gì bị xóa tự động</string>
+    <string name="ambient_message_clear_mind">Không gian sạch sẽ. Tâm trí rõ ràng.</string>
+    <string name="ambient_message_better_habits">Những bước nhỏ. Thói quen tốt hơn.</string>
+    <string name="ambient_message_your_control">Điện thoại của bạn. Sự kiểm soát của bạn.</string>
     <string name="storage_scanned_value">%1$s trong số %2$s đã sử dụng</string>
     <string name="scanner_title">Máy quét lưu trữ</string>
     <string name="scanner_choose_title">Chọn nội dung cần quét</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">Thiết bị: %1$s %2$s</string>
     <string name="settings_diagnostics_history">Mục lịch sử địa phương: %1$d</string>
     <string name="settings_diagnostics_excluded">Tên tệp cá nhân, đường dẫn, URI và nội dung bị loại trừ.</string>
+    <string name="home_phone_storage">Bộ nhớ điện thoại</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">đã dùng</string>
+    <string name="home_storage_free_total">Còn trống %1$s trên tổng %2$s</string>
+    <string name="home_quick_clean_body">Xóa các tệp không cần thiết</string>
+    <string name="home_trash_dna_body">Phân tích thói quen dọn dẹp</string>
+    <string name="home_privacy_body">Xem lại quyền của ứng dụng</string>
+    <string name="home_motivation_title">Động lực</string>
+    <string name="home_motivation_body">Cảm hứng mỗi ngày</string>
+    <string name="home_settings_body">Tùy chỉnh TrashPilot</string>
 </resources>

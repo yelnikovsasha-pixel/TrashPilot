@@ -17,6 +17,9 @@
     <string name="home_trust_local">Lokaal verwerkt</string>
     <string name="home_trust_control">Jij behoudt de controle</string>
     <string name="home_trust_manual">Niets wordt automatisch verwijderd</string>
+    <string name="ambient_message_clear_mind">Schone ruimte. Heldere geest.</string>
+    <string name="ambient_message_better_habits">Kleine stappen. Betere gewoonten.</string>
+    <string name="ambient_message_your_control">Je telefoon. Jouw controle.</string>
     <string name="storage_scanned_value">%1$s of %2$s gebruikt</string>
     <string name="scanner_title">Opslagscanner</string>
     <string name="scanner_choose_title">Kies wat u wilt scannen</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">Apparaat: %1$s %2$s</string>
     <string name="settings_diagnostics_history">Lokale geschiedenisgegevens: %1$d</string>
     <string name="settings_diagnostics_excluded">Persoonlijke bestandsnamen, paden, URI\'s en inhoud zijn uitgesloten.</string>
+    <string name="home_phone_storage">Telefoonopslag</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">gebruikt</string>
+    <string name="home_storage_free_total">%1$s vrij van in totaal %2$s</string>
+    <string name="home_quick_clean_body">Verwijder onnodige bestanden</string>
+    <string name="home_trash_dna_body">Analyseer opschoongewoonten</string>
+    <string name="home_privacy_body">Controleer app-machtigingen</string>
+    <string name="home_motivation_title">Motivatie</string>
+    <string name="home_motivation_body">Dagelijkse inspiratie</string>
+    <string name="home_settings_body">Pas TrashPilot aan</string>
 </resources>

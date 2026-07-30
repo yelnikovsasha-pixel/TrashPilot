@@ -3,7 +3,8 @@
 - Splash visuals use a white surface, a Compose-native TP mark, theme typography, and explicit restrained colors; animation and delayed navigation are lifecycle-aware through LaunchedEffect.
 - Before real device data exists, Storage must show `Not scanned yet`; never display fake percentages, capacity figures, or optimization results.
 - Keep Scan as the only visually dominant Home action; navigation actions remain in the Material 3 bottom bar.
-- Home uses the Figma `21:2` fixed geometry at 412 dp: 24 dp horizontal content
+- Home uses Figma file `XyDczeNnzEw5DmApIXuXTz`, node `1:65`, at 412 × 917; older Home nodes
+  are obsolete. Home cards use 24 dp horizontal content
   padding, a fixed 52 dp logo, weighted single-line brand copy, and four equal
   single-line navigation destinations in an 80 dp bar.
 - Home excludes Motivation and Settings cards. Settings remains in bottom navigation; Quick Clean

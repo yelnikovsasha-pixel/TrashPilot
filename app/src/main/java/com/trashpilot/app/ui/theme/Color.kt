@@ -10,3 +10,10 @@ val TrashPilotTextSecondary = Color(0xFF524D5D)
 val TrashPilotCard = Color(0xFFF5F2F9)
 val TrashPilotAccentSurface = Color(0xFFE9E2F7)
 val TrashPilotOutline = Color(0xFFD8D2E2)
+
+// Home visual source: Figma XyDczeNnzEw5DmApIXuXTz, node 1:65.
+val TrashPilotHomeBlue = Color(0xFF0EA5E9)
+val TrashPilotHomeInk = Color(0xFF111827)
+val TrashPilotHomeTextSecondary = Color(0xFF6B7280)
+val TrashPilotHomeOutline = Color(0xFFE5E7EB)
+val TrashPilotHomeNavigation = Color(0xFFB8B8B8)

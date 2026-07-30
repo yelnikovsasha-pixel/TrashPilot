@@ -39,20 +39,17 @@ Rules:
 
 ## Approved visual identity
 
-- Primary brand color: `#3C3467`.
-- Brand canvas: `#FBFAFD`.
-- Primary text: `#1B1824`.
-- Secondary text: `#524D5D`.
-- Standard card: `#F5F2F9`.
-- Accent surface: `#E9E2F7`.
+- Home brand color: `#0EA5E9`.
+- Home canvas and cards: `#FFFFFF`.
+- Home primary text: `#111827`.
+- Home secondary text: `#6B7280`.
+- Home outline: `#E5E7EB`.
 - Logo and icon treatment is monochrome, geometric, and restrained.
 - The Home screen is the reference expression of the brand.
 
 ## Logo use
 
-- Standard Home mark: rounded 52 dp square with 18 dp corners.
-- Background: Primary.
-- Monogram: white `TP`, bold.
+- Standard Home mark: 36 dp concentric blue circle with white ring and center.
 - Preserve clear space; do not place the mark against a competing colored surface.
 - Do not rotate, stretch, recolor, outline, add gradients, or apply decorative effects.
 - Splash and About variants must retain the same palette and proportions unless a separately
@@ -61,9 +58,8 @@ Rules:
 ## SCAN action
 
 - SCAN is the principal brand interaction.
-- It is a 168 dp circular Primary action with white bold text.
-- Do not add an icon, progress percentage, ring, gradient, alternate label, or competing primary
-  action without approval.
+- It is a 200 dp double-ring blue action with a 168 dp inner circle and white label.
+- Do not add an icon, progress percentage, gradient, alternate label, or competing primary action.
 - Pressing SCAN begins an explicit user-controlled storage-selection flow; it must not imply
   background or unrestricted scanning.
 
@@ -119,4 +115,3 @@ Before approving UI or copy:
 5. Is privacy copy precise about export and Android handoffs?
 6. Is descriptive copy localized and accessible?
 7. Has the result been validated at 412 × 917 and with representative locales?
-

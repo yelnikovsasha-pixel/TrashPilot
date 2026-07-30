@@ -17,6 +17,9 @@
     <string name="home_trust_local">Επεξεργάζεται τοπικά</string>
     <string name="home_trust_control">Παραμένεις στον έλεγχο</string>
     <string name="home_trust_manual">Δεν διαγράφεται τίποτα αυτόματα</string>
+    <string name="ambient_message_clear_mind">Καθαρός χώρος. Καθαρό μυαλό.</string>
+    <string name="ambient_message_better_habits">Μικρά βήματα. Καλύτερες συνήθειες.</string>
+    <string name="ambient_message_your_control">Το τηλέφωνό σας. Ο έλεγχός σας.</string>
     <string name="storage_scanned_value">%1$s από %2$s που χρησιμοποιείται</string>
     <string name="scanner_title">Σαρωτής αποθήκευσης</string>
     <string name="scanner_choose_title">Επιλέξτε τι θα σαρώσετε</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">Συσκευή: %1$s %2$s</string>
     <string name="settings_diagnostics_history">Εγγραφές τοπικής ιστορίας: %1$d</string>
     <string name="settings_diagnostics_excluded">Τα ονόματα προσωπικών αρχείων, οι διαδρομές, τα URI και τα περιεχόμενα εξαιρούνται.</string>
+    <string name="home_phone_storage">Χώρος αποθήκευσης τηλεφώνου</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">σε χρήση</string>
+    <string name="home_storage_free_total">%1$s ελεύθερα από %2$s συνολικά</string>
+    <string name="home_quick_clean_body">Αφαιρέστε περιττά αρχεία</string>
+    <string name="home_trash_dna_body">Αναλύστε τις συνήθειες καθαρισμού</string>
+    <string name="home_privacy_body">Ελέγξτε τις άδειες εφαρμογών</string>
+    <string name="home_motivation_title">Κίνητρο</string>
+    <string name="home_motivation_body">Καθημερινή έμπνευση</string>
+    <string name="home_settings_body">Προσαρμόστε το TrashPilot</string>
 </resources>

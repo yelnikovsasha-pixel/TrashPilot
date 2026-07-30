@@ -17,6 +17,9 @@
     <string name="home_trust_local">স্থানীয়ভাবে প্রক্রিয়াজাত করা হয়েছে</string>
     <string name="home_trust_control">আপনি নিয়ন্ত্রণে থাকুন</string>
     <string name="home_trust_manual">কিছুই স্বয়ংক্রিয়ভাবে মুছে ফেলা হয় না</string>
+    <string name="ambient_message_clear_mind">পরিষ্কার স্থান। পরিষ্কার মন।</string>
+    <string name="ambient_message_better_habits">ছোট পদক্ষেপ। ভালো অভ্যাস।</string>
+    <string name="ambient_message_your_control">আপনার ফোন। আপনার নিয়ন্ত্রণ.</string>
     <string name="storage_scanned_value">%2$s এর %1$s ব্যবহৃত</string>
     <string name="scanner_title">স্টোরেজ স্ক্যানার</string>
     <string name="scanner_choose_title">কি স্ক্যান করবেন তা বেছে নিন</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">ডিভাইস: %1$s %2$s</string>
     <string name="settings_diagnostics_history">স্থানীয় ইতিহাস এন্ট্রি: %1$d</string>
     <string name="settings_diagnostics_excluded">ব্যক্তিগত ফাইলের নাম, পাথ, ইউআরআই এবং বিষয়বস্তু বাদ দেওয়া হয়েছে।</string>
+    <string name="home_phone_storage">ফোন স্টোরেজ</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">ব্যবহৃত</string>
+    <string name="home_storage_free_total">মোট %2$s-এর মধ্যে %1$s খালি</string>
+    <string name="home_quick_clean_body">অপ্রয়োজনীয় ফাইল সরান</string>
+    <string name="home_trash_dna_body">পরিষ্কারের অভ্যাস বিশ্লেষণ করুন</string>
+    <string name="home_privacy_body">অ্যাপের অনুমতি পর্যালোচনা করুন</string>
+    <string name="home_motivation_title">অনুপ্রেরণা</string>
+    <string name="home_motivation_body">দৈনিক অনুপ্রেরণা</string>
+    <string name="home_settings_body">TrashPilot কাস্টমাইজ করুন</string>
 </resources>

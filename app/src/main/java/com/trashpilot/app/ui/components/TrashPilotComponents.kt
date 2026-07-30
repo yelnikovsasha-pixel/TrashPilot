@@ -1,15 +1,22 @@
 package com.trashpilot.app.ui.components
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -23,30 +30,40 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import com.trashpilot.app.R
 import com.trashpilot.app.ui.theme.TrashPilotComponentSizes
 import com.trashpilot.app.ui.theme.TrashPilotElevation
 import com.trashpilot.app.ui.theme.TrashPilotIconSizes
+import com.trashpilot.app.ui.theme.TrashPilotHomeTokens
+import com.trashpilot.app.ui.theme.TrashPilotMotion
 import com.trashpilot.app.ui.theme.TrashPilotRadii
 import com.trashpilot.app.ui.theme.TrashPilotSpacing
+import com.trashpilot.app.ui.theme.TrashPilotColors
 
 @Composable
 fun TrashPilotPrimaryButton(
@@ -420,24 +437,79 @@ fun TrashPilotScanButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    ElevatedButton(
-        onClick = onClick,
-        modifier = modifier.size(TrashPilotComponentSizes.ScanButton),
+    Surface(
+        modifier = modifier
+            .size(TrashPilotHomeTokens.ScanButtonOuter)
+            .clickable(role = Role.Button, onClick = onClick),
         shape = CircleShape,
-        colors = ButtonDefaults.elevatedButtonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary
-        ),
-        elevation = ButtonDefaults.elevatedButtonElevation(
-            defaultElevation = TrashPilotElevation.ScanDefault,
-            pressedElevation = TrashPilotElevation.ScanPressed
-        ),
-        contentPadding = ButtonDefaults.ContentPadding
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold
+        color = Color.White,
+        shadowElevation = TrashPilotElevation.ScanDefault,
+        border = androidx.compose.foundation.BorderStroke(
+            TrashPilotHomeTokens.ScanRing,
+            TrashPilotColors.HomeBlue
         )
+    ) {
+        Box(contentAlignment = Alignment.Center) {
+            Surface(
+                modifier = Modifier.size(TrashPilotHomeTokens.ScanButtonInner),
+                shape = CircleShape,
+                color = TrashPilotColors.HomeBlue
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Text(
+                        text = text,
+                        color = Color.White,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Calm, non-interactive copy that rotates only while this composable is on screen.
+ *
+ * Messages use ordinary text semantics so a focused message remains readable without behaving
+ * like an alert or live notification when the phrase changes.
+ */
+@Composable
+fun TrashPilotAmbientMessage(
+    messages: List<String>,
+    modifier: Modifier = Modifier
+) {
+    if (messages.isEmpty()) return
+
+    var messageIndex by rememberSaveable(messages.size) { mutableIntStateOf(0) }
+    LaunchedEffect(messages.size) {
+        while (true) {
+            kotlinx.coroutines.delay(TrashPilotMotion.AmbientMessageVisibleMillis)
+            messageIndex = (messageIndex + 1) % messages.size
+        }
+    }
+
+    Box(
+        modifier = modifier.defaultMinSize(
+            minHeight = TrashPilotHomeTokens.AmbientMessageMinimumHeight
+        ),
+        contentAlignment = Alignment.Center
+    ) {
+        AnimatedContent(
+            targetState = messageIndex,
+            transitionSpec = {
+                fadeIn(tween(TrashPilotMotion.AmbientMessageFadeMillis)) togetherWith
+                    fadeOut(tween(TrashPilotMotion.AmbientMessageFadeMillis))
+            },
+            label = "Ambient message"
+        ) { index ->
+            Text(
+                text = messages[index],
+                style = TrashPilotHomeTokens.AmbientTextStyle,
+                color = Color.Black.copy(alpha = 0.30f),
+                textAlign = TextAlign.Center,
+                maxLines = 2
+            )
+        }
     }
 }

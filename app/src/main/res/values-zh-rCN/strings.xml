@@ -17,6 +17,9 @@
     <string name="home_trust_local">本地处理</string>
     <string name="home_trust_control">您一切尽在掌握</string>
     <string name="home_trust_manual">没有自动删除任何内容</string>
+    <string name="ambient_message_clear_mind">干净的空间。头脑清醒。</string>
+    <string name="ambient_message_better_habits">小步骤。更好的习惯。</string>
+    <string name="ambient_message_your_control">你的电话。你的控制。</string>
     <string name="storage_scanned_value">使用了 %1$s 或 %2$s</string>
     <string name="scanner_title">存储扫描仪</string>
     <string name="scanner_choose_title">选择要扫描的内容</string>
@@ -343,4 +346,14 @@
     <string name="settings_diagnostics_device">设备：%1$s %2$s</string>
     <string name="settings_diagnostics_history">本地历史条目：%1$d</string>
     <string name="settings_diagnostics_excluded">个人文件名、路径、URI 和内容不包括在内。</string>
+    <string name="home_phone_storage">手机存储空间</string>
+    <string name="home_storage_percent">%1$d%%</string>
+    <string name="home_storage_used">已使用</string>
+    <string name="home_storage_free_total">总计 %2$s，剩余 %1$s</string>
+    <string name="home_quick_clean_body">移除不需要的文件</string>
+    <string name="home_trash_dna_body">分析清理习惯</string>
+    <string name="home_privacy_body">查看应用权限</string>
+    <string name="home_motivation_title">动力</string>
+    <string name="home_motivation_body">每日灵感</string>
+    <string name="home_settings_body">自定义 TrashPilot</string>
 </resources>
