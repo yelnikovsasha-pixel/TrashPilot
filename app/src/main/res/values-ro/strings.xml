@@ -381,4 +381,17 @@
     <string name="results_one_file">1 fișier</string>
     <string name="results_one_folder">1 folder</string>
     <string name="results_count_and_size">%1$s · %2$s</string>
+    <string name="privacy_app_details">App permission details</string>
+    <string name="privacy_installed_apps_body">%1$d installed apps reported by Android. Tap an app for details.</string>
+    <string name="privacy_sort_by">Sort by permission type</string>
+    <string name="privacy_not_granted">Not granted</string>
+    <string name="privacy_sensitive">Sensitive</string>
+    <string name="privacy_app_icon">%1$s app icon</string>
+    <string name="privacy_permission_details_body">Current declarations and runtime grant states reported by Android. Sensitive means Android exposes a special capability declaration, not observed usage.</string>
+    <string name="permission_photos_storage">Photos / Storage</string>
+    <string name="permission_accessibility">Accessibility</string>
+    <string name="permission_background_activity">Background activity</string>
+    <string name="permission_photos_storage_body">Shows whether Android reports photo, media, or shared-storage access.</string>
+    <string name="permission_accessibility_body">Sensitive when the app declares an Android accessibility service. TrashPilot does not observe whether the service is enabled.</string>
+    <string name="permission_background_activity_body">Sensitive when the app declares background-related Android capabilities. This does not mean the app is currently running.</string>
 </resources>

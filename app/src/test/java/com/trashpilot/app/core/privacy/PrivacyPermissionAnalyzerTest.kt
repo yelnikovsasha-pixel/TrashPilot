@@ -33,7 +33,7 @@ class PrivacyPermissionAnalyzerTest {
     }
 
     @Test
-    fun `keeps background and foreground location distinct`() {
+    fun `marks background capability as sensitive`() {
         val snapshot = PrivacyPermissionAnalyzer.analyze(
             listOf(
                 RawInstalledApp(
@@ -46,23 +46,24 @@ class PrivacyPermissionAnalyzerTest {
         )
         val app = snapshot.apps.single()
 
-        assertTrue(PrivacyPermissionCategory.BACKGROUND_LOCATION in app.declaredCategories)
+        assertTrue(PrivacyPermissionCategory.BACKGROUND_ACTIVITY in app.declaredCategories)
         assertFalse(PrivacyPermissionCategory.LOCATION in app.declaredCategories)
-        assertTrue(PrivacyPermissionCategory.BACKGROUND_LOCATION in app.grantedCategories)
+        assertTrue(PrivacyPermissionCategory.BACKGROUND_ACTIVITY in app.sensitiveCategories)
+        assertFalse(PrivacyPermissionCategory.BACKGROUND_ACTIVITY in app.grantedCategories)
     }
 
     @Test
-    fun `maps nearby devices and notifications without generating other categories`() {
+    fun `maps media and notifications without generating other categories`() {
         val snapshot = PrivacyPermissionAnalyzer.analyze(
             listOf(
                 RawInstalledApp(
                     label = "Connected app",
                     packageName = "test.connected",
                     requestedPermissions = setOf(
-                        Manifest.permission.BLUETOOTH_CONNECT,
+                        Manifest.permission.READ_MEDIA_IMAGES,
                         Manifest.permission.POST_NOTIFICATIONS
                     ),
-                    grantedPermissions = setOf(Manifest.permission.BLUETOOTH_CONNECT)
+                    grantedPermissions = setOf(Manifest.permission.READ_MEDIA_IMAGES)
                 )
             )
         )
@@ -70,12 +71,11 @@ class PrivacyPermissionAnalyzerTest {
 
         assertEquals(
             setOf(
-                PrivacyPermissionCategory.NEARBY_DEVICES,
+                PrivacyPermissionCategory.PHOTOS_STORAGE,
                 PrivacyPermissionCategory.NOTIFICATIONS
             ),
             app.declaredCategories
         )
-        assertEquals(setOf(PrivacyPermissionCategory.NEARBY_DEVICES), app.grantedCategories)
+        assertEquals(setOf(PrivacyPermissionCategory.PHOTOS_STORAGE), app.grantedCategories)
     }
 }
-

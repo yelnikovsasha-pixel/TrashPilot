@@ -33,6 +33,9 @@
 - Privacy Monitor uses PackageManager with permission metadata and package visibility so counts
   reflect the installed device rather than a curated or fake app list. Data is processed in
   memory and is not persisted, uploaded, scored, or tracked.
+- Privacy Monitor lists every package Android returns and distinguishes runtime grants from
+  declared special capabilities. Accessibility and background-related declarations are labeled
+  Sensitive because PackageManager cannot establish current usage or enabled state.
 - Recommendations are conditional: they appear only when the corresponding permission category
   exists on the device, and permission management opens Android's own privacy settings.
 - Reports reuses the Trash DNA Room event table as the single local metadata history. Privacy

@@ -17,3 +17,11 @@ val TrashPilotHomeInk = Color(0xFF111827)
 val TrashPilotHomeTextSecondary = Color(0xFF6B7280)
 val TrashPilotHomeOutline = Color(0xFFE5E7EB)
 val TrashPilotHomeNavigation = Color(0xFFB8B8B8)
+
+// Privacy Monitor status roles. Text labels always accompany these colors.
+val TrashPilotStatusNotGranted = Color(0xFFDDF4E4)
+val TrashPilotStatusNotGrantedText = Color(0xFF176B36)
+val TrashPilotStatusGranted = Color(0xFFDCEEFF)
+val TrashPilotStatusGrantedText = Color(0xFF145A8D)
+val TrashPilotStatusSensitive = Color(0xFFFFE5CC)
+val TrashPilotStatusSensitiveText = Color(0xFF8A4512)

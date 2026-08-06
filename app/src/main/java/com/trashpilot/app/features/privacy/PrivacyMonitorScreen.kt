@@ -1,69 +1,58 @@
-@file:Suppress("LocalContextGetResourceValueCall")
-
 package com.trashpilot.app.features.privacy
 
-import android.content.Intent
-import android.provider.Settings
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.core.graphics.drawable.toBitmap
 import com.trashpilot.app.R
 import com.trashpilot.app.core.privacy.InstalledAppPermissionReader
 import com.trashpilot.app.core.privacy.PrivacyApp
 import com.trashpilot.app.core.privacy.PrivacyPermissionCategory
+import com.trashpilot.app.core.privacy.PrivacyPermissionStatus
 import com.trashpilot.app.core.privacy.PrivacySnapshot
-import com.trashpilot.app.ui.components.TrashPilotTopAppBar
 import com.trashpilot.app.ui.components.TrashPilotCard
-import com.trashpilot.app.ui.components.TrashPilotPrimaryButton
-import com.trashpilot.app.ui.components.TrashPilotTextButton
+import com.trashpilot.app.ui.components.TrashPilotTopAppBar
+import com.trashpilot.app.ui.theme.TrashPilotColors
+import com.trashpilot.app.ui.theme.TrashPilotComponentSizes
 import com.trashpilot.app.ui.theme.TrashPilotRadii
 import com.trashpilot.app.ui.theme.TrashPilotSpacing
-import com.trashpilot.app.ui.theme.TrashPilotTypography
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-
-private enum class PrivacyPage { OVERVIEW, CATEGORIES, APPS, DETAILS, RECOMMENDATIONS }
-private enum class AppSort { PERMISSION_COUNT, NAME }
-private enum class CategorySort { APP_COUNT, NAME }
 
 private sealed interface PrivacyUiState {
     data object Loading : PrivacyUiState
@@ -72,425 +61,140 @@ private sealed interface PrivacyUiState {
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 fun PrivacyMonitorScreen(
     onBack: () -> Unit,
     onSnapshotLoaded: (PrivacySnapshot) -> Unit = {},
     loadSnapshot: (suspend () -> PrivacySnapshot)? = null
 ) {
     val context = LocalContext.current
-    val snapshotLoader = remember(context, loadSnapshot) {
-        loadSnapshot ?: suspend {
-            InstalledAppPermissionReader(context.applicationContext).read()
-        }
+    val loader = remember(context, loadSnapshot) {
+        loadSnapshot ?: suspend { InstalledAppPermissionReader(context.applicationContext).read() }
     }
     var state: PrivacyUiState by remember { mutableStateOf(PrivacyUiState.Loading) }
-    var page by remember { mutableStateOf(PrivacyPage.OVERVIEW) }
-    var selectedCategory by remember { mutableStateOf(PrivacyPermissionCategory.CAMERA) }
+    var selectedApp by remember { mutableStateOf<PrivacyApp?>(null) }
 
     LaunchedEffect(Unit) {
-        state = runCatching { withContext(Dispatchers.IO) { snapshotLoader() } }
-            .fold(
-                onSuccess = {
-                    onSnapshotLoaded(it)
-                    PrivacyUiState.Success(it)
-                },
-                onFailure = { PrivacyUiState.Error(it.message ?: context.getString(R.string.privacy_error_android)) }
-            )
+        state = runCatching { withContext(Dispatchers.IO) { loader() } }.fold(
+            onSuccess = { onSnapshotLoaded(it); PrivacyUiState.Success(it) },
+            onFailure = { PrivacyUiState.Error(it.message ?: context.getString(R.string.privacy_error_android)) }
+        )
     }
+    BackHandler { if (selectedApp != null) selectedApp = null else onBack() }
 
-    BackHandler {
-        if (page == PrivacyPage.OVERVIEW) onBack() else page = PrivacyPage.OVERVIEW
-    }
-
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.background,
-        topBar = {
-            TrashPilotTopAppBar(
-                title = page.title(),
-                onBack = {
-                    if (page == PrivacyPage.OVERVIEW) onBack() else page = PrivacyPage.OVERVIEW
-                }
-            )
-        }
-    ) { padding ->
+    Column(Modifier.fillMaxSize()) {
+        TrashPilotTopAppBar(
+            title = stringResource(if (selectedApp == null) R.string.privacy_monitor_title else R.string.privacy_app_details),
+            onBack = { if (selectedApp != null) selectedApp = null else onBack() }
+        )
         when (val current = state) {
-            PrivacyUiState.Loading -> StateCard(
-                modifier = Modifier.padding(padding),
-                title = stringResource(R.string.privacy_loading_title),
-                body = stringResource(R.string.privacy_loading_body)
-            )
-            is PrivacyUiState.Error -> StateCard(
-                modifier = Modifier.padding(padding),
-                title = stringResource(R.string.privacy_error_title),
-                body = current.message
-            )
-            is PrivacyUiState.Success -> when (page) {
-                PrivacyPage.OVERVIEW -> Overview(
-                    current.snapshot,
-                    Modifier.padding(padding),
-                    onCategories = { page = PrivacyPage.CATEGORIES },
-                    onApps = { page = PrivacyPage.APPS },
-                    onRecommendations = { page = PrivacyPage.RECOMMENDATIONS }
-                )
-                PrivacyPage.CATEGORIES -> Categories(
-                    current.snapshot,
-                    Modifier.padding(padding)
-                ) {
-                    selectedCategory = it
-                    page = PrivacyPage.DETAILS
+            PrivacyUiState.Loading -> StateMessage(R.string.privacy_loading_title, R.string.privacy_loading_body)
+            is PrivacyUiState.Error -> StateMessage(R.string.privacy_error_title, body = current.message)
+            is PrivacyUiState.Success -> selectedApp?.let { AppDetails(it) }
+                ?: AppList(current.snapshot, onAppClick = { selectedApp = it })
+        }
+    }
+}
+
+@Composable
+private fun AppList(snapshot: PrivacySnapshot, onAppClick: (PrivacyApp) -> Unit) {
+    var sortCategory by remember { mutableStateOf<PrivacyPermissionCategory?>(null) }
+    val apps = remember(snapshot, sortCategory) {
+        snapshot.apps.sortedWith(
+            sortCategory?.let { category ->
+                compareByDescending<PrivacyApp> { it.status(category).sortWeight }
+                    .thenBy(String.CASE_INSENSITIVE_ORDER) { it.label }
+            } ?: compareBy(String.CASE_INSENSITIVE_ORDER) { it.label }
+        )
+    }
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(TrashPilotSpacing.Screen),
+        verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Standard)
+    ) {
+        item {
+            Text(stringResource(R.string.privacy_installed_apps_body, snapshot.appsChecked),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        item {
+            Text(stringResource(R.string.privacy_sort_by), style = MaterialTheme.typography.titleSmall)
+            Row(
+                Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Medium)
+            ) {
+                FilterChip(selected = sortCategory == null, onClick = { sortCategory = null },
+                    label = { Text(stringResource(R.string.privacy_sort_app_name)) })
+                PrivacyPermissionCategory.entries.forEach { category ->
+                    FilterChip(selected = sortCategory == category, onClick = { sortCategory = category },
+                        label = { Text(category.label()) })
                 }
-                PrivacyPage.APPS -> Apps(current.snapshot, Modifier.padding(padding))
-                PrivacyPage.DETAILS -> Details(
-                    current.snapshot,
-                    selectedCategory,
-                    Modifier.padding(padding)
-                )
-                PrivacyPage.RECOMMENDATIONS ->
-                    Recommendations(current.snapshot, Modifier.padding(padding))
             }
         }
+        items(apps, key = PrivacyApp::packageName) { app -> AppCard(app) { onAppClick(app) } }
     }
 }
 
 @Composable
-private fun Overview(
-    snapshot: PrivacySnapshot,
-    modifier: Modifier,
-    onCategories: () -> Unit,
-    onApps: () -> Unit,
-    onRecommendations: () -> Unit
-) {
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(TrashPilotSpacing.Screen),
-        verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Large)
-    ) {
-        item {
-            Text(
-                stringResource(R.string.privacy_intro),
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-        item {
-            InfoCard(
-                stringResource(R.string.privacy_glance_title),
-                stringResource(R.string.privacy_glance_body),
-                highlighted = true
-            )
-        }
-        item {
-            MetricCard(
-                listOf(
-                    stringResource(R.string.privacy_apps_checked) to snapshot.appsChecked.toString(),
-                    stringResource(R.string.privacy_sensitive_apps) to snapshot.sensitiveAppCount.toString(),
-                    stringResource(R.string.privacy_categories) to PrivacyPermissionCategory.entries.size.toString()
-                )
-            )
-        }
-        item {
-            InfoCard(
-                stringResource(R.string.privacy_on_device_title),
-                stringResource(R.string.privacy_on_device_body)
-            )
-        }
-        item {
-            TrashPilotPrimaryButton(
-                text = stringResource(R.string.privacy_view_categories),
-                onClick = onCategories,
-                modifier = Modifier.fillMaxWidth(),
-                height = null
-            )
-        }
-        item {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                TrashPilotTextButton(
-                    text = stringResource(R.string.privacy_sensitive_apps_short),
-                    onClick = onApps
-                )
-                TrashPilotTextButton(
-                    text = stringResource(R.string.privacy_recommendations),
-                    onClick = onRecommendations
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun Categories(
-    snapshot: PrivacySnapshot,
-    modifier: Modifier,
-    onSelect: (PrivacyPermissionCategory) -> Unit
-) {
-    var query by remember { mutableStateOf("") }
-    var sort by remember { mutableStateOf(CategorySort.APP_COUNT) }
-    val labels = PrivacyPermissionCategory.entries.associateWith { it.label() }
-    val categories = PrivacyPermissionCategory.entries
-        .filter { labels.getValue(it).contains(query, ignoreCase = true) }
-        .let { list ->
-            when (sort) {
-                CategorySort.APP_COUNT -> list.sortedByDescending { snapshot.categoryCounts[it] ?: 0 }
-                CategorySort.NAME -> list.sortedBy { labels.getValue(it) }
-            }
-        }
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(TrashPilotSpacing.Screen),
-        verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.MediumLarge)
-    ) {
-        item { SearchField(query, stringResource(R.string.privacy_search_permissions)) { query = it } }
-        item {
-            SortRow {
-                FilterChip(
-                    selected = sort == CategorySort.APP_COUNT,
-                    onClick = { sort = CategorySort.APP_COUNT },
-                    label = { Text(stringResource(R.string.privacy_sort_app_count)) }
-                )
-                FilterChip(
-                    selected = sort == CategorySort.NAME,
-                    onClick = { sort = CategorySort.NAME },
-                    label = { Text(stringResource(R.string.results_sort_name)) }
-                )
-            }
-        }
-        if (categories.isEmpty()) {
-            item { InfoCard(stringResource(R.string.privacy_no_categories), stringResource(R.string.privacy_try_search)) }
-        } else {
-            items(categories) { category ->
-                PermissionRow(
-                    title = category.label(),
-                    count = snapshot.categoryCounts[category] ?: 0,
-                    onClick = { onSelect(category) }
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun Apps(snapshot: PrivacySnapshot, modifier: Modifier) {
-    var query by remember { mutableStateOf("") }
-    var sort by remember { mutableStateOf(AppSort.PERMISSION_COUNT) }
-    val apps = snapshot.apps.filter { it.declaredCategories.isNotEmpty() }
-        .filter { it.label.contains(query, true) || it.packageName.contains(query, true) }
-        .let { list ->
-            when (sort) {
-                AppSort.PERMISSION_COUNT -> list.sortedByDescending { it.declaredCategories.size }
-                AppSort.NAME -> list.sortedBy { it.label.lowercase() }
-            }
-        }
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(TrashPilotSpacing.Screen),
-        verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.MediumLarge)
-    ) {
-        item { SearchField(query, stringResource(R.string.privacy_search_apps)) { query = it } }
-        item {
-            SortRow {
-                FilterChip(
-                    selected = sort == AppSort.PERMISSION_COUNT,
-                    onClick = { sort = AppSort.PERMISSION_COUNT },
-                    label = { Text(stringResource(R.string.privacy_sort_permission_count)) }
-                )
-                FilterChip(
-                    selected = sort == AppSort.NAME,
-                    onClick = { sort = AppSort.NAME },
-                    label = { Text(stringResource(R.string.privacy_sort_app_name)) }
-                )
-            }
-        }
-        if (apps.isEmpty()) {
-            item {
-                InfoCard(
-                    stringResource(R.string.privacy_no_apps),
-                    stringResource(R.string.privacy_no_apps_body)
-                )
-            }
-        } else {
-            items(apps, key = PrivacyApp::packageName) { app -> AppRow(app) }
-        }
-    }
-}
-
-@Composable
-private fun Details(
-    snapshot: PrivacySnapshot,
-    category: PrivacyPermissionCategory,
-    modifier: Modifier
-) {
-    val context = LocalContext.current
-    val apps = snapshot.apps.filter { category in it.declaredCategories }
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(TrashPilotSpacing.Screen),
-        verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.HomeCard)
-    ) {
-        item {
-            InfoCard(
-                category.label(),
-                stringResource(R.string.privacy_apps_declare, apps.size),
-                highlighted = true
-            )
-        }
-        item { InfoCard(stringResource(R.string.privacy_what_means), category.explanation()) }
-        if (apps.isEmpty()) {
-            item { InfoCard(stringResource(R.string.privacy_no_category_apps), stringResource(R.string.privacy_no_declarations)) }
-        } else {
-            items(apps, key = PrivacyApp::packageName) { AppRow(it, category) }
-        }
-        item {
-            TrashPilotPrimaryButton(
-                text = stringResource(R.string.privacy_open_settings),
-                onClick = {
-                    context.startActivity(Intent(Settings.ACTION_PRIVACY_SETTINGS))
-                },
-                modifier = Modifier.fillMaxWidth(),
-                height = null
-            )
-        }
-    }
-}
-
-@Composable
-private fun Recommendations(snapshot: PrivacySnapshot, modifier: Modifier) {
-    val recommendations = buildList {
-        if ((snapshot.categoryCounts[PrivacyPermissionCategory.BACKGROUND_LOCATION] ?: 0) > 0) {
-            add(stringResource(R.string.privacy_review_background_title) to
-                stringResource(R.string.privacy_review_background_body))
-        }
-        if ((snapshot.categoryCounts[PrivacyPermissionCategory.CAMERA] ?: 0) > 0 ||
-            (snapshot.categoryCounts[PrivacyPermissionCategory.MICROPHONE] ?: 0) > 0
-        ) {
-            add(stringResource(R.string.privacy_review_av_title) to
-                stringResource(R.string.privacy_review_av_body))
-        }
-        if (snapshot.sensitiveAppCount > 0) {
-            add(stringResource(R.string.privacy_android_controls_title) to
-                stringResource(R.string.privacy_android_controls_body))
-        }
-    }
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(TrashPilotSpacing.Screen),
-        verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.HomeCard)
-    ) {
-        item {
-            InfoCard(
-                stringResource(R.string.privacy_no_invented_title),
-                stringResource(R.string.privacy_no_invented_body),
-                highlighted = true
-            )
-        }
-        if (recommendations.isEmpty()) {
-            item {
-                InfoCard(
-                    stringResource(R.string.privacy_no_recommendations),
-                    stringResource(R.string.privacy_no_recommendations_body)
-                )
-            }
-        } else {
-            items(recommendations) { (title, body) -> InfoCard(title, body) }
-        }
-        item {
-            InfoCard(
-                stringResource(R.string.privacy_local_review_title),
-                stringResource(R.string.privacy_local_review_body)
-            )
-        }
-    }
-}
-
-@Composable
-private fun SearchField(value: String, placeholder: String, onChange: (String) -> Unit) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onChange,
-        modifier = Modifier.fillMaxWidth(),
-        singleLine = true,
-        leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = null) },
-        placeholder = { Text(placeholder) },
-        shape = TrashPilotRadii.LargeShape
-    )
-}
-
-@Composable
-private fun SortRow(content: @Composable RowScope.() -> Unit) {
-    Row(horizontalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Medium), content = content)
-}
-
-@Composable
-private fun PermissionRow(title: String, count: Int, onClick: () -> Unit) {
+private fun AppCard(app: PrivacyApp, onClick: () -> Unit) {
     TrashPilotCard(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
-        shape = TrashPilotRadii.CompactCardShape,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-        )
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(TrashPilotSpacing.CardDense),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(title, fontWeight = FontWeight.Medium)
-            Text(stringResource(R.string.privacy_app_count, count))
-        }
-    }
-}
-
-@Composable
-private fun AppRow(app: PrivacyApp, category: PrivacyPermissionCategory? = null) {
-    TrashPilotCard(
-        modifier = Modifier.fillMaxWidth(),
-        shape = TrashPilotRadii.CompactCardShape,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-        )
-    ) {
-        Column(
-            Modifier.padding(TrashPilotSpacing.CardDense),
-            verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Small)
-        ) {
-            Text(app.label, fontWeight = FontWeight.SemiBold, maxLines = 1,
-                overflow = TextOverflow.Ellipsis)
-            Text(
-                app.packageName,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                style = MaterialTheme.typography.bodySmall,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                category?.let {
-                    if (it in app.grantedCategories) {
-                        stringResource(R.string.privacy_granted)
-                    } else {
-                        stringResource(R.string.privacy_declared_not_granted)
-                    }
-                } ?: stringResource(R.string.privacy_sensitive_category_count, app.declaredCategories.size),
-                color = MaterialTheme.colorScheme.primary,
-                style = MaterialTheme.typography.labelMedium
-            )
-        }
-    }
-}
-
-@Composable
-private fun MetricCard(rows: List<Pair<String, String>>) {
-    TrashPilotCard(
         shape = TrashPilotRadii.CardShape,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-        )
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
     ) {
-        Column(
-            Modifier.padding(TrashPilotSpacing.Card),
-            verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.HomeCard)
-        ) {
-            rows.forEach { (label, value) ->
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text(label)
-                    Text(value, fontWeight = FontWeight.SemiBold)
+        Column(Modifier.padding(TrashPilotSpacing.HomeCard)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                AppIcon(app.packageName, app.label)
+                Spacer(Modifier.width(TrashPilotSpacing.Standard))
+                Column(Modifier.weight(1f)) {
+                    Text(app.label, style = MaterialTheme.typography.titleMedium,
+                        maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(app.packageName, style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1, overflow = TextOverflow.Ellipsis)
+                }
+            }
+            Spacer(Modifier.height(TrashPilotSpacing.Standard))
+            PrivacyPermissionCategory.entries.forEach { category ->
+                PermissionStatusRow(category, app.status(category))
+            }
+        }
+    }
+}
+
+@Composable
+private fun AppDetails(app: PrivacyApp) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(TrashPilotSpacing.Screen),
+        verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Standard)
+    ) {
+        item {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                AppIcon(app.packageName, app.label)
+                Spacer(Modifier.width(TrashPilotSpacing.Standard))
+                Column {
+                    Text(app.label, style = MaterialTheme.typography.titleLarge)
+                    Text(app.packageName, style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+        }
+        item {
+            Text(stringResource(R.string.privacy_permission_details_body),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        items(PrivacyPermissionCategory.entries) { category ->
+            TrashPilotCard(
+                modifier = Modifier.fillMaxWidth(),
+                shape = TrashPilotRadii.CompactCardShape,
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
+            ) {
+                Column(Modifier.padding(TrashPilotSpacing.Large)) {
+                    PermissionStatusRow(category, app.status(category))
+                    Spacer(Modifier.height(TrashPilotSpacing.Medium))
+                    Text(category.explanation(), style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
@@ -498,71 +202,90 @@ private fun MetricCard(rows: List<Pair<String, String>>) {
 }
 
 @Composable
-private fun InfoCard(
-    title: String,
-    body: String,
-    highlighted: Boolean = false
-) {
-    TrashPilotCard(
-        shape = TrashPilotRadii.CardShape,
-        colors = CardDefaults.cardColors(
-            containerColor = if (highlighted) {
-                MaterialTheme.colorScheme.primaryContainer
-            } else {
-                MaterialTheme.colorScheme.surfaceContainerLow
-            }
-        )
-    ) {
-        Column(
-            Modifier.padding(TrashPilotSpacing.Card),
-            verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Medium)
-        ) {
-            Text(title, style = TrashPilotTypography.FeatureHeading)
-            Text(body, color = MaterialTheme.colorScheme.onSurfaceVariant)
+private fun PermissionStatusRow(category: PrivacyPermissionCategory, status: PrivacyPermissionStatus) {
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween) {
+        Text(category.label(), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
+        StatusChip(status)
+    }
+}
+
+@Composable
+private fun StatusChip(status: PrivacyPermissionStatus) {
+    val (background, foreground) = when (status) {
+        PrivacyPermissionStatus.NOT_GRANTED -> TrashPilotColors.StatusNotGranted to TrashPilotColors.StatusNotGrantedText
+        PrivacyPermissionStatus.GRANTED -> TrashPilotColors.StatusGranted to TrashPilotColors.StatusGrantedText
+        PrivacyPermissionStatus.SENSITIVE -> TrashPilotColors.StatusSensitive to TrashPilotColors.StatusSensitiveText
+    }
+    Surface(color = background, contentColor = foreground, shape = TrashPilotRadii.SmallShape) {
+        Text(status.label(), modifier = Modifier.padding(horizontal = TrashPilotSpacing.Medium, vertical = TrashPilotSpacing.Compact),
+            style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Medium)
+    }
+}
+
+@Composable
+private fun AppIcon(packageName: String, label: String) {
+    val packageManager = LocalContext.current.packageManager
+    val bitmap = remember(packageName) {
+        runCatching { packageManager.getApplicationIcon(packageName).toBitmap(48, 48).asImageBitmap() }.getOrNull()
+    }
+    Box(Modifier.size(TrashPilotComponentSizes.CardIconContainer), contentAlignment = Alignment.Center) {
+        if (bitmap != null) Image(bitmap, contentDescription = stringResource(R.string.privacy_app_icon, label),
+            modifier = Modifier.fillMaxSize())
+        else Surface(Modifier.fillMaxSize(), shape = CircleShape, color = MaterialTheme.colorScheme.primaryContainer) {
+            Box(contentAlignment = Alignment.Center) { Text(label.take(1).uppercase()) }
         }
     }
 }
 
 @Composable
-private fun StateCard(modifier: Modifier, title: String, body: String) {
-    Column(modifier.fillMaxSize().padding(TrashPilotSpacing.Screen)) {
-        InfoCard(title, body, highlighted = true)
+private fun StateMessage(title: Int, body: Int? = null, bodyText: String? = null) = StateMessage(
+    title = stringResource(title), body = bodyText ?: body?.let { stringResource(it) }.orEmpty()
+)
+
+@Composable
+private fun StateMessage(title: Int, body: String) = StateMessage(stringResource(title), body)
+
+@Composable
+private fun StateMessage(title: String, body: String) {
+    Box(Modifier.fillMaxSize().padding(TrashPilotSpacing.Screen), contentAlignment = Alignment.Center) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Medium)) {
+            Text(title, style = MaterialTheme.typography.titleMedium)
+            Text(body, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
     }
 }
 
-@Composable
-private fun PrivacyPage.title() = stringResource(when (this) {
-    PrivacyPage.OVERVIEW -> R.string.privacy_monitor_title
-    PrivacyPage.CATEGORIES -> R.string.privacy_page_categories
-    PrivacyPage.APPS -> R.string.privacy_page_sensitive
-    PrivacyPage.DETAILS -> R.string.privacy_page_details
-    PrivacyPage.RECOMMENDATIONS -> R.string.privacy_recommendations
+private val PrivacyPermissionStatus.sortWeight: Int get() = when (this) {
+    PrivacyPermissionStatus.SENSITIVE -> 2
+    PrivacyPermissionStatus.GRANTED -> 1
+    PrivacyPermissionStatus.NOT_GRANTED -> 0
+}
+
+@Composable private fun PrivacyPermissionStatus.label() = stringResource(when (this) {
+    PrivacyPermissionStatus.NOT_GRANTED -> R.string.privacy_not_granted
+    PrivacyPermissionStatus.GRANTED -> R.string.privacy_granted
+    PrivacyPermissionStatus.SENSITIVE -> R.string.privacy_sensitive
 })
 
-@Composable
-private fun PrivacyPermissionCategory.label() = stringResource(when (this) {
+@Composable private fun PrivacyPermissionCategory.label() = stringResource(when (this) {
     PrivacyPermissionCategory.CAMERA -> R.string.permission_camera
     PrivacyPermissionCategory.MICROPHONE -> R.string.permission_microphone
     PrivacyPermissionCategory.LOCATION -> R.string.permission_location
     PrivacyPermissionCategory.CONTACTS -> R.string.permission_contacts
-    PrivacyPermissionCategory.CALENDAR -> R.string.permission_calendar
-    PrivacyPermissionCategory.SMS -> R.string.permission_sms
-    PrivacyPermissionCategory.PHONE -> R.string.permission_phone
-    PrivacyPermissionCategory.NEARBY_DEVICES -> R.string.permission_nearby
+    PrivacyPermissionCategory.PHOTOS_STORAGE -> R.string.permission_photos_storage
     PrivacyPermissionCategory.NOTIFICATIONS -> R.string.permission_notifications
-    PrivacyPermissionCategory.BACKGROUND_LOCATION -> R.string.permission_background_location
+    PrivacyPermissionCategory.ACCESSIBILITY -> R.string.permission_accessibility
+    PrivacyPermissionCategory.BACKGROUND_ACTIVITY -> R.string.permission_background_activity
 })
 
-@Composable
-private fun PrivacyPermissionCategory.explanation() = stringResource(when (this) {
+@Composable private fun PrivacyPermissionCategory.explanation() = stringResource(when (this) {
     PrivacyPermissionCategory.CAMERA -> R.string.permission_camera_body
     PrivacyPermissionCategory.MICROPHONE -> R.string.permission_microphone_body
     PrivacyPermissionCategory.LOCATION -> R.string.permission_location_body
     PrivacyPermissionCategory.CONTACTS -> R.string.permission_contacts_body
-    PrivacyPermissionCategory.CALENDAR -> R.string.permission_calendar_body
-    PrivacyPermissionCategory.SMS -> R.string.permission_sms_body
-    PrivacyPermissionCategory.PHONE -> R.string.permission_phone_body
-    PrivacyPermissionCategory.NEARBY_DEVICES -> R.string.permission_nearby_body
+    PrivacyPermissionCategory.PHOTOS_STORAGE -> R.string.permission_photos_storage_body
     PrivacyPermissionCategory.NOTIFICATIONS -> R.string.permission_notifications_body
-    PrivacyPermissionCategory.BACKGROUND_LOCATION -> R.string.permission_background_location_body
+    PrivacyPermissionCategory.ACCESSIBILITY -> R.string.permission_accessibility_body
+    PrivacyPermissionCategory.BACKGROUND_ACTIVITY -> R.string.permission_background_activity_body
 })

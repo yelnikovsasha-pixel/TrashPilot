@@ -7,17 +7,25 @@ import android.os.Build
 class InstalledAppPermissionReader(private val context: Context) {
     fun read(): PrivacySnapshot {
         val packageManager = context.packageManager
+        val flags = PackageManager.GET_PERMISSIONS or PackageManager.GET_SERVICES
         val packages = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getInstalledPackages(
-                PackageManager.PackageInfoFlags.of(PackageManager.GET_PERMISSIONS.toLong())
+                PackageManager.PackageInfoFlags.of(flags.toLong())
             )
         } else {
             @Suppress("DEPRECATION")
-            packageManager.getInstalledPackages(PackageManager.GET_PERMISSIONS)
+            packageManager.getInstalledPackages(flags)
         }
         return PrivacyPermissionAnalyzer.analyze(packages.mapNotNull { info ->
             val applicationInfo = info.applicationInfo ?: return@mapNotNull null
-            val requested = info.requestedPermissions.orEmpty()
+            val requested = buildSet {
+                addAll(info.requestedPermissions.orEmpty())
+                if (info.services.orEmpty().any {
+                        it.permission == android.Manifest.permission.BIND_ACCESSIBILITY_SERVICE
+                    }) {
+                    add(android.Manifest.permission.BIND_ACCESSIBILITY_SERVICE)
+                }
+            }
             RawInstalledApp(
                 label = applicationInfo.loadLabel(packageManager).toString()
                     .ifBlank { info.packageName },
@@ -31,4 +39,3 @@ class InstalledAppPermissionReader(private val context: Context) {
         })
     }
 }
-

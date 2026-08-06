@@ -26,6 +26,12 @@ object TrashPilotColors {
     val HomeTextSecondary: Color = TrashPilotHomeTextSecondary
     val HomeOutline: Color = TrashPilotHomeOutline
     val HomeNavigation: Color = TrashPilotHomeNavigation
+    val StatusNotGranted: Color = TrashPilotStatusNotGranted
+    val StatusNotGrantedText: Color = TrashPilotStatusNotGrantedText
+    val StatusGranted: Color = TrashPilotStatusGranted
+    val StatusGrantedText: Color = TrashPilotStatusGrantedText
+    val StatusSensitive: Color = TrashPilotStatusSensitive
+    val StatusSensitiveText: Color = TrashPilotStatusSensitiveText
     val SplashInk = Color(0xFF17212B)
     val SplashTextSecondary = Color(0xFF66727D)
     val White = Color(0xFFFFFFFF)

@@ -21,9 +21,9 @@
   owns overview, supported local insights, history, and loading/empty/success/error presentation.
 - KSP 2.2.10-2.0.2 generates Room code. AGP 9 requires the scoped
   `android.disallowKotlinSourceSets=false` compatibility setting for this KSP version.
-- `core/privacy` maps Android package permission declarations into ten factual permission
-  categories. `features/privacy` owns overview, category, app, detail, recommendation,
-  search, sorting, loading, empty, success, and error presentation.
+- `core/privacy` maps Android package declarations and runtime grant states into the eight
+  Privacy Monitor categories. `features/privacy` owns the sortable installed-app list,
+  app icons, status chips, app details, loading, and error presentation.
 - `core/reports` summarizes and exports the existing metadata-only Room history.
   `features/reports` owns overview, scan and cleaning histories, real-data charts, local text
   export, and loading/empty/success/error presentation.

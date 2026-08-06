@@ -42,6 +42,9 @@
   Recommendations: `51:6`, all on page `18:2` and validated as 412 × 917 frames.
 - Privacy Monitor reads current installed-package permission declarations from Android only.
   Counts, app rows, grant status, and recommendations are derived from the current device.
+- Privacy Monitor now opens directly to a sortable installed-app list. Every row shows the real
+  application icon and Camera, Microphone, Location, Contacts, Photos / Storage, Notifications,
+  Accessibility, and Background activity status; tapping a row opens factual app details.
 - Reports Figma Overview: node `56:2`; Scan History: `56:3`; Cleaning History: `56:4`;
   Storage Trends: `56:5`; Export Report: `56:6`, all on page `18:2` and validated
   as 412 × 917 frames.
