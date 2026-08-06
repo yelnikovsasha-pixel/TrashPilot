@@ -91,3 +91,5 @@
   to public Android App Info and is recorded as cleaned only after a measured decrease.
 - Large-file discovery reuses MediaStore and the Storage Access Framework. Archives remain a
   presentation type derived from real extensions so the scan-history schema stays compatible.
+- Hidden-file management is SAF-only and never traverses protected Android/OS trees. A file is
+  hidden only through a dot-prefixed path segment or an accessible `.nomedia` marker.

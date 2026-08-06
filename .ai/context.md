@@ -162,3 +162,9 @@
   cancellation, exact thresholds, search, filters, and deterministic sorting.
 - Android confirms deletion. Only successful deletions update Results and cleanup history used by
   Reports and Trash DNA.
+
+## Hidden Files Manager
+
+- Results opens a Storage Access Framework picker and progressively identifies dot-prefixed paths
+  and files hidden by a real `.nomedia` marker.
+- Protected Android/OS trees are skipped. Only confirmed successful SAF deletions update history.

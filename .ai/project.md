@@ -64,3 +64,5 @@
   App Info handoff, progress, and factual state UI.
 - `core/largefiles` owns file-type mapping, thresholds, filtering, searching, and sorting.
   Existing storage scanners stream accessible files to the Large Files feature UI.
+- `core/hiddenfiles` owns hidden-path and `.nomedia` detection plus protected-tree guards.
+  `features/hiddenfiles` owns SAF selection, progressive presentation, and confirmed deletion.

@@ -26,7 +26,8 @@ class DocumentTreeStorageScanner(
     suspend fun scan(
         treeUri: Uri,
         onStage: suspend (ScanStage) -> Unit,
-        onFileScanned: suspend (ScannedFile, StorageScanProgress) -> Unit = { _, _ -> }
+        onFileScanned: suspend (ScannedFile, StorageScanProgress) -> Unit = { _, _ -> },
+        shouldTraverseDirectory: (List<String>) -> Boolean = { true }
     ): StorageScanResult = withContext(Dispatchers.IO) {
         val scanStartedAt = SystemClock.elapsedRealtime()
         onStage(ScanStage.STORAGE)
@@ -74,7 +75,9 @@ class DocumentTreeStorageScanner(
                     val mimeType = cursor.getString(mimeIndex)
                     val childPath = directory.pathSegments + name
                     if (mimeType == DocumentsContract.Document.MIME_TYPE_DIR) {
-                        pendingDirectories.addLast(PendingDirectory(documentId, childPath))
+                        if (shouldTraverseDirectory(childPath)) {
+                            pendingDirectories.addLast(PendingDirectory(documentId, childPath))
+                        }
                         continue
                     }
 

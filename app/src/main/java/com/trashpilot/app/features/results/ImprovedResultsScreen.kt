@@ -71,7 +71,8 @@ fun ImprovedResultsScreen(
     @Suppress("UNUSED_PARAMETER") onOpenCategory: (FileCategory) -> Unit,
     onOpenSocialMedia: () -> Unit,
     onOpenDuplicates: () -> Unit,
-    onOpenLargeFiles: () -> Unit
+    onOpenLargeFiles: () -> Unit,
+    onOpenHiddenFiles: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -106,7 +107,8 @@ fun ImprovedResultsScreen(
                 onQuickClean = onQuickClean,
                 onOpenSocialMedia = onOpenSocialMedia,
                 onOpenDuplicates = onOpenDuplicates,
-                onOpenLargeFiles = onOpenLargeFiles
+                onOpenLargeFiles = onOpenLargeFiles,
+                onOpenHiddenFiles = onOpenHiddenFiles
             )
         }
     }
@@ -119,7 +121,8 @@ private fun ResultsContent(
     onQuickClean: (Set<String>) -> Unit,
     onOpenSocialMedia: () -> Unit,
     onOpenDuplicates: () -> Unit,
-    onOpenLargeFiles: () -> Unit
+    onOpenLargeFiles: () -> Unit,
+    onOpenHiddenFiles: () -> Unit
 ) {
     val overview = remember(result) { result.toResultsOverview() }
     val listState = remember(result) { LazyListState() }
@@ -201,7 +204,7 @@ private fun ResultsContent(
                 title = stringResource(R.string.results_hidden_files),
                 subtitle = stringResource(R.string.results_local_category_subtitle),
                 value = formatBytes(overview.hiddenBytes),
-                showChevron = false
+                onClick = onOpenHiddenFiles
             )
         }
         item {

@@ -38,6 +38,7 @@ import com.trashpilot.app.features.reports.ReportsScreen
 import com.trashpilot.app.features.duplicates.DuplicateScannerScreen
 import com.trashpilot.app.features.cache.RealCacheAnalyzerScreen
 import com.trashpilot.app.features.largefiles.LargeFilesManagerScreen
+import com.trashpilot.app.features.hiddenfiles.HiddenFilesManagerScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -139,7 +140,8 @@ fun AppNavigation() {
                 },
                 onOpenSocialMedia = { navController.navigate("social-media-files") },
                 onOpenDuplicates = { navController.navigate("duplicate-scanner") },
-                onOpenLargeFiles = { navController.navigate("large-files-manager") }
+                onOpenLargeFiles = { navController.navigate("large-files-manager") },
+                onOpenHiddenFiles = { navController.navigate("hidden-files-manager") }
             )
         }
         composable("large-files-manager") {
@@ -149,6 +151,16 @@ fun AppNavigation() {
                     val source = latestScan ?: updated
                     latestScan = updated
                     scope.launch { historyRepository.recordLargeFilesCleanup(source, report) }
+                }
+            )
+        }
+        composable("hidden-files-manager") {
+            HiddenFilesManagerScreen(
+                onBack = { navController.popBackStack() },
+                onFilesDeleted = { updated, report ->
+                    val source = latestScan ?: updated
+                    latestScan = updated
+                    scope.launch { historyRepository.recordHiddenFilesCleanup(source, report) }
                 }
             )
         }
