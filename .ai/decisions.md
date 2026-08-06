@@ -97,3 +97,5 @@
   public-folder markers otherwise; private directories and inferred cache sizes are excluded.
 - The persisted theme preference selects a real light or dark Material scheme; dynamic color
   remains disabled and shared semantic roles remain the UI contract.
+- APK metadata uses only `PackageManager.getPackageArchiveInfo` against a temporary private-cache
+  copy of a user-accessible file; the copy is removed immediately after parsing.

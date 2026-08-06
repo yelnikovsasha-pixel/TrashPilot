@@ -71,7 +71,7 @@ fun TrashPilotBottomBar(
                 (destination.route == "home" && currentRoute in setOf(
                     "splash", "scanner", "results", "quick-clean", "category-files", "trash-dna",
                     "duplicate-scanner", "cache-analyzer", "large-files-manager", "hidden-files-manager",
-                    "social-media-files"
+                    "social-media-files", "apk-manager"
                 ))
             NavigationBarItem(
                 modifier = Modifier.weight(1f),

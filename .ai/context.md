@@ -174,3 +174,11 @@
 - Only installed supported packages are shown. Public files stream from MediaStore or explicit SAF.
 - Owner-package metadata is preferred; conservative public folder markers are the fallback.
 - Cache is reported unavailable, and only actual confirmed deletions update recovered history.
+
+## APK Manager
+
+- Results opens an APK Manager backed by the existing MediaStore scanner and explicit SAF folder
+  access. Only accessible files whose real names end in `.apk` are included.
+- Metadata is parsed with public `PackageManager` archive APIs from a cancellable temporary
+  app-cache copy. Parse failures remain visible as unreadable APKs and never block discovery.
+- Deletion uses Android confirmation/SAF APIs and records only successful deleted bytes.

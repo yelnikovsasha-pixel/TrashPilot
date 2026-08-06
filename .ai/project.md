@@ -70,3 +70,5 @@
   filtering, and sorting. `features/socialcleaner` owns scan and deletion UI.
 - `TrashPilotTheme` now honors the existing System/Light/Dark preference with role-based light and
   dark color schemes; feature UI continues to consume `MaterialTheme` roles.
+- `core/apkmanager` owns APK detection, metadata parsing, models, filtering, and sorting.
+  `features/apkmanager` owns progressive scan state, details, selection, and deletion.

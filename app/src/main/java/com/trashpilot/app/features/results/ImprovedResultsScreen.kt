@@ -22,6 +22,7 @@ import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.FolderOff
 import androidx.compose.material.icons.outlined.Forum
 import androidx.compose.material.icons.outlined.VisibilityOff
+import androidx.compose.material.icons.outlined.Android
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
@@ -72,7 +73,8 @@ fun ImprovedResultsScreen(
     onOpenSocialMedia: () -> Unit,
     onOpenDuplicates: () -> Unit,
     onOpenLargeFiles: () -> Unit,
-    onOpenHiddenFiles: () -> Unit
+    onOpenHiddenFiles: () -> Unit,
+    onOpenApkManager: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -108,7 +110,8 @@ fun ImprovedResultsScreen(
                 onOpenSocialMedia = onOpenSocialMedia,
                 onOpenDuplicates = onOpenDuplicates,
                 onOpenLargeFiles = onOpenLargeFiles,
-                onOpenHiddenFiles = onOpenHiddenFiles
+                onOpenHiddenFiles = onOpenHiddenFiles,
+                onOpenApkManager = onOpenApkManager
             )
         }
     }
@@ -122,7 +125,8 @@ private fun ResultsContent(
     onOpenSocialMedia: () -> Unit,
     onOpenDuplicates: () -> Unit,
     onOpenLargeFiles: () -> Unit,
-    onOpenHiddenFiles: () -> Unit
+    onOpenHiddenFiles: () -> Unit,
+    onOpenApkManager: () -> Unit
 ) {
     val overview = remember(result) { result.toResultsOverview() }
     val listState = remember(result) { LazyListState() }
@@ -205,6 +209,15 @@ private fun ResultsContent(
                 subtitle = stringResource(R.string.results_local_category_subtitle),
                 value = formatBytes(overview.hiddenBytes),
                 onClick = onOpenHiddenFiles
+            )
+        }
+        item {
+            ResultCategoryCard(
+                icon = Icons.Outlined.Android,
+                title = stringResource(R.string.apk_manager_title),
+                subtitle = stringResource(R.string.results_local_category_subtitle),
+                value = fileCountText(overview.apkFileCount),
+                onClick = onOpenApkManager
             )
         }
         item {
@@ -493,7 +506,8 @@ internal data class ResultsOverview(
     val cacheCandidates: List<com.trashpilot.app.core.quickclean.DisposableCandidate>,
     val emptyFolderCandidates: List<com.trashpilot.app.core.quickclean.DisposableCandidate>,
     val socialFiles: List<ScannedFile>,
-    val socialBytes: Long
+    val socialBytes: Long,
+    val apkFileCount: Int
 )
 
 internal fun StorageScanResult.toResultsOverview(): ResultsOverview {
@@ -517,7 +531,8 @@ internal fun StorageScanResult.toResultsOverview(): ResultsOverview {
         cacheCandidates = cacheCandidates,
         emptyFolderCandidates = emptyFolderCandidates,
         socialFiles = socialFiles,
-        socialBytes = socialFiles.sumOf(ScannedFile::sizeBytes)
+        socialBytes = socialFiles.sumOf(ScannedFile::sizeBytes),
+        apkFileCount = files.count { it.name.endsWith(".apk", ignoreCase = true) }
     )
 }
 
