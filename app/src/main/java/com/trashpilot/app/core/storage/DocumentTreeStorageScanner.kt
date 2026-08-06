@@ -21,11 +21,12 @@ class DocumentTreeStorageScanner(
     private val unknownFileName: String
 ) : StorageScanner {
 
-    override suspend fun scan(treeUri: Uri): StorageScanResult = scan(treeUri) {}
+    override suspend fun scan(treeUri: Uri): StorageScanResult = scan(treeUri, onStage = {})
 
     suspend fun scan(
         treeUri: Uri,
-        onStage: suspend (ScanStage) -> Unit
+        onStage: suspend (ScanStage) -> Unit,
+        onFileScanned: suspend (ScannedFile, StorageScanProgress) -> Unit = { _, _ -> }
     ): StorageScanResult = withContext(Dispatchers.IO) {
         val scanStartedAt = SystemClock.elapsedRealtime()
         onStage(ScanStage.STORAGE)
@@ -96,6 +97,7 @@ class DocumentTreeStorageScanner(
                         relativePath = childPath.joinToString("/")
                     )
                     files += scannedFile
+                    onFileScanned(scannedFile, StorageScanProgress(scannedFileCount, null))
                     DisposableClassifier.classify(name, childPath, category)?.let {
                         disposableCandidates += DisposableCandidate(
                             uri = scannedFile.uri,

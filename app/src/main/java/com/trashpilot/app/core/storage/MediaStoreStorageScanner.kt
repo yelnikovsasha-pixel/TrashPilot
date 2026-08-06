@@ -28,7 +28,8 @@ class MediaStoreStorageScanner(
     private val unknownFileName: String
 ) {
     suspend fun scan(
-        onStage: suspend (ScanStage) -> Unit = {}
+        onStage: suspend (ScanStage) -> Unit = {},
+        onFileScanned: suspend (ScannedFile, StorageScanProgress) -> Unit = { _, _ -> }
     ): StorageScanResult = withContext(Dispatchers.IO) {
         val scanStartedAt = SystemClock.elapsedRealtime()
         val categoryBytes = FileCategory.entries.associateWith { 0L }.toMutableMap()
@@ -69,9 +70,11 @@ class MediaStoreStorageScanner(
                 cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATE_MODIFIED)
             val createdIndex = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATE_ADDED)
             val pathIndex = cursor.getColumnIndexOrThrow(pathColumn)
+            var processedRows = 0
 
             while (cursor.moveToNext()) {
                 coroutineContext.ensureActive()
+                processedRows += 1
                 val mimeType = cursor.getString(mimeIndex)
                 val mediaType = cursor.getInt(mediaTypeIndex)
                 if (
@@ -111,6 +114,7 @@ class MediaStoreStorageScanner(
 
                 categoryBytes[category] = categoryBytes.getValue(category) + sizeBytes
                 files += scannedFile
+                onFileScanned(scannedFile, StorageScanProgress(processedRows, cursor.count))
                 DisposableClassifier.classify(name, pathSegments, category)?.let { disposable ->
                     disposableCandidates += DisposableCandidate(
                         uri = uri,

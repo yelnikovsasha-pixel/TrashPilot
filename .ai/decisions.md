@@ -89,3 +89,5 @@
 - Per-app cache measurement uses only `StorageStatsManager` with user-granted Usage Access on API
   26+. Automatic cleaning is restricted to TrashPilot's own cache; every other package is handed
   to public Android App Info and is recorded as cleaned only after a measured decrease.
+- Large-file discovery reuses MediaStore and the Storage Access Framework. Archives remain a
+  presentation type derived from real extensions so the scan-history schema stays compatible.

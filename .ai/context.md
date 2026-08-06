@@ -155,3 +155,10 @@
 - TrashPilot can automatically remove only its own private cache. Other selected apps use an
   explicit App Info handoff, and reclaimed bytes are recorded only from actual deletion or a
   measured before/after cache decrease.
+
+## Large Files Manager
+
+- Results opens a real MediaStore/Storage Access Framework scan with incremental file delivery,
+  cancellation, exact thresholds, search, filters, and deterministic sorting.
+- Android confirms deletion. Only successful deletions update Results and cleanup history used by
+  Reports and Trash DNA.

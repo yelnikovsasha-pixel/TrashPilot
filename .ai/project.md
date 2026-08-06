@@ -62,3 +62,5 @@
 - `core/cache` owns public-API cache capability checks, installed-app cache snapshots, sorting,
   and TrashPilot-private cache deletion. `features/cache` owns Usage Access, search, selection,
   App Info handoff, progress, and factual state UI.
+- `core/largefiles` owns file-type mapping, thresholds, filtering, searching, and sorting.
+  Existing storage scanners stream accessible files to the Large Files feature UI.

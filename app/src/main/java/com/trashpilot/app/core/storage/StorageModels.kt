@@ -38,6 +38,11 @@ data class StorageScanResult(
         get() = files.sortedByDescending(ScannedFile::sizeBytes).take(10)
 }
 
+data class StorageScanProgress(
+    val scannedFiles: Int,
+    val totalFiles: Int?
+)
+
 interface StorageScanner {
     suspend fun scan(treeUri: Uri): StorageScanResult
 }
