@@ -66,3 +66,7 @@
   Existing storage scanners stream accessible files to the Large Files feature UI.
 - `core/hiddenfiles` owns hidden-path and `.nomedia` detection plus protected-tree guards.
   `features/hiddenfiles` owns SAF selection, progressive presentation, and confirmed deletion.
+- `core/socialcleaner` owns installed-package discovery, file attribution, typing, summaries,
+  filtering, and sorting. `features/socialcleaner` owns scan and deletion UI.
+- `TrashPilotTheme` now honors the existing System/Light/Dark preference with role-based light and
+  dark color schemes; feature UI continues to consume `MaterialTheme` roles.

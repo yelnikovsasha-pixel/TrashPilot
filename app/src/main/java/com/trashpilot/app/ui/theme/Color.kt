@@ -11,6 +11,15 @@ val TrashPilotCard = Color(0xFFF5F2F9)
 val TrashPilotAccentSurface = Color(0xFFE9E2F7)
 val TrashPilotOutline = Color(0xFFD8D2E2)
 
+val TrashPilotDarkBackground = Color(0xFF15131B)
+val TrashPilotDarkSurface = Color(0xFF1D1A25)
+val TrashPilotDarkCard = Color(0xFF25212F)
+val TrashPilotDarkAccentSurface = Color(0xFF37304C)
+val TrashPilotDarkPrimary = Color(0xFFCFC4FF)
+val TrashPilotDarkText = Color(0xFFF2EEF8)
+val TrashPilotDarkTextSecondary = Color(0xFFC9C2D3)
+val TrashPilotDarkOutline = Color(0xFF514A5D)
+
 // Home visual source: Figma XyDczeNnzEw5DmApIXuXTz, node 1:65.
 val TrashPilotHomeBlue = Color(0xFF0EA5E9)
 val TrashPilotHomeInk = Color(0xFF111827)

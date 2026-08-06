@@ -2,6 +2,7 @@ package com.trashpilot.app.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 
 private val TrashPilotColorScheme = lightColorScheme(
@@ -25,14 +26,35 @@ private val TrashPilotColorScheme = lightColorScheme(
     outline = TrashPilotOutline
 )
 
+private val TrashPilotDarkColorScheme = darkColorScheme(
+    primary = TrashPilotDarkPrimary,
+    onPrimary = TrashPilotPrimary,
+    primaryContainer = TrashPilotDarkAccentSurface,
+    onPrimaryContainer = TrashPilotDarkText,
+    secondary = TrashPilotDarkPrimary,
+    onSecondary = TrashPilotPrimary,
+    secondaryContainer = TrashPilotDarkAccentSurface,
+    onSecondaryContainer = TrashPilotDarkText,
+    background = TrashPilotDarkBackground,
+    onBackground = TrashPilotDarkText,
+    surface = TrashPilotDarkSurface,
+    onSurface = TrashPilotDarkText,
+    surfaceVariant = TrashPilotDarkCard,
+    onSurfaceVariant = TrashPilotDarkTextSecondary,
+    surfaceContainer = TrashPilotDarkCard,
+    surfaceContainerLow = TrashPilotDarkCard,
+    surfaceContainerLowest = TrashPilotDarkBackground,
+    outline = TrashPilotDarkOutline
+)
+
 @Composable
 fun TrashPilotTheme(
-    @Suppress("UNUSED_PARAMETER") darkTheme: Boolean = false,
+    darkTheme: Boolean = false,
     @Suppress("UNUSED_PARAMETER") dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colorScheme = TrashPilotColorScheme,
+        colorScheme = if (darkTheme) TrashPilotDarkColorScheme else TrashPilotColorScheme,
         typography = Typography,
         content = content
     )

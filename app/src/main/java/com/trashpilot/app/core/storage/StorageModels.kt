@@ -20,7 +20,8 @@ data class ScannedFile(
     val uri: String,
     val category: FileCategory,
     val relativePath: String = "",
-    val createdMillis: Long = 0
+    val createdMillis: Long = 0,
+    val ownerPackageName: String? = null
 )
 
 data class StorageScanResult(

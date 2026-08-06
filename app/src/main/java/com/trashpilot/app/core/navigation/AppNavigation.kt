@@ -26,7 +26,7 @@ import com.trashpilot.app.features.results.ImprovedResultsScreen
 import com.trashpilot.app.features.results.ResultsUiState
 import com.trashpilot.app.features.results.hasReviewableItems
 import com.trashpilot.app.features.results.CategoryFilesScreen
-import com.trashpilot.app.features.results.SocialMediaFilesScreen
+import com.trashpilot.app.features.socialcleaner.SocialMediaCleanerScreen
 import com.trashpilot.app.core.storage.FileCategory
 import com.trashpilot.app.features.scanner.ScannerScreen
 import com.trashpilot.app.features.quickclean.QuickCleanScreen
@@ -231,19 +231,14 @@ fun AppNavigation() {
             }
         }
         composable("social-media-files") {
-            val result = latestScan
-            if (result != null) {
-                SocialMediaFilesScreen(
-                    result = result,
-                    onBack = { navController.popBackStack() }
-                )
-            } else {
-                PlaceholderDestinationScreen(
-                    title = R.string.results_social_media,
-                    message = R.string.results_missing,
-                    onBack = { navController.popBackStack() }
-                )
-            }
+            SocialMediaCleanerScreen(
+                onBack = { navController.popBackStack() },
+                onFilesDeleted = { updated, report ->
+                    val source = latestScan ?: updated
+                    latestScan = updated
+                    scope.launch { historyRepository.recordSocialMediaCleanup(source, report) }
+                }
+            )
         }
         composable("privacy") {
             PrivacyMonitorScreen(

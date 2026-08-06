@@ -168,3 +168,9 @@
 - Results opens a Storage Access Framework picker and progressively identifies dot-prefixed paths
   and files hidden by a real `.nomedia` marker.
 - Protected Android/OS trees are skipped. Only confirmed successful SAF deletions update history.
+
+## Social Media Cleaner
+
+- Only installed supported packages are shown. Public files stream from MediaStore or explicit SAF.
+- Owner-package metadata is preferred; conservative public folder markers are the fallback.
+- Cache is reported unavailable, and only actual confirmed deletions update recovered history.

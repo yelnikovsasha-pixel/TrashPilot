@@ -47,7 +47,9 @@ class MediaStoreStorageScanner(
             @Suppress("DEPRECATION")
             MediaStore.Files.FileColumns.DATA
         }
-        val projection = BASE_PROJECTION + pathColumn
+        val projection = BASE_PROJECTION + pathColumn + if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            arrayOf(MediaStore.MediaColumns.OWNER_PACKAGE_NAME)
+        } else emptyArray()
 
         onStage(ScanStage.STORAGE)
         Log.d(TAG, "Querying collection=$collection projection=${projection.joinToString()}")
@@ -70,6 +72,9 @@ class MediaStoreStorageScanner(
                 cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATE_MODIFIED)
             val createdIndex = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATE_ADDED)
             val pathIndex = cursor.getColumnIndexOrThrow(pathColumn)
+            val ownerIndex = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                cursor.getColumnIndex(MediaStore.MediaColumns.OWNER_PACKAGE_NAME)
+            } else -1
             var processedRows = 0
 
             while (cursor.moveToNext()) {
@@ -109,7 +114,10 @@ class MediaStoreStorageScanner(
                         0L
                     } else {
                         cursor.getLong(createdIndex) * MILLIS_PER_SECOND
-                    }
+                    },
+                    ownerPackageName = if (ownerIndex >= 0 && !cursor.isNull(ownerIndex)) {
+                        cursor.getString(ownerIndex)
+                    } else null
                 )
 
                 categoryBytes[category] = categoryBytes.getValue(category) + sizeBytes

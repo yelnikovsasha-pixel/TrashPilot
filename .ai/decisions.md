@@ -93,3 +93,7 @@
   presentation type derived from real extensions so the scan-history schema stays compatible.
 - Hidden-file management is SAF-only and never traverses protected Android/OS trees. A file is
   hidden only through a dot-prefixed path segment or an accessible `.nomedia` marker.
+- Social media attribution uses MediaStore owner-package metadata where exposed and conservative
+  public-folder markers otherwise; private directories and inferred cache sizes are excluded.
+- The persisted theme preference selects a real light or dark Material scheme; dynamic color
+  remains disabled and shared semantic roles remain the UI contract.
