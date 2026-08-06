@@ -70,7 +70,7 @@ fun TrashPilotBottomBar(
             val selected = currentRoute == destination.route ||
                 (destination.route == "home" && currentRoute in setOf(
                     "splash", "scanner", "results", "quick-clean", "category-files", "trash-dna",
-                    "duplicate-scanner"
+                    "duplicate-scanner", "cache-analyzer"
                 ))
             NavigationBarItem(
                 modifier = Modifier.weight(1f),

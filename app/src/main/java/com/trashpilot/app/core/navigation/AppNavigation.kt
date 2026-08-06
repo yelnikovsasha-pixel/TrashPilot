@@ -36,6 +36,7 @@ import com.trashpilot.app.features.trashdna.TrashDnaScreen
 import com.trashpilot.app.features.privacy.PrivacyMonitorScreen
 import com.trashpilot.app.features.reports.ReportsScreen
 import com.trashpilot.app.features.duplicates.DuplicateScannerScreen
+import com.trashpilot.app.features.cache.RealCacheAnalyzerScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -83,8 +84,7 @@ fun AppNavigation() {
             HomeScreen(
                 onScan = { navController.navigate("scanner") },
                 onOpenQuickClean = {
-                    selectedCleanUris = emptySet()
-                    navController.navigate("quick-clean")
+                    navController.navigate("cache-analyzer")
                 },
                 onOpenTrashDna = { navController.navigate("trash-dna") },
                 onOpenPrivacy = { navController.navigate("privacy") },
@@ -177,6 +177,17 @@ fun AppNavigation() {
                     onBack = { navController.popBackStack() }
                 )
             }
+        }
+        composable("cache-analyzer") {
+            RealCacheAnalyzerScreen(
+                onBack = { navController.popBackStack() },
+                onCacheScan = { snapshot ->
+                    scope.launch { historyRepository.recordCacheScan(snapshot) }
+                },
+                onCacheCleaned = { report ->
+                    scope.launch { historyRepository.recordCacheCleanup(report) }
+                }
+            )
         }
         composable("category-files") {
             val result = latestScan

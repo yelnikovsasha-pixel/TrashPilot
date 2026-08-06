@@ -7,6 +7,8 @@ import com.trashpilot.app.core.storage.StorageScanResult
 import com.trashpilot.app.core.storage.FileCategory
 import com.trashpilot.app.core.storage.SocialMediaAnalyzer
 import com.trashpilot.app.core.storage.DuplicateCleaningReport
+import com.trashpilot.app.core.cache.CacheSnapshot
+import com.trashpilot.app.core.cache.CacheCleaningReport
 
 interface HistoryRepository {
     suspend fun loadTrashDnaHistory(): List<TrashDnaSessionEntity>
@@ -93,6 +95,48 @@ class TrashDnaRepository(private val dao: TrashDnaDao) : HistoryRepository {
                 result = if (report.failedFiles.isEmpty()) TrashDnaResult.CLEANED else TrashDnaResult.PARTIAL,
                 temporaryBytes = 0, cacheBytes = 0, emptyFolderCount = 0,
                 apkLeftoverBytes = 0, logBytes = 0
+            )
+        )
+    }
+
+    suspend fun recordCacheScan(snapshot: CacheSnapshot) {
+        dao.insert(
+            TrashDnaSessionEntity(
+                sessionType = TrashDnaSessionType.CACHE_SCAN,
+                timestampMillis = snapshot.timestampMillis,
+                scannedFolderName = "",
+                reclaimableBytes = snapshot.totalCacheBytes,
+                reclaimedBytes = 0,
+                result = TrashDnaResult.ANALYZED,
+                temporaryBytes = 0,
+                cacheBytes = snapshot.totalCacheBytes,
+                emptyFolderCount = 0,
+                apkLeftoverBytes = 0,
+                logBytes = 0,
+                scannedFileCount = snapshot.measurableAppCount.toLong()
+            )
+        )
+    }
+
+    suspend fun recordCacheCleanup(
+        report: CacheCleaningReport,
+        timestampMillis: Long = System.currentTimeMillis()
+    ) {
+        if (report.cleanedBytes <= 0 || report.cleanedAppsCount <= 0) return
+        dao.insert(
+            TrashDnaSessionEntity(
+                sessionType = TrashDnaSessionType.CLEANUP,
+                timestampMillis = timestampMillis,
+                scannedFolderName = "",
+                reclaimableBytes = report.cleanedBytes,
+                reclaimedBytes = report.cleanedBytes,
+                result = TrashDnaResult.CLEANED,
+                temporaryBytes = 0,
+                cacheBytes = report.cleanedBytes,
+                emptyFolderCount = 0,
+                apkLeftoverBytes = 0,
+                logBytes = 0,
+                scannedFileCount = report.cleanedAppsCount.toLong()
             )
         )
     }

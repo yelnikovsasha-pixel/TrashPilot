@@ -59,3 +59,6 @@
   from stored relative paths, and runs SHA-256 duplicate comparison only on explicit user action.
 - `core/storage/DuplicateAnalyzer.kt` owns size-first SHA-256 grouping and progress models;
   `DuplicateCleaner.kt` owns explicit URI deletion reports; `features/duplicates` owns UI only.
+- `core/cache` owns public-API cache capability checks, installed-app cache snapshots, sorting,
+  and TrashPilot-private cache deletion. `features/cache` owns Usage Access, search, selection,
+  App Info handoff, progress, and factual state UI.

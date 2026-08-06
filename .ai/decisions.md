@@ -86,3 +86,6 @@
 - Duplicate recoverable storage is the real byte total of redundant copies after retaining one
   file per SHA-256 group. Confirmed duplicate cleanup is stored as a normal cleanup event so
   existing Reports and Trash DNA consume only actual deletions.
+- Per-app cache measurement uses only `StorageStatsManager` with user-granted Usage Access on API
+  26+. Automatic cleaning is restricted to TrashPilot's own cache; every other package is handed
+  to public Android App Info and is recorded as cleaned only after a measured decrease.

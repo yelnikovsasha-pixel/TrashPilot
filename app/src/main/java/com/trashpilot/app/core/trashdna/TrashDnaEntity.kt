@@ -51,6 +51,7 @@ object TrashDnaSessionType {
     const val SCAN = "SCAN"
     const val CLEANUP = "CLEANUP"
     const val PRIVACY_REVIEW = "PRIVACY_REVIEW"
+    const val CACHE_SCAN = "CACHE_SCAN"
 }
 
 object TrashDnaResult {

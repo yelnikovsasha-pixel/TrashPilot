@@ -144,3 +144,14 @@
   eligible; Android private/system paths and TrashPilot-owned paths are excluded.
 - Groups retain the oldest known file by default. Confirmed deletion updates the active scan and
   records actual reclaimed bytes as local cleanup history for Reports and Trash DNA.
+
+## Real Cache Analyzer
+
+- Home's existing Quick Clean entry opens an installed-application cache analyzer; Results keeps
+  the existing selected-file Quick Clean flow.
+- On Android 8+, public `StorageStatsManager` values are read only after the user grants Usage
+  Access. Values Android withholds remain unavailable and Android 7 receives an honest unsupported
+  state; no accessibility, root, broad storage, or hidden API is used.
+- TrashPilot can automatically remove only its own private cache. Other selected apps use an
+  explicit App Info handoff, and reclaimed bytes are recorded only from actual deletion or a
+  measured before/after cache decrease.

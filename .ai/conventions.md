@@ -65,3 +65,5 @@
 - Translate only surrounding descriptions, messages, dialogs, hints, and explanations.
 - Duplicate scanning compares sizes before hashing, streams content, exposes progress, retains at
   least one file per group, and never deletes without explicit confirmation.
+- Cache values must remain nullable when Android withholds them. Never substitute estimates, and
+  never describe an App Info handoff as automatic cleaning.
