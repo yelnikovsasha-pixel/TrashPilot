@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">भंडारण बढ़ा</string>
     <string name="trash_dna_trend_down">भंडारण कम हो गया</string>
     <string name="trash_dna_trend_stable">भंडारण अपरिवर्तित</string>
+    <string name="reports_detail_title">रिपोर्ट विवरण</string>
+    <string name="reports_empty_title">अभी तक कोई रिपोर्ट नहीं</string>
+    <string name="reports_empty_body">अपना सफाई इतिहास बनाना शुरू करने के लिए अपना पहला स्कैन पूरा करें।</string>
+    <string name="reports_scan_now">अब स्कैन करें</string>
+    <string name="reports_summary_title">सफाई का इतिहास</string>
+    <string name="reports_total_scans">कुल स्कैन</string>
+    <string name="reports_total_analyzed">कुल भंडारण का विश्लेषण किया गया</string>
+    <string name="reports_total_cleaned">कुल भण्डारण साफ किया गया</string>
+    <string name="reports_last_scan_date">अंतिम स्कैन तिथि</string>
+    <string name="reports_average_cleaned">प्रति स्कैन औसत सफाई</string>
+    <string name="reports_cleaned_chart">भंडारण को स्कैन द्वारा साफ किया गया</string>
+    <string name="reports_storage_cleaned_axis">भंडारण साफ़ किया गया</string>
+    <string name="reports_timeline">टाइमलाइन स्कैन करें</string>
+    <string name="reports_storage_scanned">भंडारण स्कैन किया गया</string>
+    <string name="reports_storage_cleaned">भंडारण साफ़ किया गया</string>
+    <string name="reports_largest_category">सबसे बड़ी श्रेणी</string>
+    <string name="reports_recorded_categories">रिकॉर्ड की गई श्रेणियां</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">इतिहास मिटा दें</string>
+    <string name="reports_clear_body">केवल संग्रहीत स्कैन और सफ़ाई इतिहास हटाएँ। उपयोगकर्ता फ़ाइलें कभी हटाई नहीं जातीं.</string>
+    <string name="reports_clear_confirm_title">सभी संग्रहीत स्कैन इतिहास हटाएँ?</string>
+    <string name="reports_clear_confirm_body">यह केवल TrashPilot स्कैन और सफाई इतिहास को हटाता है। यह उपयोगकर्ता फ़ाइलें नहीं हटाता.</string>
+    <string name="reports_delete">मिटाना</string>
 </resources>

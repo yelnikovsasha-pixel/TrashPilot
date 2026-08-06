@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">พื้นที่เก็บข้อมูลเพิ่มขึ้น</string>
     <string name="trash_dna_trend_down">พื้นที่เก็บข้อมูลลดลง</string>
     <string name="trash_dna_trend_stable">พื้นที่เก็บข้อมูลไม่เปลี่ยนแปลง</string>
+    <string name="reports_detail_title">รายละเอียดรายงาน</string>
+    <string name="reports_empty_title">ยังไม่มีรายงาน</string>
+    <string name="reports_empty_body">สแกนครั้งแรกให้เสร็จสิ้นเพื่อเริ่มสร้างประวัติการทำความสะอาด</string>
+    <string name="reports_scan_now">สแกนเลย</string>
+    <string name="reports_summary_title">ประวัติการทำความสะอาด</string>
+    <string name="reports_total_scans">การสแกนทั้งหมด</string>
+    <string name="reports_total_analyzed">วิเคราะห์พื้นที่เก็บข้อมูลทั้งหมด</string>
+    <string name="reports_total_cleaned">ทำความสะอาดพื้นที่เก็บข้อมูลทั้งหมดแล้ว</string>
+    <string name="reports_last_scan_date">วันที่สแกนครั้งล่าสุด</string>
+    <string name="reports_average_cleaned">ทำความสะอาดโดยเฉลี่ยต่อการสแกน</string>
+    <string name="reports_cleaned_chart">พื้นที่เก็บข้อมูลได้รับการทำความสะอาดโดยการสแกน</string>
+    <string name="reports_storage_cleaned_axis">ทำความสะอาดที่เก็บของแล้ว</string>
+    <string name="reports_timeline">สแกนไทม์ไลน์</string>
+    <string name="reports_storage_scanned">สแกนพื้นที่เก็บข้อมูลแล้ว</string>
+    <string name="reports_storage_cleaned">ทำความสะอาดที่เก็บของแล้ว</string>
+    <string name="reports_largest_category">หมวดหมู่ที่ใหญ่ที่สุด</string>
+    <string name="reports_recorded_categories">หมวดหมู่ที่บันทึกไว้</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">ล้างประวัติ</string>
+    <string name="reports_clear_body">ลบประวัติการสแกนและการทำความสะอาดที่เก็บไว้เท่านั้น ไฟล์ผู้ใช้จะไม่ถูกลบ</string>
+    <string name="reports_clear_confirm_title">ลบประวัติการสแกนที่เก็บไว้ทั้งหมดหรือไม่</string>
+    <string name="reports_clear_confirm_body">วิธีนี้จะลบเฉพาะ TrashPilot การสแกนและประวัติการทำความสะอาดเท่านั้น มันไม่ได้ลบไฟล์ผู้ใช้</string>
+    <string name="reports_delete">ลบ</string>
 </resources>

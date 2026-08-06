@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">স্টোরেজ বেড়েছে</string>
     <string name="trash_dna_trend_down">স্টোরেজ কমে গেছে</string>
     <string name="trash_dna_trend_stable">স্টোরেজ অপরিবর্তিত</string>
+    <string name="reports_detail_title">রিপোর্ট বিবরণ</string>
+    <string name="reports_empty_title">এখনও কোন রিপোর্ট</string>
+    <string name="reports_empty_body">আপনার পরিষ্কারের ইতিহাস তৈরি করা শুরু করতে আপনার প্রথম স্ক্যানটি সম্পূর্ণ করুন।</string>
+    <string name="reports_scan_now">এখন স্ক্যান করুন</string>
+    <string name="reports_summary_title">পরিষ্কার করার ইতিহাস</string>
+    <string name="reports_total_scans">মোট স্ক্যান</string>
+    <string name="reports_total_analyzed">মোট স্টোরেজ বিশ্লেষণ করা হয়েছে</string>
+    <string name="reports_total_cleaned">মোট স্টোরেজ পরিষ্কার করা হয়েছে</string>
+    <string name="reports_last_scan_date">শেষ স্ক্যান তারিখ</string>
+    <string name="reports_average_cleaned">প্রতি স্ক্যানের গড় পরিস্কার</string>
+    <string name="reports_cleaned_chart">স্টোরেজ স্ক্যান করে পরিষ্কার করা হয়েছে</string>
+    <string name="reports_storage_cleaned_axis">স্টোরেজ পরিষ্কার করা হয়েছে</string>
+    <string name="reports_timeline">টাইমলাইন স্ক্যান করুন</string>
+    <string name="reports_storage_scanned">স্টোরেজ স্ক্যান করা হয়েছে</string>
+    <string name="reports_storage_cleaned">স্টোরেজ পরিষ্কার করা হয়েছে</string>
+    <string name="reports_largest_category">সবচেয়ে বড় বিভাগ</string>
+    <string name="reports_recorded_categories">রেকর্ড করা বিভাগ</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">ইতিহাস পরিষ্কার করুন</string>
+    <string name="reports_clear_body">শুধুমাত্র সঞ্চিত স্ক্যান এবং পরিষ্কারের ইতিহাস সরান। ব্যবহারকারী ফাইল মুছে ফেলা হয় না.</string>
+    <string name="reports_clear_confirm_title">সব সঞ্চিত স্ক্যান ইতিহাস মুছে ফেলবেন?</string>
+    <string name="reports_clear_confirm_body">এটি শুধুমাত্র TrashPilot স্ক্যান এবং পরিষ্কার করার ইতিহাস সরিয়ে দেয়। এটি ব্যবহারকারীর ফাইল মুছে দেয় না।</string>
+    <string name="reports_delete">মুছে দিন</string>
 </resources>

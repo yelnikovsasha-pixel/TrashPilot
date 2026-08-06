@@ -208,7 +208,8 @@ fun AppNavigation() {
         composable("reports") {
             ReportsScreen(
                 repository = historyRepository,
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                onScanNow = { navController.navigate("scanner") }
             )
         }
         composable("settings") {

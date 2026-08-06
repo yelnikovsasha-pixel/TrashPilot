@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Sklad se zvětšil</string>
     <string name="trash_dna_trend_down">Snížil se úložný prostor</string>
     <string name="trash_dna_trend_stable">Skladování beze změny</string>
+    <string name="reports_detail_title">Podrobnosti nahlásit</string>
+    <string name="reports_empty_title">Zatím žádné zprávy</string>
+    <string name="reports_empty_body">Dokončete první skenování a začněte vytvářet historii čištění.</string>
+    <string name="reports_scan_now">Skenujte nyní</string>
+    <string name="reports_summary_title">Historie čištění</string>
+    <string name="reports_total_scans">Celkový počet skenů</string>
+    <string name="reports_total_analyzed">Celkové úložiště analyzováno</string>
+    <string name="reports_total_cleaned">Úložiště celkem vyčištěno</string>
+    <string name="reports_last_scan_date">Datum posledního skenování</string>
+    <string name="reports_average_cleaned">Průměr vyčištěných na skenování</string>
+    <string name="reports_cleaned_chart">Úložiště vyčištěno skenováním</string>
+    <string name="reports_storage_cleaned_axis">Sklad vyčištěn</string>
+    <string name="reports_timeline">Naskenujte časovou osu</string>
+    <string name="reports_storage_scanned">Úložiště bylo naskenováno</string>
+    <string name="reports_storage_cleaned">Sklad vyčištěn</string>
+    <string name="reports_largest_category">Největší kategorie</string>
+    <string name="reports_recorded_categories">Zaznamenané kategorie</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Vymazat historii</string>
+    <string name="reports_clear_body">Odeberte pouze uloženou historii skenování a čištění. Uživatelské soubory nejsou nikdy smazány.</string>
+    <string name="reports_clear_confirm_title">Smazat veškerou uloženou historii skenování?</string>
+    <string name="reports_clear_confirm_body">Tím se odstraní pouze TrashPilot historie skenování a čištění. Neodstraní uživatelské soubory.</string>
+    <string name="reports_delete">Vymazat</string>
 </resources>

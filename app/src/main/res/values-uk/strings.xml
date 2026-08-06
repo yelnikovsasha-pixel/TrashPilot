@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Пам\'ять збільшена</string>
     <string name="trash_dna_trend_down">Пам\'ять зменшилася</string>
     <string name="trash_dna_trend_stable">Зберігання без змін</string>
+    <string name="reports_detail_title">Деталі звіту</string>
+    <string name="reports_empty_title">Звітів ще немає</string>
+    <string name="reports_empty_body">Завершіть своє перше сканування, щоб розпочати створення історії очищення.</string>
+    <string name="reports_scan_now">Сканувати зараз</string>
+    <string name="reports_summary_title">Історія очищення</string>
+    <string name="reports_total_scans">Загальна кількість сканувань</string>
+    <string name="reports_total_analyzed">Проаналізовано загальну пам’ять</string>
+    <string name="reports_total_cleaned">Повністю очищено сховище</string>
+    <string name="reports_last_scan_date">Дата останнього сканування</string>
+    <string name="reports_average_cleaned">Середнє очищення за сканування</string>
+    <string name="reports_cleaned_chart">Сховище очищено скануванням</string>
+    <string name="reports_storage_cleaned_axis">Сховище очищено</string>
+    <string name="reports_timeline">Сканувати хронологію</string>
+    <string name="reports_storage_scanned">Сховище проскановано</string>
+    <string name="reports_storage_cleaned">Сховище очищено</string>
+    <string name="reports_largest_category">Найбільша категорія</string>
+    <string name="reports_recorded_categories">Записані категорії</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Очистити історію</string>
+    <string name="reports_clear_body">Видалити лише збережену історію сканування та очищення. Файли користувача ніколи не видаляються.</string>
+    <string name="reports_clear_confirm_title">Видалити всю збережену історію сканування?</string>
+    <string name="reports_clear_confirm_body">Це видаляє лише історію сканування та очищення TrashPilot. Він не видаляє файли користувача.</string>
+    <string name="reports_delete">Видалити</string>
 </resources>

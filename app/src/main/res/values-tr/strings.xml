@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Depolama alanı artırıldı</string>
     <string name="trash_dna_trend_down">Depolama alanı azaldı</string>
     <string name="trash_dna_trend_stable">Depolama değişmedi</string>
+    <string name="reports_detail_title">Rapor ayrıntıları</string>
+    <string name="reports_empty_title">Henüz rapor yok</string>
+    <string name="reports_empty_body">Temizleme geçmişinizi oluşturmaya başlamak için ilk taramanızı tamamlayın.</string>
+    <string name="reports_scan_now">Şimdi tarayın</string>
+    <string name="reports_summary_title">Temizleme geçmişi</string>
+    <string name="reports_total_scans">Toplam taramalar</string>
+    <string name="reports_total_analyzed">Analiz edilen toplam depolama alanı</string>
+    <string name="reports_total_cleaned">Toplam depolama alanı temizlendi</string>
+    <string name="reports_last_scan_date">Son tarama tarihi</string>
+    <string name="reports_average_cleaned">Tarama başına ortalama temizlenme</string>
+    <string name="reports_cleaned_chart">Depolama alanı taramayla temizlendi</string>
+    <string name="reports_storage_cleaned_axis">Depolama alanı temizlendi</string>
+    <string name="reports_timeline">Zaman çizelgesini tara</string>
+    <string name="reports_storage_scanned">Depolama alanı tarandı</string>
+    <string name="reports_storage_cleaned">Depolama alanı temizlendi</string>
+    <string name="reports_largest_category">En büyük kategori</string>
+    <string name="reports_recorded_categories">Kaydedilen kategoriler</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Geçmişi temizle</string>
+    <string name="reports_clear_body">Yalnızca depolanan tarama ve temizleme geçmişini kaldırın. Kullanıcı dosyaları hiçbir zaman silinmez.</string>
+    <string name="reports_clear_confirm_title">Saklanan tüm tarama geçmişi silinsin mi?</string>
+    <string name="reports_clear_confirm_body">Bu yalnızca TrashPilot tarama ve temizleme geçmişini kaldırır. Kullanıcı dosyalarını silmez.</string>
+    <string name="reports_delete">Silmek</string>
 </resources>

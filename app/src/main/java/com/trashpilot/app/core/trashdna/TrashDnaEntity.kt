@@ -32,7 +32,13 @@ data class TrashDnaSessionEntity(
     val largeFileBytes: Long = 0,
     val largeVideoBytes: Long = 0,
     val hiddenFileBytes: Long = 0,
-    val messengerSourceName: String = ""
+    val messengerSourceName: String = "",
+    val reportMetricsRecorded: Boolean = false,
+    val scannedBytes: Long = 0,
+    val apkBytes: Long = 0,
+    val otherBytes: Long = 0,
+    val largeFileCount: Long = 0,
+    val socialMediaFileCount: Long = 0
 )
 
 @Entity(tableName = "trash_dna_state")

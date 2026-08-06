@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Хранилище увеличено</string>
     <string name="trash_dna_trend_down">Объем памяти уменьшен</string>
     <string name="trash_dna_trend_stable">Хранение без изменений</string>
+    <string name="reports_detail_title">Подробности отчета</string>
+    <string name="reports_empty_title">Пока нет отчетов</string>
+    <string name="reports_empty_body">Завершите первое сканирование, чтобы начать создавать историю очистки.</string>
+    <string name="reports_scan_now">Сканировать сейчас</string>
+    <string name="reports_summary_title">История очистки</string>
+    <string name="reports_total_scans">Всего сканирований</string>
+    <string name="reports_total_analyzed">Общий объем проанализированного хранилища</string>
+    <string name="reports_total_cleaned">Всего хранилище очищено</string>
+    <string name="reports_last_scan_date">Дата последнего сканирования</string>
+    <string name="reports_average_cleaned">Средняя очистка за сканирование</string>
+    <string name="reports_cleaned_chart">Память очищена сканированием</string>
+    <string name="reports_storage_cleaned_axis">Хранилище очищено</string>
+    <string name="reports_timeline">Сканировать временную шкалу</string>
+    <string name="reports_storage_scanned">Хранилище проверено</string>
+    <string name="reports_storage_cleaned">Хранилище очищено</string>
+    <string name="reports_largest_category">Самая большая категория</string>
+    <string name="reports_recorded_categories">Записанные категории</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Очистить историю</string>
+    <string name="reports_clear_body">Удалить только сохраненную историю сканирования и очистки. Пользовательские файлы никогда не удаляются.</string>
+    <string name="reports_clear_confirm_title">Удалить всю сохраненную историю сканирования?</string>
+    <string name="reports_clear_confirm_body">При этом будет удалена только TrashPilot история сканирования и очистки. Пользовательские файлы не удаляются.</string>
+    <string name="reports_delete">Удалить</string>
 </resources>

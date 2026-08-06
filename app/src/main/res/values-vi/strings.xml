@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Tăng dung lượng lưu trữ</string>
     <string name="trash_dna_trend_down">Dung lượng lưu trữ giảm</string>
     <string name="trash_dna_trend_stable">Dung lượng lưu trữ không thay đổi</string>
+    <string name="reports_detail_title">Chi tiết báo cáo</string>
+    <string name="reports_empty_title">Chưa có báo cáo nào</string>
+    <string name="reports_empty_body">Hoàn thành lần quét đầu tiên của bạn để bắt đầu xây dựng lịch sử dọn dẹp của bạn.</string>
+    <string name="reports_scan_now">Quét ngay bây giờ</string>
+    <string name="reports_summary_title">Lịch sử làm sạch</string>
+    <string name="reports_total_scans">Tổng số lần quét</string>
+    <string name="reports_total_analyzed">Tổng dung lượng lưu trữ được phân tích</string>
+    <string name="reports_total_cleaned">Tổng số bộ nhớ đã được dọn sạch</string>
+    <string name="reports_last_scan_date">Ngày quét cuối cùng</string>
+    <string name="reports_average_cleaned">Trung bình được làm sạch mỗi lần quét</string>
+    <string name="reports_cleaned_chart">Bộ nhớ được làm sạch bằng cách quét</string>
+    <string name="reports_storage_cleaned_axis">Đã dọn dẹp kho lưu trữ</string>
+    <string name="reports_timeline">Quét dòng thời gian</string>
+    <string name="reports_storage_scanned">Đã quét bộ nhớ</string>
+    <string name="reports_storage_cleaned">Đã dọn dẹp kho lưu trữ</string>
+    <string name="reports_largest_category">Danh mục lớn nhất</string>
+    <string name="reports_recorded_categories">Danh mục đã ghi</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Xóa lịch sử</string>
+    <string name="reports_clear_body">Chỉ xóa lịch sử quét và làm sạch được lưu trữ. Tập tin người dùng không bao giờ bị xóa.</string>
+    <string name="reports_clear_confirm_title">Xóa tất cả lịch sử quét được lưu trữ?</string>
+    <string name="reports_clear_confirm_body">Thao tác này chỉ xóa TrashPilot lịch sử quét và dọn dẹp. Nó không xóa các tập tin người dùng.</string>
+    <string name="reports_delete">Xóa bỏ</string>
 </resources>

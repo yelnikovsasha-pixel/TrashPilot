@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Armazenamento aumentado</string>
     <string name="trash_dna_trend_down">Armazenamento diminuído</string>
     <string name="trash_dna_trend_stable">Armazenamento inalterado</string>
+    <string name="reports_detail_title">Detalhes do relatório</string>
+    <string name="reports_empty_title">Ainda não há relatórios</string>
+    <string name="reports_empty_body">Conclua sua primeira verificação para começar a construir seu histórico de limpeza.</string>
+    <string name="reports_scan_now">Digitalize agora</string>
+    <string name="reports_summary_title">Histórico de limpeza</string>
+    <string name="reports_total_scans">Verificações totais</string>
+    <string name="reports_total_analyzed">Armazenamento total analisado</string>
+    <string name="reports_total_cleaned">Armazenamento total limpo</string>
+    <string name="reports_last_scan_date">Data da última verificação</string>
+    <string name="reports_average_cleaned">Média de limpeza por varredura</string>
+    <string name="reports_cleaned_chart">Armazenamento limpo por verificação</string>
+    <string name="reports_storage_cleaned_axis">Armazenamento limpo</string>
+    <string name="reports_timeline">Linha do tempo da verificação</string>
+    <string name="reports_storage_scanned">Armazenamento verificado</string>
+    <string name="reports_storage_cleaned">Armazenamento limpo</string>
+    <string name="reports_largest_category">Maior categoria</string>
+    <string name="reports_recorded_categories">Categorias gravadas</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Limpar histórico</string>
+    <string name="reports_clear_body">Remova apenas o histórico de varredura e limpeza armazenado. Os arquivos do usuário nunca são excluídos.</string>
+    <string name="reports_clear_confirm_title">Excluir todo o histórico de verificação armazenado?</string>
+    <string name="reports_clear_confirm_body">Isso remove apenas o histórico de verificação e limpeza TrashPilot. Ele não exclui arquivos do usuário.</string>
+    <string name="reports_delete">Excluir</string>
 </resources>

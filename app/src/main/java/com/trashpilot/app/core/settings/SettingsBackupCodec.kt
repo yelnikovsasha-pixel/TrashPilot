@@ -8,8 +8,8 @@ data class SettingsBackup(
 )
 
 object SettingsBackupCodec {
-    private const val HEADER = "TRASHPILOT_BACKUP_V2"
-    private const val LEGACY_HEADER = "TRASHPILOT_BACKUP_V1"
+    private const val HEADER = "TRASHPILOT_BACKUP_V3"
+    private val LEGACY_HEADERS = setOf("TRASHPILOT_BACKUP_V1", "TRASHPILOT_BACKUP_V2")
 
     fun encode(backup: SettingsBackup): String = buildString {
         appendLine(HEADER)
@@ -28,7 +28,9 @@ object SettingsBackupCodec {
                     session.imageBytes, session.videoBytes, session.audioBytes,
                     session.documentBytes, session.downloadBytes, session.messengerMediaBytes,
                     session.screenshotBytes, session.largeFileBytes, session.largeVideoBytes,
-                    session.hiddenFileBytes, safe(session.messengerSourceName)
+                    session.hiddenFileBytes, safe(session.messengerSourceName),
+                    session.reportMetricsRecorded, session.scannedBytes, session.apkBytes,
+                    session.otherBytes, session.largeFileCount, session.socialMediaFileCount
                 ).joinToString("\t")
             )
         }
@@ -37,7 +39,7 @@ object SettingsBackupCodec {
     fun decode(text: String): SettingsBackup {
         val lines = text.lineSequence().filter { it.isNotBlank() }.toList()
         val header = lines.firstOrNull()
-        require(header == HEADER || header == LEGACY_HEADER) { "This is not a TrashPilot backup." }
+        require(header == HEADER || header in LEGACY_HEADERS) { "This is not a TrashPilot backup." }
         val preferences = mutableMapOf<String, String>()
         val sessions = mutableListOf<TrashDnaSessionEntity>()
         lines.drop(1).forEach { line ->
@@ -45,7 +47,7 @@ object SettingsBackupCodec {
             when (parts.firstOrNull()) {
                 "P" -> if (parts.size == 3) preferences[unsafe(parts[1])] = unsafe(parts[2])
                 "S" -> {
-                    require(parts.size == 16 || parts.size == 28) {
+                    require(parts.size == 16 || parts.size == 28 || parts.size == 34) {
                         "The backup contains an invalid history row."
                     }
                     sessions += TrashDnaSessionEntity(
@@ -75,7 +77,13 @@ object SettingsBackupCodec {
                         largeFileBytes = parts.getOrNull(24)?.toLong() ?: 0,
                         largeVideoBytes = parts.getOrNull(25)?.toLong() ?: 0,
                         hiddenFileBytes = parts.getOrNull(26)?.toLong() ?: 0,
-                        messengerSourceName = parts.getOrNull(27)?.let(::unsafe).orEmpty()
+                        messengerSourceName = parts.getOrNull(27)?.let(::unsafe).orEmpty(),
+                        reportMetricsRecorded = parts.getOrNull(28)?.toBooleanStrictOrNull() ?: false,
+                        scannedBytes = parts.getOrNull(29)?.toLong() ?: 0,
+                        apkBytes = parts.getOrNull(30)?.toLong() ?: 0,
+                        otherBytes = parts.getOrNull(31)?.toLong() ?: 0,
+                        largeFileCount = parts.getOrNull(32)?.toLong() ?: 0,
+                        socialMediaFileCount = parts.getOrNull(33)?.toLong() ?: 0
                     )
                 }
             }

@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Penyimpanan meningkat</string>
     <string name="trash_dna_trend_down">Penyimpanan menurun</string>
     <string name="trash_dna_trend_stable">Penyimpanan tidak berubah</string>
+    <string name="reports_detail_title">Detail laporan</string>
+    <string name="reports_empty_title">Belum ada laporan</string>
+    <string name="reports_empty_body">Selesaikan pemindaian pertama Anda untuk mulai membangun riwayat pembersihan Anda.</string>
+    <string name="reports_scan_now">Pindai sekarang</string>
+    <string name="reports_summary_title">Riwayat pembersihan</string>
+    <string name="reports_total_scans">Pemindaian total</string>
+    <string name="reports_total_analyzed">Total penyimpanan dianalisis</string>
+    <string name="reports_total_cleaned">Total penyimpanan dibersihkan</string>
+    <string name="reports_last_scan_date">Tanggal pemindaian terakhir</string>
+    <string name="reports_average_cleaned">Rata-rata dibersihkan per pemindaian</string>
+    <string name="reports_cleaned_chart">Penyimpanan dibersihkan dengan pemindaian</string>
+    <string name="reports_storage_cleaned_axis">Penyimpanan dibersihkan</string>
+    <string name="reports_timeline">Pindai garis waktu</string>
+    <string name="reports_storage_scanned">Penyimpanan dipindai</string>
+    <string name="reports_storage_cleaned">Penyimpanan dibersihkan</string>
+    <string name="reports_largest_category">Kategori terbesar</string>
+    <string name="reports_recorded_categories">Kategori yang direkam</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Hapus riwayat</string>
+    <string name="reports_clear_body">Hapus riwayat pemindaian dan pembersihan yang tersimpan saja. File pengguna tidak pernah dihapus.</string>
+    <string name="reports_clear_confirm_title">Hapus semua riwayat pemindaian yang tersimpan?</string>
+    <string name="reports_clear_confirm_body">Ini hanya menghapus TrashPilot riwayat pemindaian dan pembersihan. Itu tidak menghapus file pengguna.</string>
+    <string name="reports_delete">Menghapus</string>
 </resources>

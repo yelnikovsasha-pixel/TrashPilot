@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Η αποθήκευση αυξήθηκε</string>
     <string name="trash_dna_trend_down">Ο αποθηκευτικός χώρος μειώθηκε</string>
     <string name="trash_dna_trend_stable">Η αποθήκευση αμετάβλητη</string>
+    <string name="reports_detail_title">Αναφορά λεπτομερειών</string>
+    <string name="reports_empty_title">Δεν υπάρχουν ακόμη αναφορές</string>
+    <string name="reports_empty_body">Ολοκληρώστε την πρώτη σας σάρωση για να ξεκινήσετε τη δημιουργία του ιστορικού καθαρισμού σας.</string>
+    <string name="reports_scan_now">Σάρωση τώρα</string>
+    <string name="reports_summary_title">Ιστορικό καθαρισμού</string>
+    <string name="reports_total_scans">Συνολικές σαρώσεις</string>
+    <string name="reports_total_analyzed">Αναλύθηκε η συνολική αποθήκευση</string>
+    <string name="reports_total_cleaned">Καθαρίστηκε η συνολική αποθήκευση</string>
+    <string name="reports_last_scan_date">Ημερομηνία τελευταίας σάρωσης</string>
+    <string name="reports_average_cleaned">Μέσος όρος καθαρισμού ανά σάρωση</string>
+    <string name="reports_cleaned_chart">Ο αποθηκευτικός χώρος καθαρίστηκε με σάρωση</string>
+    <string name="reports_storage_cleaned_axis">Καθαρίστηκε η αποθήκευση</string>
+    <string name="reports_timeline">Σάρωση χρονολογίου</string>
+    <string name="reports_storage_scanned">Ο χώρος αποθήκευσης σαρώθηκε</string>
+    <string name="reports_storage_cleaned">Καθαρίστηκε η αποθήκευση</string>
+    <string name="reports_largest_category">Η μεγαλύτερη κατηγορία</string>
+    <string name="reports_recorded_categories">Καταγεγραμμένες κατηγορίες</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Εκκαθάριση ιστορικού</string>
+    <string name="reports_clear_body">Καταργήστε μόνο το αποθηκευμένο ιστορικό σάρωσης και καθαρισμού. Τα αρχεία χρήστη δεν διαγράφονται ποτέ.</string>
+    <string name="reports_clear_confirm_title">Διαγραφή όλου του αποθηκευμένου ιστορικού σάρωσης;</string>
+    <string name="reports_clear_confirm_body">Αυτό καταργεί μόνο TrashPilot το ιστορικό σάρωσης και καθαρισμού. Δεν διαγράφει αρχεία χρήστη.</string>
+    <string name="reports_delete">Διαγράφω</string>
 </resources>

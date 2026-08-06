@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">De opslag is toegenomen</string>
     <string name="trash_dna_trend_down">Opslag afgenomen</string>
     <string name="trash_dna_trend_stable">Opslag ongewijzigd</string>
+    <string name="reports_detail_title">Rapportdetails</string>
+    <string name="reports_empty_title">Nog geen rapporten</string>
+    <string name="reports_empty_body">Voltooi uw eerste scan om uw schoonmaakgeschiedenis op te bouwen.</string>
+    <string name="reports_scan_now">Scan nu</string>
+    <string name="reports_summary_title">Geschiedenis van het schoonmaken</string>
+    <string name="reports_total_scans">Totaal scans</string>
+    <string name="reports_total_analyzed">Totale opslag geanalyseerd</string>
+    <string name="reports_total_cleaned">Totale opslag schoongemaakt</string>
+    <string name="reports_last_scan_date">Laatste scandatum</string>
+    <string name="reports_average_cleaned">Gemiddeld schoongemaakt per scan</string>
+    <string name="reports_cleaned_chart">Opslag gereinigd door scan</string>
+    <string name="reports_storage_cleaned_axis">Opslag schoongemaakt</string>
+    <string name="reports_timeline">Tijdlijn scannen</string>
+    <string name="reports_storage_scanned">Opslag gescand</string>
+    <string name="reports_storage_cleaned">Opslag schoongemaakt</string>
+    <string name="reports_largest_category">Grootste categorie</string>
+    <string name="reports_recorded_categories">Opgenomen categorieën</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Geschiedenis wissen</string>
+    <string name="reports_clear_body">Verwijder alleen de opgeslagen scan- en opschoongeschiedenis. Gebruikersbestanden worden nooit verwijderd.</string>
+    <string name="reports_clear_confirm_title">Alle opgeslagen scangeschiedenis verwijderen?</string>
+    <string name="reports_clear_confirm_body">Hiermee wordt alleen de TrashPilot scan- en opschoongeschiedenis verwijderd. Het verwijdert geen gebruikersbestanden.</string>
+    <string name="reports_delete">Verwijderen</string>
 </resources>

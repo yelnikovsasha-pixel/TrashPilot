@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [TrashDnaSessionEntity::class, TrashDnaStateEntity::class],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 abstract class TrashDnaDatabase : RoomDatabase() {
@@ -24,7 +24,7 @@ abstract class TrashDnaDatabase : RoomDatabase() {
                     context.applicationContext,
                     TrashDnaDatabase::class.java,
                     "trash-dna.db"
-                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3).build().also { instance = it }
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4).build().also { instance = it }
             }
 
         private val MIGRATION_1_2 = object : Migration(1, 2) {
@@ -50,6 +50,16 @@ abstract class TrashDnaDatabase : RoomDatabase() {
                     "CREATE TABLE IF NOT EXISTS trash_dna_state (`key` TEXT NOT NULL, " +
                         "resetAtMillis INTEGER NOT NULL, PRIMARY KEY(`key`))"
                 )
+            }
+        }
+
+        private val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE trash_dna_sessions ADD COLUMN reportMetricsRecorded INTEGER NOT NULL DEFAULT 0")
+                listOf("scannedBytes", "apkBytes", "otherBytes", "largeFileCount", "socialMediaFileCount")
+                    .forEach { column ->
+                        db.execSQL("ALTER TABLE trash_dna_sessions ADD COLUMN $column INTEGER NOT NULL DEFAULT 0")
+                    }
             }
         }
     }

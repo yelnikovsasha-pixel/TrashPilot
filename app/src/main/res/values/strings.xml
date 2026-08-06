@@ -441,4 +441,27 @@
     <string name="trash_dna_trend_up">Storage increased</string>
     <string name="trash_dna_trend_down">Storage decreased</string>
     <string name="trash_dna_trend_stable">Storage unchanged</string>
+    <string name="reports_detail_title">Report details</string>
+    <string name="reports_empty_title">No reports yet</string>
+    <string name="reports_empty_body">Complete your first scan to start building your cleaning history.</string>
+    <string name="reports_scan_now">Scan now</string>
+    <string name="reports_summary_title">Cleaning history</string>
+    <string name="reports_total_scans">Total scans</string>
+    <string name="reports_total_analyzed">Total storage analyzed</string>
+    <string name="reports_total_cleaned">Total storage cleaned</string>
+    <string name="reports_last_scan_date">Last scan date</string>
+    <string name="reports_average_cleaned">Average cleaned per scan</string>
+    <string name="reports_cleaned_chart">Storage cleaned by scan</string>
+    <string name="reports_storage_cleaned_axis">Storage cleaned</string>
+    <string name="reports_timeline">Scan timeline</string>
+    <string name="reports_storage_scanned">Storage scanned</string>
+    <string name="reports_storage_cleaned">Storage cleaned</string>
+    <string name="reports_largest_category">Largest category</string>
+    <string name="reports_recorded_categories">Recorded categories</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Clear history</string>
+    <string name="reports_clear_body">Remove stored scan and cleaning history only. User files are never deleted.</string>
+    <string name="reports_clear_confirm_title">Delete all stored scan history?</string>
+    <string name="reports_clear_confirm_body">This removes only TrashPilot scan and cleaning history. It does not delete user files.</string>
+    <string name="reports_delete">Delete</string>
 </resources>

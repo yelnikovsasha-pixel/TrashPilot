@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Zwiększono pojemność</string>
     <string name="trash_dna_trend_down">Zmniejszono ilość miejsca na dane</string>
     <string name="trash_dna_trend_stable">Przechowywanie bez zmian</string>
+    <string name="reports_detail_title">Szczegóły raportu</string>
+    <string name="reports_empty_title">Nie ma jeszcze żadnych raportów</string>
+    <string name="reports_empty_body">Wykonaj pierwsze skanowanie, aby rozpocząć tworzenie historii czyszczenia.</string>
+    <string name="reports_scan_now">Zeskanuj teraz</string>
+    <string name="reports_summary_title">Historia czyszczenia</string>
+    <string name="reports_total_scans">Razem skany</string>
+    <string name="reports_total_analyzed">Przeanalizowano całkowitą pamięć</string>
+    <string name="reports_total_cleaned">Całość magazynu wyczyszczona</string>
+    <string name="reports_last_scan_date">Data ostatniego skanowania</string>
+    <string name="reports_average_cleaned">Średnio czyszczone na skan</string>
+    <string name="reports_cleaned_chart">Pamięć oczyszczona poprzez skanowanie</string>
+    <string name="reports_storage_cleaned_axis">Magazyn wyczyszczony</string>
+    <string name="reports_timeline">Skanuj oś czasu</string>
+    <string name="reports_storage_scanned">Przeskanowano pamięć</string>
+    <string name="reports_storage_cleaned">Magazyn wyczyszczony</string>
+    <string name="reports_largest_category">Największa kategoria</string>
+    <string name="reports_recorded_categories">Nagrane kategorie</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Wyczyść historię</string>
+    <string name="reports_clear_body">Usuń tylko zapisaną historię skanowania i czyszczenia. Pliki użytkownika nigdy nie są usuwane.</string>
+    <string name="reports_clear_confirm_title">Usunąć całą zapisaną historię skanowania?</string>
+    <string name="reports_clear_confirm_body">Spowoduje to usunięcie tylko TrashPilot historii skanowania i czyszczenia. Nie usuwa plików użytkownika.</string>
+    <string name="reports_delete">Usuwać</string>
 </resources>

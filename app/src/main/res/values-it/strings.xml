@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Lo spazio di archiviazione è aumentato</string>
     <string name="trash_dna_trend_down">Lo spazio di archiviazione è diminuito</string>
     <string name="trash_dna_trend_stable">Stoccaggio invariato</string>
+    <string name="reports_detail_title">Dettagli del rapporto</string>
+    <string name="reports_empty_title">Nessuna segnalazione ancora</string>
+    <string name="reports_empty_body">Completa la tua prima scansione per iniziare a creare la cronologia delle pulizie.</string>
+    <string name="reports_scan_now">Scansiona ora</string>
+    <string name="reports_summary_title">Cronologia delle pulizie</string>
+    <string name="reports_total_scans">Scansioni totali</string>
+    <string name="reports_total_analyzed">Spazio di archiviazione totale analizzato</string>
+    <string name="reports_total_cleaned">Spazio di archiviazione totale pulito</string>
+    <string name="reports_last_scan_date">Data dell\'ultima scansione</string>
+    <string name="reports_average_cleaned">Media pulita per scansione</string>
+    <string name="reports_cleaned_chart">Spazio di archiviazione pulito tramite scansione</string>
+    <string name="reports_storage_cleaned_axis">Deposito pulito</string>
+    <string name="reports_timeline">Scansiona la sequenza temporale</string>
+    <string name="reports_storage_scanned">Archiviazione scansionata</string>
+    <string name="reports_storage_cleaned">Deposito pulito</string>
+    <string name="reports_largest_category">Categoria più ampia</string>
+    <string name="reports_recorded_categories">Categorie registrate</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Cancella cronologia</string>
+    <string name="reports_clear_body">Rimuove solo la cronologia di scansione e pulizia memorizzata. I file utente non vengono mai eliminati.</string>
+    <string name="reports_clear_confirm_title">Eliminare tutta la cronologia delle scansioni memorizzata?</string>
+    <string name="reports_clear_confirm_body">Ciò rimuove solo la cronologia di scansione e pulizia TrashPilot. Non elimina i file utente.</string>
+    <string name="reports_delete">Eliminare</string>
 </resources>

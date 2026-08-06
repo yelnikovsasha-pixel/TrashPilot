@@ -25,17 +25,17 @@
 - `core/privacy` maps Android package declarations and runtime grant states into the eight
   Privacy Monitor categories. `features/privacy` owns the sortable installed-app list,
   app icons, status chips, app details, loading, and error presentation.
-- `core/reports` summarizes and exports the existing metadata-only Room history.
-  `features/reports` owns overview, scan and cleaning histories, real-data charts, local text
-  export, and loading/empty/success/error presentation.
-- Room schema version 3 adds aggregate storage/category trend fields and a Trash DNA reset cutoff
-  through non-destructive `1 -> 2 -> 3` migrations.
+- `core/reports` associates recorded cleanup outcomes with completed scans and produces factual
+  summary, chart, timeline, and detail models. `features/reports` owns the single Reports screen,
+  empty/loading/error states, saved detail selection, and scan-history confirmation reset.
+- Room schema version 4 adds explicit report-metric availability, scanned bytes, APK/Other totals,
+  and large/social file counts through non-destructive `1 -> 2 -> 3 -> 4` migrations.
 - `core/settings` owns persisted theme preferences, DataStore language selection, and a versioned metadata-only
   backup codec. `features/settings` owns the seven Settings destinations and local document
   picker flows for diagnostics, backup, and restore.
 - Preferences DataStore 1.2.1 stores the selected locale and migrates the legacy
   `trashpilot-settings` SharedPreferences language key on upgrade.
-- Android resources provide complete 442-key catalogs for all 25 supported app languages.
+- Android resources provide complete 465-key catalogs for all 25 supported app languages.
   `tools/generate_locale_drafts.mjs` reproduces the automated draft catalogs and
   `tools/verify_locales.mjs` checks XML structure, exact key parity, formatting-token parity,
   and probable long English fallbacks.

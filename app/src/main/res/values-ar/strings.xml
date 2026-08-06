@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">زيادة التخزين</string>
     <string name="trash_dna_trend_down">انخفض التخزين</string>
     <string name="trash_dna_trend_stable">التخزين دون تغيير</string>
+    <string name="reports_detail_title">تفاصيل التقرير</string>
+    <string name="reports_empty_title">لا توجد تقارير حتى الآن</string>
+    <string name="reports_empty_body">أكمل الفحص الأول لبدء إنشاء سجل التنظيف الخاص بك.</string>
+    <string name="reports_scan_now">مسح الآن</string>
+    <string name="reports_summary_title">تاريخ التنظيف</string>
+    <string name="reports_total_scans">إجمالي عمليات المسح</string>
+    <string name="reports_total_analyzed">تحليل إجمالي التخزين</string>
+    <string name="reports_total_cleaned">تم تنظيف إجمالي مساحة التخزين</string>
+    <string name="reports_last_scan_date">تاريخ آخر مسح</string>
+    <string name="reports_average_cleaned">متوسط ​​التنظيف لكل مسح</string>
+    <string name="reports_cleaned_chart">تخزين تنظيفها عن طريق المسح</string>
+    <string name="reports_storage_cleaned_axis">تم تنظيف التخزين</string>
+    <string name="reports_timeline">مسح الجدول الزمني</string>
+    <string name="reports_storage_scanned">تم فحص التخزين</string>
+    <string name="reports_storage_cleaned">تم تنظيف التخزين</string>
+    <string name="reports_largest_category">أكبر فئة</string>
+    <string name="reports_recorded_categories">الفئات المسجلة</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">مسح التاريخ</string>
+    <string name="reports_clear_body">قم بإزالة سجل المسح والتنظيف المخزن فقط. لا يتم حذف ملفات المستخدم أبدًا.</string>
+    <string name="reports_clear_confirm_title">هل تريد حذف سجل الفحص المخزن بالكامل؟</string>
+    <string name="reports_clear_confirm_body">يؤدي هذا إلى إزالة TrashPilot سجل المسح والتنظيف فقط. ولا يحذف ملفات المستخدم.</string>
+    <string name="reports_delete">يمسح</string>
 </resources>

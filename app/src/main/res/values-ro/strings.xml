@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Spațiul de stocare a crescut</string>
     <string name="trash_dna_trend_down">Stocarea a scăzut</string>
     <string name="trash_dna_trend_stable">Stocare neschimbată</string>
+    <string name="reports_detail_title">Detalii raport</string>
+    <string name="reports_empty_title">Încă nu există rapoarte</string>
+    <string name="reports_empty_body">Finalizați prima scanare pentru a începe să vă construiți istoricul de curățare.</string>
+    <string name="reports_scan_now">Scanează acum</string>
+    <string name="reports_summary_title">Istoricul curățeniei</string>
+    <string name="reports_total_scans">Scanări totale</string>
+    <string name="reports_total_analyzed">Stocarea totala analizata</string>
+    <string name="reports_total_cleaned">Depozitare totală curățată</string>
+    <string name="reports_last_scan_date">Data ultimei scanări</string>
+    <string name="reports_average_cleaned">Curățare medie per scanare</string>
+    <string name="reports_cleaned_chart">Spațiul de stocare curățat prin scanare</string>
+    <string name="reports_storage_cleaned_axis">Depozitare curatata</string>
+    <string name="reports_timeline">Scanează cronologia</string>
+    <string name="reports_storage_scanned">Stocare scanată</string>
+    <string name="reports_storage_cleaned">Depozitare curatata</string>
+    <string name="reports_largest_category">Cea mai mare categorie</string>
+    <string name="reports_recorded_categories">Categoriile înregistrate</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Ștergeți istoricul</string>
+    <string name="reports_clear_body">Eliminați numai istoricul de scanare și curățare stocat. Fișierele utilizator nu sunt niciodată șterse.</string>
+    <string name="reports_clear_confirm_title">Ștergeți tot istoricul de scanare stocat?</string>
+    <string name="reports_clear_confirm_body">Acest lucru elimină doar istoricul de scanare și curățare TrashPilot. Nu șterge fișierele utilizator.</string>
+    <string name="reports_delete">Şterge</string>
 </resources>

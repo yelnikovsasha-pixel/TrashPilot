@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">存储空间增加</string>
     <string name="trash_dna_trend_down">存储量减少</string>
     <string name="trash_dna_trend_stable">存储不变</string>
+    <string name="reports_detail_title">报告详情</string>
+    <string name="reports_empty_title">还没有报告</string>
+    <string name="reports_empty_body">完成第一次扫描以开始建立您的清洁历史记录。</string>
+    <string name="reports_scan_now">立即扫描</string>
+    <string name="reports_summary_title">清洁历史</string>
+    <string name="reports_total_scans">总扫描次数</string>
+    <string name="reports_total_analyzed">分析的总存储量</string>
+    <string name="reports_total_cleaned">已清理的总存储空间</string>
+    <string name="reports_last_scan_date">上次扫描日期</string>
+    <string name="reports_average_cleaned">每次扫描的平均清洁量</string>
+    <string name="reports_cleaned_chart">通过扫描清理存储</string>
+    <string name="reports_storage_cleaned_axis">储藏室已清理</string>
+    <string name="reports_timeline">扫描时间线</string>
+    <string name="reports_storage_scanned">已扫描存储空间</string>
+    <string name="reports_storage_cleaned">储藏室已清理</string>
+    <string name="reports_largest_category">最大类别</string>
+    <string name="reports_recorded_categories">记录类别</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">清除历史记录</string>
+    <string name="reports_clear_body">仅删除存储的扫描和清洁历史记录。用户文件永远不会被删除。</string>
+    <string name="reports_clear_confirm_title">删除所有存储的扫描历史记录？</string>
+    <string name="reports_clear_confirm_body">这仅删除 TrashPilot 扫描和清理历史记录。它不会删除用户文件。</string>
+    <string name="reports_delete">删除</string>
 </resources>

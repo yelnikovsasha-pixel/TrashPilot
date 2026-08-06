@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Almacenamiento aumentado</string>
     <string name="trash_dna_trend_down">Almacenamiento disminuido</string>
     <string name="trash_dna_trend_stable">Almacenamiento sin cambios</string>
+    <string name="reports_detail_title">Detalles del informe</string>
+    <string name="reports_empty_title">Aún no hay informes</string>
+    <string name="reports_empty_body">Complete su primer escaneo para comenzar a crear su historial de limpieza.</string>
+    <string name="reports_scan_now">Escanear ahora</string>
+    <string name="reports_summary_title">Historial de limpieza</string>
+    <string name="reports_total_scans">Escaneos totales</string>
+    <string name="reports_total_analyzed">Almacenamiento total analizado</string>
+    <string name="reports_total_cleaned">Almacenamiento total limpio</string>
+    <string name="reports_last_scan_date">Fecha del último escaneo</string>
+    <string name="reports_average_cleaned">Promedio de limpieza por escaneo</string>
+    <string name="reports_cleaned_chart">Almacenamiento limpiado por escaneo</string>
+    <string name="reports_storage_cleaned_axis">Almacenamiento limpio</string>
+    <string name="reports_timeline">Escanear línea de tiempo</string>
+    <string name="reports_storage_scanned">Almacenamiento escaneado</string>
+    <string name="reports_storage_cleaned">Almacenamiento limpio</string>
+    <string name="reports_largest_category">categoría más grande</string>
+    <string name="reports_recorded_categories">Categorías grabadas</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Borrar historial</string>
+    <string name="reports_clear_body">Elimine únicamente el historial de escaneo y limpieza almacenado. Los archivos de usuario nunca se eliminan.</string>
+    <string name="reports_clear_confirm_title">¿Eliminar todo el historial de análisis almacenado?</string>
+    <string name="reports_clear_confirm_body">Esto elimina solo el historial de limpieza y escaneo TrashPilot. No elimina archivos de usuario.</string>
+    <string name="reports_delete">Borrar</string>
 </resources>

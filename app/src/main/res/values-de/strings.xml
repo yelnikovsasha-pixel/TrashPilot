@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Speicher erhöht</string>
     <string name="trash_dna_trend_down">Der Speicherplatz wurde verringert</string>
     <string name="trash_dna_trend_stable">Lagerung unverändert</string>
+    <string name="reports_detail_title">Details melden</string>
+    <string name="reports_empty_title">Noch keine Berichte</string>
+    <string name="reports_empty_body">Führen Sie Ihren ersten Scan durch, um mit der Erstellung Ihres Reinigungsverlaufs zu beginnen.</string>
+    <string name="reports_scan_now">Jetzt scannen</string>
+    <string name="reports_summary_title">Reinigungsgeschichte</string>
+    <string name="reports_total_scans">Gesamtzahl der Scans</string>
+    <string name="reports_total_analyzed">Gesamtspeicher analysiert</string>
+    <string name="reports_total_cleaned">Gesamtspeicher gereinigt</string>
+    <string name="reports_last_scan_date">Datum des letzten Scans</string>
+    <string name="reports_average_cleaned">Durchschnittlich gereinigt pro Scan</string>
+    <string name="reports_cleaned_chart">Speicher durch Scan bereinigt</string>
+    <string name="reports_storage_cleaned_axis">Lager gereinigt</string>
+    <string name="reports_timeline">Zeitleiste scannen</string>
+    <string name="reports_storage_scanned">Speicher gescannt</string>
+    <string name="reports_storage_cleaned">Lager gereinigt</string>
+    <string name="reports_largest_category">Größte Kategorie</string>
+    <string name="reports_recorded_categories">Aufgezeichnete Kategorien</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Klare Geschichte</string>
+    <string name="reports_clear_body">Nur den gespeicherten Scan- und Reinigungsverlauf entfernen. Benutzerdateien werden niemals gelöscht.</string>
+    <string name="reports_clear_confirm_title">Gesamten gespeicherten Scanverlauf löschen?</string>
+    <string name="reports_clear_confirm_body">Dadurch wird nur der Scan- und Reinigungsverlauf von TrashPilot entfernt. Benutzerdateien werden nicht gelöscht.</string>
+    <string name="reports_delete">Löschen</string>
 </resources>

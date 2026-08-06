@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Lagringen ökade</string>
     <string name="trash_dna_trend_down">Lagringen minskade</string>
     <string name="trash_dna_trend_stable">Förvaring oförändrad</string>
+    <string name="reports_detail_title">Rapportera detaljer</string>
+    <string name="reports_empty_title">Inga rapporter ännu</string>
+    <string name="reports_empty_body">Slutför din första skanning för att börja bygga din städhistorik.</string>
+    <string name="reports_scan_now">Skanna nu</string>
+    <string name="reports_summary_title">Rengöringshistorik</string>
+    <string name="reports_total_scans">Totalt antal skanningar</string>
+    <string name="reports_total_analyzed">Total lagring analyserad</string>
+    <string name="reports_total_cleaned">Totalt lager städat</string>
+    <string name="reports_last_scan_date">Senaste scanningsdatum</string>
+    <string name="reports_average_cleaned">Genomsnittlig rensning per skanning</string>
+    <string name="reports_cleaned_chart">Förvaring rengörs genom skanning</string>
+    <string name="reports_storage_cleaned_axis">Förrådet städat</string>
+    <string name="reports_timeline">Skanna tidslinjen</string>
+    <string name="reports_storage_scanned">Lagring skannat</string>
+    <string name="reports_storage_cleaned">Förrådet städat</string>
+    <string name="reports_largest_category">Största kategorin</string>
+    <string name="reports_recorded_categories">Inspelade kategorier</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Rensa historik</string>
+    <string name="reports_clear_body">Ta endast bort lagrad skannings- och rengöringshistorik. Användarfiler raderas aldrig.</string>
+    <string name="reports_clear_confirm_title">Ta bort all lagrad skanningshistorik?</string>
+    <string name="reports_clear_confirm_body">Detta tar endast bort TrashPilot skannings- och rengöringshistorik. Det tar inte bort användarfiler.</string>
+    <string name="reports_delete">Radera</string>
 </resources>

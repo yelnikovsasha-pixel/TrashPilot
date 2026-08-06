@@ -44,7 +44,13 @@ class TrashDnaRepository(private val dao: TrashDnaDao) : HistoryRepository {
                 largeFileBytes = largeFiles.sumOf { it.sizeBytes },
                 largeVideoBytes = largeFiles.filter { it.category == FileCategory.VIDEOS }.sumOf { it.sizeBytes },
                 hiddenFileBytes = result.files.filter(::isHidden).sumOf { it.sizeBytes },
-                messengerSourceName = messengerSource?.applicationName.orEmpty()
+                messengerSourceName = messengerSource?.applicationName.orEmpty(),
+                reportMetricsRecorded = true,
+                scannedBytes = result.files.sumOf { it.sizeBytes },
+                apkBytes = result.categoryBytes[FileCategory.APK_FILES] ?: 0,
+                otherBytes = result.categoryBytes[FileCategory.OTHER] ?: 0,
+                largeFileCount = largeFiles.size.toLong(),
+                socialMediaFileCount = messengerGroups.sumOf { it.files.size }.toLong()
             )
         )
     }
@@ -107,6 +113,8 @@ class TrashDnaRepository(private val dao: TrashDnaDao) : HistoryRepository {
     }
 
     suspend fun loadReportHistory(): List<TrashDnaSessionEntity> = dao.loadAll()
+
+    suspend fun clearReportHistory() = dao.clearReportHistory()
 
     suspend fun resetLocalHistory() = dao.clearAll()
 

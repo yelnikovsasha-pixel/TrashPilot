@@ -52,8 +52,11 @@
 - Reports Figma Overview: node `56:2`; Scan History: `56:3`; Cleaning History: `56:4`;
   Storage Trends: `56:5`; Export Report: `56:6`, all on page `18:2` and validated
   as 412 × 917 frames.
-- Reports combines real locally recorded scan, Quick Clean, Trash DNA, and Privacy Monitor
-  metadata. Charts remain empty until recorded sessions provide actual points.
+- Reports combines real locally recorded scan and Quick Clean metadata. Charts remain empty until
+  recorded scan sessions provide actual points.
+- Reports now presents cleaning history as one summary, an unsmoothed storage-cleaned-per-scan
+  chart, tappable scan timeline, and exact aggregate detail screen. Detail selection survives
+  Activity recreation, and the empty state routes directly to a new foreground scan.
 - Settings Figma Overview: node `60:2`; Appearance: `60:3`; Language: `60:4`;
   Data & Storage: `60:5`; Privacy: `60:6`; About: `60:7`; Pro Upgrade: `60:8`,
   all on page `18:2` and validated as 412 × 917 frames.

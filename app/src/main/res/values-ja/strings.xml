@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">ストレージの増加</string>
     <string name="trash_dna_trend_down">ストレージが減少しました</string>
     <string name="trash_dna_trend_stable">ストレージは変更なし</string>
+    <string name="reports_detail_title">レポートの詳細</string>
+    <string name="reports_empty_title">まだ報告はありません</string>
+    <string name="reports_empty_body">最初のスキャンを完了して、クリーニング履歴の構築を開始します。</string>
+    <string name="reports_scan_now">今すぐスキャン</string>
+    <string name="reports_summary_title">クリーニング履歴</string>
+    <string name="reports_total_scans">合計スキャン数</string>
+    <string name="reports_total_analyzed">分析された合計ストレージ</string>
+    <string name="reports_total_cleaned">ストレージ全体がクリーンアップされました</string>
+    <string name="reports_last_scan_date">最終スキャン日</string>
+    <string name="reports_average_cleaned">スキャンごとの平均クリーニング</string>
+    <string name="reports_cleaned_chart">スキャンによってストレージがクリーンアップされました</string>
+    <string name="reports_storage_cleaned_axis">ストレージのクリーニング済み</string>
+    <string name="reports_timeline">スキャンタイムライン</string>
+    <string name="reports_storage_scanned">ストレージがスキャンされました</string>
+    <string name="reports_storage_cleaned">ストレージのクリーニング済み</string>
+    <string name="reports_largest_category">最大のカテゴリ</string>
+    <string name="reports_recorded_categories">記録されたカテゴリ</string>
+    <string name="reports_count_and_size">%1$d・%2$s</string>
+    <string name="reports_clear_history">履歴をクリアする</string>
+    <string name="reports_clear_body">保存されているスキャン履歴とクリーニング履歴のみを削除します。ユーザーファイルは決して削除されません。</string>
+    <string name="reports_clear_confirm_title">保存されているスキャン履歴をすべて削除しますか?</string>
+    <string name="reports_clear_confirm_body">これにより、TrashPilot のスキャンとクリーニングの履歴のみが削除されます。ユーザーファイルは削除されません。</string>
+    <string name="reports_delete">消去</string>
 </resources>

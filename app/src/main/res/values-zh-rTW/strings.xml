@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">儲存空間增加</string>
     <string name="trash_dna_trend_down">儲存量減少</string>
     <string name="trash_dna_trend_stable">儲存不變</string>
+    <string name="reports_detail_title">報告詳情</string>
+    <string name="reports_empty_title">還沒有報告</string>
+    <string name="reports_empty_body">完成第一次掃描以開始建立您的清潔記錄。</string>
+    <string name="reports_scan_now">立即掃描</string>
+    <string name="reports_summary_title">清潔歷史</string>
+    <string name="reports_total_scans">總掃描次數</string>
+    <string name="reports_total_analyzed">分析的總儲存量</string>
+    <string name="reports_total_cleaned">已清理的總儲存空間</string>
+    <string name="reports_last_scan_date">上次掃描日期</string>
+    <string name="reports_average_cleaned">每次掃描的平均清潔量</string>
+    <string name="reports_cleaned_chart">透過掃描清理存儲</string>
+    <string name="reports_storage_cleaned_axis">儲藏室已清理</string>
+    <string name="reports_timeline">掃描時間軸</string>
+    <string name="reports_storage_scanned">已掃描儲存空間</string>
+    <string name="reports_storage_cleaned">儲藏室已清理</string>
+    <string name="reports_largest_category">最大類別</string>
+    <string name="reports_recorded_categories">記錄類別</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">清除歷史記錄</string>
+    <string name="reports_clear_body">僅刪除儲存的掃描和清潔歷史記錄。用戶檔案永遠不會被刪除。</string>
+    <string name="reports_clear_confirm_title">刪除所有儲存的掃描記錄？</string>
+    <string name="reports_clear_confirm_body">這僅刪除 TrashPilot 掃描和清理歷史記錄。它不會刪除用戶檔案。</string>
+    <string name="reports_delete">刪除</string>
 </resources>

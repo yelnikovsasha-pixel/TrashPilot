@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">Stockage augmenté</string>
     <string name="trash_dna_trend_down">Le stockage a diminué</string>
     <string name="trash_dna_trend_stable">Stockage inchangé</string>
+    <string name="reports_detail_title">Détails du rapport</string>
+    <string name="reports_empty_title">Aucun rapport pour l\'instant</string>
+    <string name="reports_empty_body">Effectuez votre première analyse pour commencer à créer votre historique de nettoyage.</string>
+    <string name="reports_scan_now">Scannez maintenant</string>
+    <string name="reports_summary_title">Historique de nettoyage</string>
+    <string name="reports_total_scans">Analyses totales</string>
+    <string name="reports_total_analyzed">Stockage total analysé</string>
+    <string name="reports_total_cleaned">Stockage total nettoyé</string>
+    <string name="reports_last_scan_date">Date de la dernière analyse</string>
+    <string name="reports_average_cleaned">Moyenne nettoyée par analyse</string>
+    <string name="reports_cleaned_chart">Stockage nettoyé par scan</string>
+    <string name="reports_storage_cleaned_axis">Stockage nettoyé</string>
+    <string name="reports_timeline">Chronologie de l\'analyse</string>
+    <string name="reports_storage_scanned">Stockage analysé</string>
+    <string name="reports_storage_cleaned">Stockage nettoyé</string>
+    <string name="reports_largest_category">La plus grande catégorie</string>
+    <string name="reports_recorded_categories">Catégories enregistrées</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">Effacer l\'historique</string>
+    <string name="reports_clear_body">Supprimez uniquement l’historique d’analyse et de nettoyage stocké. Les fichiers utilisateur ne sont jamais supprimés.</string>
+    <string name="reports_clear_confirm_title">Supprimer tout l\'historique d\'analyse stocké ?</string>
+    <string name="reports_clear_confirm_body">Cela supprime uniquement l\'historique d\'analyse et de nettoyage TrashPilot. Il ne supprime pas les fichiers utilisateur.</string>
+    <string name="reports_delete">Supprimer</string>
 </resources>

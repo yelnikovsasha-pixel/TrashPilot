@@ -22,6 +22,9 @@ interface TrashDnaDao {
     @Query("DELETE FROM trash_dna_sessions")
     suspend fun clearAll()
 
+    @Query("DELETE FROM trash_dna_sessions WHERE sessionType IN ('SCAN', 'CLEANUP')")
+    suspend fun clearReportHistory()
+
     @Insert
     suspend fun insertAll(sessions: List<TrashDnaSessionEntity>)
 

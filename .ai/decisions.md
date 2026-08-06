@@ -46,6 +46,12 @@
 - Reports reuses the Trash DNA Room event table as the single local metadata history. Privacy
   reviews append aggregate app counts only; no app names, package names, or permission lists are
   persisted.
+- Reports displays one real point per completed scan and associates only cleanup rows recorded
+  after that scan and before the next. Charts use unsmoothed bars and never interpolate points.
+- Version-4 scan rows explicitly mark complete Reports aggregates. Older rows remain visible but
+  unavailable fields are labeled Not recorded; they are never inferred from unrelated totals.
+- Clearing Reports deletes only SCAN and CLEANUP rows from app-private history. It never touches
+  user files or Privacy Monitor review rows.
 - Scan duration is measured with elapsed realtime around the actual SAF traversal. Legacy rows
   retain explicit missing values, while new scans record duration and scanned-file count.
 - Storage trend charts normalize only values from recorded sessions and never seed demo,

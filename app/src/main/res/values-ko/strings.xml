@@ -442,4 +442,27 @@
     <string name="trash_dna_trend_up">저장용량 증가</string>
     <string name="trash_dna_trend_down">저장용량 감소</string>
     <string name="trash_dna_trend_stable">저장용량은 변경되지 않음</string>
+    <string name="reports_detail_title">보고서 세부정보</string>
+    <string name="reports_empty_title">아직 보고서가 없습니다.</string>
+    <string name="reports_empty_body">청소 기록을 작성하려면 첫 번째 스캔을 완료하세요.</string>
+    <string name="reports_scan_now">지금 스캔</string>
+    <string name="reports_summary_title">청소 이력</string>
+    <string name="reports_total_scans">총 스캔</string>
+    <string name="reports_total_analyzed">분석된 총 스토리지</string>
+    <string name="reports_total_cleaned">정리된 총 저장용량</string>
+    <string name="reports_last_scan_date">마지막 스캔 날짜</string>
+    <string name="reports_average_cleaned">스캔당 평균 청소됨</string>
+    <string name="reports_cleaned_chart">검사를 통해 정리된 저장소</string>
+    <string name="reports_storage_cleaned_axis">저장소 청소됨</string>
+    <string name="reports_timeline">스캔 타임라인</string>
+    <string name="reports_storage_scanned">스캔된 저장소</string>
+    <string name="reports_storage_cleaned">저장소 청소됨</string>
+    <string name="reports_largest_category">가장 큰 카테고리</string>
+    <string name="reports_recorded_categories">기록된 카테고리</string>
+    <string name="reports_count_and_size">%1$d · %2$s</string>
+    <string name="reports_clear_history">기록 지우기</string>
+    <string name="reports_clear_body">저장된 검사 및 치료 기록만 제거합니다. 사용자 파일은 절대 삭제되지 않습니다.</string>
+    <string name="reports_clear_confirm_title">저장된 검사 기록을 모두 삭제하시겠습니까?</string>
+    <string name="reports_clear_confirm_body">이렇게 하면 TrashPilot 검사 및 치료 기록만 제거됩니다. 사용자 파일은 삭제되지 않습니다.</string>
+    <string name="reports_delete">삭제</string>
 </resources>
