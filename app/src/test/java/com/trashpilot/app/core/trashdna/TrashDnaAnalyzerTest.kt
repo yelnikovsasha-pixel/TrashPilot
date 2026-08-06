@@ -7,64 +7,100 @@ import org.junit.Test
 
 class TrashDnaAnalyzerTest {
     @Test
-    fun `summary stays empty until two real scans exist`() {
-        assertNull(TrashDnaAnalyzer.summary(emptyList()))
-        assertNull(TrashDnaAnalyzer.summary(listOf(scan(1, temporary = 10))))
+    fun `analysis stays empty until two completed metric scans exist`() {
+        assertNull(TrashDnaAnalyzer.analyze(emptyList()))
+        assertNull(TrashDnaAnalyzer.analyze(listOf(scan(1, used = 100))))
+        assertNull(TrashDnaAnalyzer.analyze(listOf(scan(1, used = 0), scan(2, used = 100))))
     }
 
     @Test
-    fun `summary uses stored aggregates without inventing values`() {
-        val history = listOf(
-            scan(100, reclaimable = 100, temporary = 60, cache = 20),
-            scan(200, reclaimable = 300, temporary = 120, cache = 30),
-            cleanup(250, reclaimed = 80)
-        )
-        val summary = checkNotNull(TrashDnaAnalyzer.summary(history))
-        assertEquals(2, summary.scansCompleted)
-        assertEquals(1, summary.cleanupsCompleted)
-        assertEquals(TrashDnaCategory.TEMPORARY_FILES, summary.mostCommonCategory)
-        assertEquals(200, summary.averageReclaimableBytes)
-        assertEquals(200, summary.lastScanMillis)
+    fun `calculates real storage and category change from latest scans`() {
+        val analysis = checkNotNull(TrashDnaAnalyzer.analyze(listOf(
+            scan(1, used = 1_000, downloads = 100),
+            scan(2, used = 1_400, downloads = 500)
+        )))
+
+        assertEquals(400, analysis.storageTrend.changeBytes)
+        assertEquals(TrashDnaCategory.DOWNLOADS, analysis.fastestGrowingCategory?.category)
+        assertEquals(400L, analysis.fastestGrowingCategory?.changeBytes)
+        assertEquals(TrashDnaInsight.DOWNLOADS_GROWTH, analysis.insight)
+        assertEquals(TrashDnaRecommendation.REMOVE_OLD_DOWNLOADS, analysis.recommendation)
     }
 
     @Test
-    fun `insights require three scans and supported patterns`() {
-        val history = listOf(
-            scan(1, reclaimable = 100, temporary = 10, apk = 5, logs = 2),
-            scan(2, reclaimable = 200, temporary = 40, apk = 6, logs = 3),
-            scan(3, reclaimable = 300, temporary = 100, apk = 0, logs = 4)
+    fun `profile detector chooses dominant recorded pattern and otherwise balanced`() {
+        val messenger = ProfileDetector.detect(
+            scan(1, used = 100, messenger = 10),
+            scan(2, used = 500, messenger = 410)
         )
-        val insights = TrashDnaAnalyzer.insights(history)
-        assertTrue(TrashDnaInsight.TEMPORARY_FILES_ACCUMULATE_FASTEST in insights)
-        assertTrue(TrashDnaInsight.APK_LEFTOVERS_RECUR in insights)
-        assertTrue(TrashDnaInsight.LOG_FILES_REMAIN_LOW in insights)
+        val balanced = ProfileDetector.detect(
+            scan(1, used = 100, downloads = 10, screenshots = 10),
+            scan(2, used = 200, downloads = 60, screenshots = 55)
+        )
+
+        assertEquals(TrashDnaProfile.MESSENGER_HEAVY, messenger)
+        assertEquals(TrashDnaProfile.BALANCED, balanced)
+    }
+
+    @Test
+    fun `history is chronological and attaches only real cleanup totals`() {
+        val analysis = checkNotNull(TrashDnaAnalyzer.analyze(listOf(
+            scan(200, used = 200, videos = 80),
+            cleanup(150, reclaimed = 25),
+            scan(100, used = 100, videos = 40),
+            cleanup(250, reclaimed = 10)
+        )))
+
+        assertEquals(listOf(100L, 200L), analysis.history.map { it.timestampMillis })
+        assertEquals(25, analysis.history[0].deletedBytes)
+        assertEquals(10, analysis.history[1].deletedBytes)
+        assertEquals(TrashDnaCategory.VIDEOS, analysis.history[1].largestCategory)
+    }
+
+    @Test
+    fun `storage reduction produces calm stable recommendation`() {
+        val analysis = checkNotNull(TrashDnaAnalyzer.analyze(listOf(
+            scan(1, used = 500, hidden = 100),
+            scan(2, used = 300, hidden = 50)
+        )))
+
+        assertTrue(analysis.storageTrend.changeBytes < 0)
+        assertEquals(TrashDnaInsight.STORAGE_REDUCED, analysis.insight)
+        assertEquals(TrashDnaRecommendation.KEEP_CURRENT_HABITS, analysis.recommendation)
     }
 
     private fun scan(
         time: Long,
-        reclaimable: Long = 0,
-        temporary: Long = 0,
-        cache: Long = 0,
-        apk: Long = 0,
-        logs: Long = 0
+        used: Long,
+        downloads: Long = 0,
+        screenshots: Long = 0,
+        messenger: Long = 0,
+        videos: Long = 0,
+        hidden: Long = 0
     ) = TrashDnaSessionEntity(
         sessionType = TrashDnaSessionType.SCAN,
         timestampMillis = time,
-        scannedFolderName = "Folder",
-        reclaimableBytes = reclaimable,
+        scannedFolderName = "Device",
+        reclaimableBytes = 0,
         reclaimedBytes = 0,
         result = TrashDnaResult.ANALYZED,
-        temporaryBytes = temporary,
-        cacheBytes = cache,
+        temporaryBytes = 0,
+        cacheBytes = 0,
         emptyFolderCount = 0,
-        apkLeftoverBytes = apk,
-        logBytes = logs
+        apkLeftoverBytes = 0,
+        logBytes = 0,
+        usedStorageBytes = used,
+        downloadBytes = downloads,
+        screenshotBytes = screenshots,
+        messengerMediaBytes = messenger,
+        videoBytes = videos,
+        hiddenFileBytes = hidden
     )
 
     private fun cleanup(time: Long, reclaimed: Long) = TrashDnaSessionEntity(
         sessionType = TrashDnaSessionType.CLEANUP,
         timestampMillis = time,
-        scannedFolderName = "Folder",
+        scannedFolderName = "Device",
         reclaimableBytes = reclaimed,
         reclaimedBytes = reclaimed,
         result = TrashDnaResult.CLEANED,

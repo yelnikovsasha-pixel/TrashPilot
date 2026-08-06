@@ -20,7 +20,25 @@ data class TrashDnaSessionEntity(
     val scannedFileCount: Long = 0,
     val scanDurationMillis: Long = 0,
     val privacyAppsChecked: Long = 0,
-    val privacySensitiveAppCount: Long = 0
+    val privacySensitiveAppCount: Long = 0,
+    val usedStorageBytes: Long = 0,
+    val imageBytes: Long = 0,
+    val videoBytes: Long = 0,
+    val audioBytes: Long = 0,
+    val documentBytes: Long = 0,
+    val downloadBytes: Long = 0,
+    val messengerMediaBytes: Long = 0,
+    val screenshotBytes: Long = 0,
+    val largeFileBytes: Long = 0,
+    val largeVideoBytes: Long = 0,
+    val hiddenFileBytes: Long = 0,
+    val messengerSourceName: String = ""
+)
+
+@Entity(tableName = "trash_dna_state")
+data class TrashDnaStateEntity(
+    @PrimaryKey val key: String = "state",
+    val resetAtMillis: Long = 0
 )
 
 object TrashDnaSessionType {

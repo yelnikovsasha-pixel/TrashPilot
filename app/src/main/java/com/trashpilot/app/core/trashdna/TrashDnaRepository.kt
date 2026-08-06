@@ -4,10 +4,20 @@ import com.trashpilot.app.core.quickclean.CleaningReport
 import com.trashpilot.app.core.quickclean.DisposableCategory
 import com.trashpilot.app.core.privacy.PrivacySnapshot
 import com.trashpilot.app.core.storage.StorageScanResult
+import com.trashpilot.app.core.storage.FileCategory
+import com.trashpilot.app.core.storage.SocialMediaAnalyzer
 
-class TrashDnaRepository(private val dao: TrashDnaDao) {
+interface HistoryRepository {
+    suspend fun loadTrashDnaHistory(): List<TrashDnaSessionEntity>
+    suspend fun resetTrashDnaHistory(timestampMillis: Long = System.currentTimeMillis())
+}
+
+class TrashDnaRepository(private val dao: TrashDnaDao) : HistoryRepository {
     suspend fun recordScan(result: StorageScanResult, timestampMillis: Long = System.currentTimeMillis()) {
         val grouped = result.disposableCandidates.groupBy { it.category }
+        val messengerGroups = SocialMediaAnalyzer.groups(result.files)
+        val messengerSource = messengerGroups.maxByOrNull { it.totalBytes }
+        val largeFiles = result.files.filter { it.sizeBytes >= LARGE_FILE_MIN_BYTES }
         dao.insert(
             TrashDnaSessionEntity(
                 sessionType = TrashDnaSessionType.SCAN,
@@ -22,7 +32,19 @@ class TrashDnaRepository(private val dao: TrashDnaDao) {
                 apkLeftoverBytes = grouped.bytes(DisposableCategory.APK_LEFTOVERS),
                 logBytes = grouped.bytes(DisposableCategory.LOG_FILES),
                 scannedFileCount = result.scannedFileCount.toLong(),
-                scanDurationMillis = result.scanDurationMillis
+                scanDurationMillis = result.scanDurationMillis,
+                usedStorageBytes = result.usedBytes,
+                imageBytes = result.categoryBytes[FileCategory.IMAGES] ?: 0,
+                videoBytes = result.categoryBytes[FileCategory.VIDEOS] ?: 0,
+                audioBytes = result.categoryBytes[FileCategory.AUDIO] ?: 0,
+                documentBytes = result.categoryBytes[FileCategory.DOCUMENTS] ?: 0,
+                downloadBytes = result.categoryBytes[FileCategory.DOWNLOADS] ?: 0,
+                messengerMediaBytes = messengerGroups.sumOf { it.totalBytes },
+                screenshotBytes = result.files.filter(::isScreenshot).sumOf { it.sizeBytes },
+                largeFileBytes = largeFiles.sumOf { it.sizeBytes },
+                largeVideoBytes = largeFiles.filter { it.category == FileCategory.VIDEOS }.sumOf { it.sizeBytes },
+                hiddenFileBytes = result.files.filter(::isHidden).sumOf { it.sizeBytes },
+                messengerSourceName = messengerSource?.applicationName.orEmpty()
             )
         )
     }
@@ -75,9 +97,22 @@ class TrashDnaRepository(private val dao: TrashDnaDao) {
     suspend fun loadHistory(): List<TrashDnaSessionEntity> = dao.loadAll()
         .filter { it.sessionType != TrashDnaSessionType.PRIVACY_REVIEW }
 
+    override suspend fun loadTrashDnaHistory(): List<TrashDnaSessionEntity> {
+        val resetAt = dao.loadResetAtMillis() ?: 0
+        return dao.loadAll().filter {
+            it.timestampMillis > resetAt && it.sessionType in setOf(
+                TrashDnaSessionType.SCAN, TrashDnaSessionType.CLEANUP
+            )
+        }
+    }
+
     suspend fun loadReportHistory(): List<TrashDnaSessionEntity> = dao.loadAll()
 
     suspend fun resetLocalHistory() = dao.clearAll()
+
+    override suspend fun resetTrashDnaHistory(timestampMillis: Long) {
+        dao.saveState(TrashDnaStateEntity(resetAtMillis = timestampMillis))
+    }
 
     suspend fun replaceLocalHistory(sessions: List<TrashDnaSessionEntity>) {
         dao.replaceAll(sessions.map { it.copy(id = 0) })
@@ -86,4 +121,15 @@ class TrashDnaRepository(private val dao: TrashDnaDao) {
     private fun Map<DisposableCategory, List<com.trashpilot.app.core.quickclean.DisposableCandidate>>.bytes(
         category: DisposableCategory
     ): Long = get(category)?.sumOf { it.sizeBytes } ?: 0
+
+    private fun isScreenshot(file: com.trashpilot.app.core.storage.ScannedFile): Boolean =
+        file.relativePath.replace('\\', '/').split('/').any { it.equals("Screenshots", true) } ||
+            file.name.startsWith("Screenshot", true)
+
+    private fun isHidden(file: com.trashpilot.app.core.storage.ScannedFile): Boolean =
+        file.relativePath.replace('\\', '/').split('/').any { it.startsWith(".") }
+
+    private companion object {
+        const val LARGE_FILE_MIN_BYTES = 100L * 1024L * 1024L
+    }
 }

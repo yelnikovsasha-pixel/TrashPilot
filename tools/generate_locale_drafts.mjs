@@ -82,13 +82,32 @@ async function mapLimited(values, limit, mapper) {
 for (const [folder, language] of Object.entries(locales)) {
   if (requestedFolders.size && !requestedFolders.has(folder)) continue;
   const existingPath = path.join(root, "app/src/main/res", folder, "strings.xml");
-  try {
-    const existing = await readFile(existingPath, "utf8");
-    if (!force && [...existing.matchAll(/<string name="/g)].length === entries.length) {
-      process.stdout.write(`${folder}: already complete\n`);
+  let existing = null;
+  try { existing = await readFile(existingPath, "utf8"); } catch {}
+  if (existing !== null && !force) {
+      const existingNames = new Set(
+        [...existing.matchAll(/<string name="([^"]+)"/g)].map(match => match[1])
+      );
+      const missing = entries.filter(entry => !existingNames.has(entry.name));
+      if (missing.length === 0) {
+        process.stdout.write(`${folder}: already complete\n`);
+        continue;
+      }
+      const localizedMissing = await mapLimited(missing, 12, async entry => ({
+        ...entry,
+        value: overrides[folder]?.[entry.name] ?? (
+          entry.attrs.includes('translatable="false"')
+            ? entry.value : await translate(entry.value, language)
+        )
+      }));
+      const additions = localizedMissing.map(entry =>
+        `    <string name="${entry.name}"${entry.attrs}>${escapeXml(entry.value)}</string>`
+      ).join("\n");
+      const updated = existing.replace("</resources>", `${additions}\n</resources>`);
+      await writeFile(existingPath, updated, "utf8");
+      process.stdout.write(`${folder}: added ${localizedMissing.length} keys\n`);
       continue;
-    }
-  } catch {}
+  }
   const localized = await mapLimited(entries, 12, async entry => ({
     ...entry,
     value: overrides[folder]?.[entry.name] ?? (

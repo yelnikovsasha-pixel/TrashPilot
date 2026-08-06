@@ -1,72 +1,54 @@
 package com.trashpilot.app.core.trashdna
 
-data class TrashDnaSummary(
-    val scansCompleted: Int,
-    val cleanupsCompleted: Int,
-    val mostCommonCategory: TrashDnaCategory?,
-    val averageReclaimableBytes: Long,
-    val lastScanMillis: Long
-)
-
-enum class TrashDnaCategory {
-    TEMPORARY_FILES, APP_CACHE, EMPTY_FOLDERS, APK_LEFTOVERS, LOG_FILES
-}
-
-enum class TrashDnaInsight {
-    TEMPORARY_FILES_ACCUMULATE_FASTEST,
-    APK_LEFTOVERS_RECUR,
-    LOG_FILES_REMAIN_LOW
-}
+import com.trashpilot.app.core.trashdna.TrendCalculator.bytes
 
 object TrashDnaAnalyzer {
-    const val minimumSummaryScans = 2
-    private const val minimumInsightScans = 3
+    const val minimumScans = 2
 
-    fun summary(history: List<TrashDnaSessionEntity>): TrashDnaSummary? {
-        val scans = history.filter { it.sessionType == TrashDnaSessionType.SCAN }
-        if (scans.size < minimumSummaryScans) return null
-        val occurrences = categoryOccurrences(scans)
-        val common = occurrences.maxByOrNull { it.value }?.takeIf { it.value > 0 }?.key
-        return TrashDnaSummary(
-            scansCompleted = scans.size,
-            cleanupsCompleted = history.count { it.sessionType == TrashDnaSessionType.CLEANUP },
-            mostCommonCategory = common,
-            averageReclaimableBytes = scans.sumOf { it.reclaimableBytes } / scans.size,
-            lastScanMillis = scans.maxOf { it.timestampMillis }
+    fun analyze(history: List<TrashDnaSessionEntity>): TrashDnaAnalysis? {
+        val scans = history.filter {
+            it.sessionType == TrashDnaSessionType.SCAN && it.usedStorageBytes > 0
+        }.sortedBy { it.timestampMillis }
+        if (scans.size < minimumScans) return null
+        val previous = scans[scans.lastIndex - 1]
+        val latest = scans.last()
+        val storageTrend = TrendCalculator.storage(previous, latest)
+        val fastest = TrendCalculator.fastestGrowing(previous, latest)
+        val insight = InsightGenerator.generate(previous, latest, storageTrend, fastest)
+        val mainCategory = fastest?.category ?: latest.largestCategory()
+        val cleanupTimes = history.filter { it.sessionType == TrashDnaSessionType.CLEANUP }
+            .map { it.timestampMillis }.sorted()
+        return TrashDnaAnalysis(
+            profile = ProfileDetector.detect(scans.first(), latest),
+            storageTrend = storageTrend,
+            fastestGrowingCategory = fastest,
+            mainSourceCategory = mainCategory,
+            mainSourceName = latest.messengerSourceName.takeIf {
+                mainCategory == TrashDnaCategory.MESSENGER_MEDIA && it.isNotBlank()
+            },
+            insight = insight,
+            recommendation = RecommendationGenerator.generate(insight),
+            history = scans.mapIndexed { index, scan ->
+                val nextTimestamp = scans.getOrNull(index + 1)?.timestampMillis ?: Long.MAX_VALUE
+                TrashDnaHistoryItem(
+                    timestampMillis = scan.timestampMillis,
+                    totalStorageBytes = scan.usedStorageBytes,
+                    deletedBytes = history.filter {
+                        it.sessionType == TrashDnaSessionType.CLEANUP &&
+                            it.timestampMillis >= scan.timestampMillis && it.timestampMillis < nextTimestamp
+                    }.sumOf { it.reclaimedBytes },
+                    largestCategory = scan.largestCategory()
+                )
+            },
+            cleanupCount = cleanupTimes.size,
+            averageDaysBetweenCleanups = cleanupTimes.zipWithNext { first, second -> second - first }
+                .takeIf { it.isNotEmpty() }?.average()?.div(MILLIS_PER_DAY)
         )
     }
 
-    fun insights(history: List<TrashDnaSessionEntity>): Set<TrashDnaInsight> {
-        val scans = history.filter { it.sessionType == TrashDnaSessionType.SCAN }
-            .sortedBy { it.timestampMillis }
-        if (scans.size < minimumInsightScans) return emptySet()
-        val result = mutableSetOf<TrashDnaInsight>()
-        val first = scans.first()
-        val last = scans.last()
-        val tempGrowth = last.temporaryBytes - first.temporaryBytes
-        val competingGrowth = maxOf(
-            last.cacheBytes - first.cacheBytes,
-            last.apkLeftoverBytes - first.apkLeftoverBytes,
-            last.logBytes - first.logBytes,
-            0L
-        )
-        if (tempGrowth > 0 && tempGrowth > competingGrowth) {
-            result += TrashDnaInsight.TEMPORARY_FILES_ACCUMULATE_FASTEST
-        }
-        if (scans.count { it.apkLeftoverBytes > 0 } >= 2) {
-            result += TrashDnaInsight.APK_LEFTOVERS_RECUR
-        }
-        if (scans.all { it.logBytes <= it.reclaimableBytes / 10 }) {
-            result += TrashDnaInsight.LOG_FILES_REMAIN_LOW
-        }
-        return result
-    }
+    private fun TrashDnaSessionEntity.largestCategory(): TrashDnaCategory? =
+        TrashDnaCategory.entries.map { it to bytes(it) }.maxByOrNull { it.second }
+            ?.takeIf { it.second > 0 }?.first
 
-    private fun categoryOccurrences(scans: List<TrashDnaSessionEntity>) = mapOf(
-        TrashDnaCategory.TEMPORARY_FILES to scans.count { it.temporaryBytes > 0 },
-        TrashDnaCategory.APP_CACHE to scans.count { it.cacheBytes > 0 },
-        TrashDnaCategory.EMPTY_FOLDERS to scans.count { it.emptyFolderCount > 0 },
-        TrashDnaCategory.APK_LEFTOVERS to scans.count { it.apkLeftoverBytes > 0 },
-        TrashDnaCategory.LOG_FILES to scans.count { it.logBytes > 0 }
-    )
+    private const val MILLIS_PER_DAY = 86_400_000.0
 }

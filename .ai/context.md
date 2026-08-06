@@ -37,6 +37,10 @@
   all on page `18:2` and validated as 412 × 917 frames.
 - Trash DNA analyzes only locally persisted scan and cleanup metadata generated inside
   TrashPilot. Its overview and insights remain honestly empty until enough history exists.
+- Trash DNA persists aggregate used-storage, media, download, messenger, screenshot, large-file,
+  hidden-file, and cache totals for completed scans. It shows one deterministic profile, latest
+  storage/category trends, one insight, one recommendation, and chronological scan history after
+  two qualifying scans; earlier schema rows remain stored but are not treated as complete metrics.
 - Privacy Monitor Figma Overview: node `51:2`; Permission Categories: `51:3`;
   Apps With Sensitive Permissions: `51:4`; Permission Details: `51:5`;
   Recommendations: `51:6`, all on page `18:2` and validated as 412 × 917 frames.

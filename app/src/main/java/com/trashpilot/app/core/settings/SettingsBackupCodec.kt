@@ -8,7 +8,8 @@ data class SettingsBackup(
 )
 
 object SettingsBackupCodec {
-    private const val HEADER = "TRASHPILOT_BACKUP_V1"
+    private const val HEADER = "TRASHPILOT_BACKUP_V2"
+    private const val LEGACY_HEADER = "TRASHPILOT_BACKUP_V1"
 
     fun encode(backup: SettingsBackup): String = buildString {
         appendLine(HEADER)
@@ -23,7 +24,11 @@ object SettingsBackupCodec {
                     session.temporaryBytes, session.cacheBytes, session.emptyFolderCount,
                     session.apkLeftoverBytes, session.logBytes, session.scannedFileCount,
                     session.scanDurationMillis, session.privacyAppsChecked,
-                    session.privacySensitiveAppCount
+                    session.privacySensitiveAppCount, session.usedStorageBytes,
+                    session.imageBytes, session.videoBytes, session.audioBytes,
+                    session.documentBytes, session.downloadBytes, session.messengerMediaBytes,
+                    session.screenshotBytes, session.largeFileBytes, session.largeVideoBytes,
+                    session.hiddenFileBytes, safe(session.messengerSourceName)
                 ).joinToString("\t")
             )
         }
@@ -31,7 +36,8 @@ object SettingsBackupCodec {
 
     fun decode(text: String): SettingsBackup {
         val lines = text.lineSequence().filter { it.isNotBlank() }.toList()
-        require(lines.firstOrNull() == HEADER) { "This is not a TrashPilot backup." }
+        val header = lines.firstOrNull()
+        require(header == HEADER || header == LEGACY_HEADER) { "This is not a TrashPilot backup." }
         val preferences = mutableMapOf<String, String>()
         val sessions = mutableListOf<TrashDnaSessionEntity>()
         lines.drop(1).forEach { line ->
@@ -39,7 +45,9 @@ object SettingsBackupCodec {
             when (parts.firstOrNull()) {
                 "P" -> if (parts.size == 3) preferences[unsafe(parts[1])] = unsafe(parts[2])
                 "S" -> {
-                    require(parts.size == 16) { "The backup contains an invalid history row." }
+                    require(parts.size == 16 || parts.size == 28) {
+                        "The backup contains an invalid history row."
+                    }
                     sessions += TrashDnaSessionEntity(
                         sessionType = parts[1],
                         timestampMillis = parts[2].toLong(),
@@ -55,7 +63,19 @@ object SettingsBackupCodec {
                         scannedFileCount = parts[12].toLong(),
                         scanDurationMillis = parts[13].toLong(),
                         privacyAppsChecked = parts[14].toLong(),
-                        privacySensitiveAppCount = parts[15].toLong()
+                        privacySensitiveAppCount = parts[15].toLong(),
+                        usedStorageBytes = parts.getOrNull(16)?.toLong() ?: 0,
+                        imageBytes = parts.getOrNull(17)?.toLong() ?: 0,
+                        videoBytes = parts.getOrNull(18)?.toLong() ?: 0,
+                        audioBytes = parts.getOrNull(19)?.toLong() ?: 0,
+                        documentBytes = parts.getOrNull(20)?.toLong() ?: 0,
+                        downloadBytes = parts.getOrNull(21)?.toLong() ?: 0,
+                        messengerMediaBytes = parts.getOrNull(22)?.toLong() ?: 0,
+                        screenshotBytes = parts.getOrNull(23)?.toLong() ?: 0,
+                        largeFileBytes = parts.getOrNull(24)?.toLong() ?: 0,
+                        largeVideoBytes = parts.getOrNull(25)?.toLong() ?: 0,
+                        hiddenFileBytes = parts.getOrNull(26)?.toLong() ?: 0,
+                        messengerSourceName = parts.getOrNull(27)?.let(::unsafe).orEmpty()
                     )
                 }
             }

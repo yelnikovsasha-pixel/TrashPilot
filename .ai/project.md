@@ -17,8 +17,9 @@
 - `core/quickclean` owns conservative disposable-file classification and selected-document
   deletion through the Storage Access Framework. `features/quickclean` owns Overview, manual
   Review, Confirmation, and honest Cleaning Report states.
-- Room 2.8.4 persists metadata-only Trash DNA sessions in `core/trashdna`; `features/trashdna`
-  owns overview, supported local insights, history, and loading/empty/success/error presentation.
+- Room 2.8.4 persists metadata-only Trash DNA scan aggregates in `core/trashdna`; focused trend,
+  profile, insight, and recommendation analyzers produce one honest local behavior summary.
+  `features/trashdna` owns the empty, analysis, chronological history, reset, loading, and error UI.
 - KSP 2.2.10-2.0.2 generates Room code. AGP 9 requires the scoped
   `android.disallowKotlinSourceSets=false` compatibility setting for this KSP version.
 - `core/privacy` maps Android package declarations and runtime grant states into the eight
@@ -27,14 +28,14 @@
 - `core/reports` summarizes and exports the existing metadata-only Room history.
   `features/reports` owns overview, scan and cleaning histories, real-data charts, local text
   export, and loading/empty/success/error presentation.
-- Room schema version 2 adds scan duration, scanned-file count, and aggregate Privacy Monitor
-  review counts through a non-destructive `1 -> 2` migration.
+- Room schema version 3 adds aggregate storage/category trend fields and a Trash DNA reset cutoff
+  through non-destructive `1 -> 2 -> 3` migrations.
 - `core/settings` owns persisted theme preferences, DataStore language selection, and a versioned metadata-only
   backup codec. `features/settings` owns the seven Settings destinations and local document
   picker flows for diagnostics, backup, and restore.
 - Preferences DataStore 1.2.1 stores the selected locale and migrates the legacy
   `trashpilot-settings` SharedPreferences language key on upgrade.
-- Android resources provide complete 381-key catalogs for all 25 supported app languages.
+- Android resources provide complete 442-key catalogs for all 25 supported app languages.
   `tools/generate_locale_drafts.mjs` reproduces the automated draft catalogs and
   `tools/verify_locales.mjs` checks XML structure, exact key parity, formatting-token parity,
   and probable long English fallbacks.

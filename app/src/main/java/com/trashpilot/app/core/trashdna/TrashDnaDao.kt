@@ -13,6 +13,12 @@ interface TrashDnaDao {
     @Query("SELECT * FROM trash_dna_sessions ORDER BY timestampMillis DESC, id DESC")
     suspend fun loadAll(): List<TrashDnaSessionEntity>
 
+    @Query("SELECT resetAtMillis FROM trash_dna_state WHERE `key` = 'state' LIMIT 1")
+    suspend fun loadResetAtMillis(): Long?
+
+    @Insert(onConflict = androidx.room.OnConflictStrategy.REPLACE)
+    suspend fun saveState(state: TrashDnaStateEntity)
+
     @Query("DELETE FROM trash_dna_sessions")
     suspend fun clearAll()
 

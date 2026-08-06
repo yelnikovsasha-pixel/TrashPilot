@@ -201,7 +201,8 @@ fun AppNavigation() {
         composable("trash-dna") {
             TrashDnaScreen(
                 repository = historyRepository,
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                onScanAgain = { navController.navigate("scanner") }
             )
         }
         composable("reports") {

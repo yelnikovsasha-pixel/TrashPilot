@@ -28,6 +28,11 @@
   reports reclaimed bytes, successful counts by category, and every failed deletion honestly.
 - Trash DNA uses a private on-device Room database with no account, network, cloud, analytics,
   or tracking integration. Scan and cleanup completion append metadata-only history records.
+- Trash DNA requires two completed scans containing version-3 aggregate metrics. Profiles are
+  deterministic and default to Balanced unless one recorded growth pattern clearly dominates.
+  One insight and one calm recommendation are derived from the latest two qualifying scans.
+- Resetting Trash DNA records a local cutoff rather than deleting scan rows, so Trash DNA starts
+  fresh while historical scan results remain available to Reports and metadata backup.
 - Folder display names are retained to make history understandable; document URIs, full paths,
   and file-level identifiers are deliberately excluded from the Room schema.
 - Privacy Monitor uses PackageManager with permission metadata and package visibility so counts
