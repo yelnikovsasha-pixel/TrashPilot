@@ -35,6 +35,7 @@ import com.trashpilot.app.core.trashdna.TrashDnaRepository
 import com.trashpilot.app.features.trashdna.TrashDnaScreen
 import com.trashpilot.app.features.privacy.PrivacyMonitorScreen
 import com.trashpilot.app.features.reports.ReportsScreen
+import com.trashpilot.app.features.duplicates.DuplicateScannerScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -135,7 +136,26 @@ fun AppNavigation() {
                     selectedCategory = category
                     navController.navigate("category-files")
                 },
-                onOpenSocialMedia = { navController.navigate("social-media-files") }
+                onOpenSocialMedia = { navController.navigate("social-media-files") },
+                onOpenDuplicates = { navController.navigate("duplicate-scanner") }
+            )
+        }
+        composable("duplicate-scanner") {
+            val result = latestScan
+            if (result != null) {
+                DuplicateScannerScreen(
+                    scanResult = result,
+                    onBack = { navController.popBackStack() },
+                    onScanAgain = { navController.navigate("scanner") },
+                    onCleaningComplete = { updated, report ->
+                        latestScan = updated
+                        scope.launch { historyRepository.recordDuplicateCleanup(result, report) }
+                    }
+                )
+            } else PlaceholderDestinationScreen(
+                title = R.string.duplicate_scanner_title,
+                message = R.string.results_missing,
+                onBack = { navController.popBackStack() }
             )
         }
         composable("quick-clean") {

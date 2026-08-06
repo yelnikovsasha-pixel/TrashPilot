@@ -57,3 +57,5 @@
   card shell, and feature card used by Home and Scan Results.
 - Scan Results displays only active-scan metrics, classifies accessible social/messenger media
   from stored relative paths, and runs SHA-256 duplicate comparison only on explicit user action.
+- `core/storage/DuplicateAnalyzer.kt` owns size-first SHA-256 grouping and progress models;
+  `DuplicateCleaner.kt` owns explicit URI deletion reports; `features/duplicates` owns UI only.

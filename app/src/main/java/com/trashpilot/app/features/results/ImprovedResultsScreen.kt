@@ -32,14 +32,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,8 +46,6 @@ import androidx.compose.ui.unit.dp
 import com.trashpilot.app.R
 import com.trashpilot.app.core.quickclean.DisposableCategory
 import com.trashpilot.app.core.storage.FileCategory
-import com.trashpilot.app.core.storage.DuplicateAnalysis
-import com.trashpilot.app.core.storage.DuplicateAnalyzer
 import com.trashpilot.app.core.storage.ScannedFile
 import com.trashpilot.app.core.storage.SocialMediaAnalyzer
 import com.trashpilot.app.core.storage.StorageScanResult
@@ -65,7 +61,6 @@ import com.trashpilot.app.ui.theme.TrashPilotRadii
 import com.trashpilot.app.ui.theme.TrashPilotSpacing
 import java.text.DateFormat
 import java.util.Date
-import kotlinx.coroutines.launch
 
 @Composable
 fun ImprovedResultsScreen(
@@ -74,7 +69,8 @@ fun ImprovedResultsScreen(
     onScanAgain: () -> Unit,
     onQuickClean: (Set<String>) -> Unit,
     @Suppress("UNUSED_PARAMETER") onOpenCategory: (FileCategory) -> Unit,
-    onOpenSocialMedia: () -> Unit
+    onOpenSocialMedia: () -> Unit,
+    onOpenDuplicates: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -107,7 +103,8 @@ fun ImprovedResultsScreen(
                 result = state.result,
                 onBack = onBack,
                 onQuickClean = onQuickClean,
-                onOpenSocialMedia = onOpenSocialMedia
+                onOpenSocialMedia = onOpenSocialMedia,
+                onOpenDuplicates = onOpenDuplicates
             )
         }
     }
@@ -118,16 +115,11 @@ private fun ResultsContent(
     result: StorageScanResult,
     onBack: () -> Unit,
     onQuickClean: (Set<String>) -> Unit,
-    onOpenSocialMedia: () -> Unit
+    onOpenSocialMedia: () -> Unit,
+    onOpenDuplicates: () -> Unit
 ) {
     val overview = remember(result) { result.toResultsOverview() }
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    val duplicateAnalyzer = remember(context) { DuplicateAnalyzer(context.contentResolver) }
     val listState = remember(result) { LazyListState() }
-    var duplicateState by remember(result) {
-        mutableStateOf<DuplicateUiState>(DuplicateUiState.NotStarted)
-    }
     var selectedUris by remember(result) { mutableStateOf(emptySet<String>()) }
     fun toggleCandidates(candidates: List<com.trashpilot.app.core.quickclean.DisposableCandidate>) {
         val uris = candidates.mapTo(mutableSetOf()) { it.uri }
@@ -137,15 +129,7 @@ private fun ResultsContent(
             selectedUris + uris
         }
     }
-    val duplicateValue = when (val current = duplicateState) {
-        DuplicateUiState.NotStarted -> stringResource(R.string.results_run_duplicate_analysis)
-        DuplicateUiState.Loading -> stringResource(R.string.results_duplicate_analyzing)
-        is DuplicateUiState.Complete -> stringResource(
-            R.string.results_duplicate_result,
-            current.result.duplicateFileCount,
-            formatBytes(current.result.duplicateBytes)
-        )
-    }
+    val duplicateValue = stringResource(R.string.results_run_duplicate_analysis)
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         state = listState,
@@ -223,16 +207,7 @@ private fun ResultsContent(
                 title = stringResource(R.string.results_duplicates),
                 subtitle = stringResource(R.string.results_tap_duplicate_analysis),
                 value = duplicateValue,
-                onClick = {
-                    if (duplicateState !is DuplicateUiState.Loading) {
-                        duplicateState = DuplicateUiState.Loading
-                        scope.launch {
-                            duplicateState = DuplicateUiState.Complete(
-                                duplicateAnalyzer.analyze(result.files)
-                            )
-                        }
-                    }
-                }
+                onClick = onOpenDuplicates
             )
         }
         item {
@@ -542,11 +517,6 @@ internal fun StorageScanResult.toResultsOverview(): ResultsOverview {
 
 private const val LARGE_FILE_MIN_BYTES = 100L * 1024L * 1024L
 
-private sealed interface DuplicateUiState {
-    data object NotStarted : DuplicateUiState
-    data object Loading : DuplicateUiState
-    data class Complete(val result: DuplicateAnalysis) : DuplicateUiState
-}
 
 @Composable
 private fun fileCountText(count: Int): String =

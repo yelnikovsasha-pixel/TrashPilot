@@ -6,6 +6,7 @@ import com.trashpilot.app.core.privacy.PrivacySnapshot
 import com.trashpilot.app.core.storage.StorageScanResult
 import com.trashpilot.app.core.storage.FileCategory
 import com.trashpilot.app.core.storage.SocialMediaAnalyzer
+import com.trashpilot.app.core.storage.DuplicateCleaningReport
 
 interface HistoryRepository {
     suspend fun loadTrashDnaHistory(): List<TrashDnaSessionEntity>
@@ -73,6 +74,25 @@ class TrashDnaRepository(private val dao: TrashDnaDao) : HistoryRepository {
                 emptyFolderCount = 0,
                 apkLeftoverBytes = 0,
                 logBytes = 0
+            )
+        )
+    }
+
+    suspend fun recordDuplicateCleanup(
+        scan: StorageScanResult,
+        report: DuplicateCleaningReport,
+        timestampMillis: Long = System.currentTimeMillis()
+    ) {
+        dao.insert(
+            TrashDnaSessionEntity(
+                sessionType = TrashDnaSessionType.CLEANUP,
+                timestampMillis = timestampMillis,
+                scannedFolderName = scan.selectedRootName,
+                reclaimableBytes = report.deletedFiles.sumOf { it.sizeBytes },
+                reclaimedBytes = report.reclaimedBytes,
+                result = if (report.failedFiles.isEmpty()) TrashDnaResult.CLEANED else TrashDnaResult.PARTIAL,
+                temporaryBytes = 0, cacheBytes = 0, emptyFolderCount = 0,
+                apkLeftoverBytes = 0, logBytes = 0
             )
         )
     }

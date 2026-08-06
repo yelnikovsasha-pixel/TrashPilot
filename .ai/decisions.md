@@ -83,3 +83,6 @@
 - Hide system bars immersively so the 412 × 917 app surface matches the approved full-frame design.
 - Preserve legacy approved geometry as semantic tokens during architecture refactors; tokenization
   does not authorize normalizing 20/24/26/28 dp shapes into a redesigned shape scale.
+- Duplicate recoverable storage is the real byte total of redundant copies after retaining one
+  file per SHA-256 group. Confirmed duplicate cleanup is stored as a normal cleanup event so
+  existing Reports and Trash DNA consume only actual deletions.

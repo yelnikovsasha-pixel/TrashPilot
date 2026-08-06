@@ -19,7 +19,8 @@ data class ScannedFile(
     val lastModifiedMillis: Long,
     val uri: String,
     val category: FileCategory,
-    val relativePath: String = ""
+    val relativePath: String = "",
+    val createdMillis: Long = 0
 )
 
 data class StorageScanResult(

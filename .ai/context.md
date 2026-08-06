@@ -135,3 +135,12 @@
   all-files access is never requested.
 - A completed scan with no removable candidates, large files, hidden paths, or supported social
   media uses the positive `Your storage is already clean` state instead of zero-valued cards.
+
+## Duplicate Scanner
+
+- The Results duplicate card opens a dedicated scanner over the active real shared-storage scan.
+- Detection groups equal sizes before streaming SHA-256 hashes, reports incremental progress, and
+  is cancelled with its Compose scope. Only accessible image, video, document, and audio files are
+  eligible; Android private/system paths and TrashPilot-owned paths are excluded.
+- Groups retain the oldest known file by default. Confirmed deletion updates the active scan and
+  records actual reclaimed bytes as local cleanup history for Reports and Trash DNA.

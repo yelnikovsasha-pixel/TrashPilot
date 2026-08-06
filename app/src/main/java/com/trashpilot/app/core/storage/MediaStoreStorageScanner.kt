@@ -67,6 +67,7 @@ class MediaStoreStorageScanner(
             val sizeIndex = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.SIZE)
             val modifiedIndex =
                 cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATE_MODIFIED)
+            val createdIndex = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATE_ADDED)
             val pathIndex = cursor.getColumnIndexOrThrow(pathColumn)
 
             while (cursor.moveToNext()) {
@@ -100,7 +101,12 @@ class MediaStoreStorageScanner(
                     },
                     uri = uri,
                     category = category,
-                    relativePath = pathSegments.joinToString("/")
+                    relativePath = pathSegments.joinToString("/"),
+                    createdMillis = if (cursor.isNull(createdIndex)) {
+                        0L
+                    } else {
+                        cursor.getLong(createdIndex) * MILLIS_PER_SECOND
+                    }
                 )
 
                 categoryBytes[category] = categoryBytes.getValue(category) + sizeBytes
@@ -174,7 +180,8 @@ class MediaStoreStorageScanner(
             MediaStore.Files.FileColumns.MIME_TYPE,
             MediaStore.Files.FileColumns.MEDIA_TYPE,
             MediaStore.Files.FileColumns.SIZE,
-            MediaStore.Files.FileColumns.DATE_MODIFIED
+            MediaStore.Files.FileColumns.DATE_MODIFIED,
+            MediaStore.Files.FileColumns.DATE_ADDED
         )
     }
 }

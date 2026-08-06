@@ -63,3 +63,5 @@
 - Never translate these tokens, including inside descriptive sentences: SCAN, TrashPilot, Trash DNA, Quick Clean, Privacy Monitor, Reports, Settings, and Smart Cleaner.
 - Exact-name resources use translatable=false; the draft generator masks embedded occurrences and the verifier checks exact occurrence counts in every locale.
 - Translate only surrounding descriptions, messages, dialogs, hints, and explanations.
+- Duplicate scanning compares sizes before hashing, streams content, exposes progress, retains at
+  least one file per group, and never deletes without explicit confirmation.
