@@ -69,7 +69,7 @@ fun AppNavigation() {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
-            if (currentRoute != "splash" && currentRoute != "onboarding") {
+            if (currentRoute !in setOf("splash", "onboarding", "introduction")) {
                 TrashPilotBottomBar(currentRoute = currentRoute) { route ->
                     if (route != currentRoute) {
                         navController.navigate(route) {
@@ -110,6 +110,9 @@ fun AppNavigation() {
                     }
                 }
             )
+        }
+        composable("introduction") {
+            OnboardingScreen(onComplete = { navController.popBackStack() })
         }
         composable("home") {
             HomeScreen(
@@ -371,7 +374,8 @@ fun AppNavigation() {
         composable("settings") {
             SettingsScreen(
                 repository = historyRepository,
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                onViewIntroduction = { navController.navigate("introduction") }
             )
         }
         }

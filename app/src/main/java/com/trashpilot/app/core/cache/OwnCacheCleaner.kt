@@ -14,19 +14,22 @@ class OwnCacheCleaner(private val context: Context) {
             add(context.codeCacheDir)
             context.externalCacheDirs.filterNotNull().forEach(::add)
         }.distinctBy(File::getAbsolutePath)
-        val before = roots.sumOf(::sizeOf)
-        roots.forEach { root ->
-            coroutineContext.ensureActive()
-            root.listFiles()?.forEach { it.deleteRecursively() }
-        }
-        val after = roots.sumOf(::sizeOf)
-        val cleaned = (before - after).coerceAtLeast(0)
+        val cleaned = clearCacheRoots(roots) { coroutineContext.ensureActive() }
         CacheCleaningReport(cleaned, if (cleaned > 0) 1 else 0)
     }
+}
 
-    private fun sizeOf(file: File): Long {
-        if (!file.exists()) return 0
-        if (file.isFile) return file.length()
-        return file.listFiles()?.sumOf(::sizeOf) ?: 0
+internal fun clearCacheRoots(roots: List<File>, cancellationCheck: () -> Unit = {}): Long {
+    val before = roots.sumOf(::cacheTreeSize)
+    roots.forEach { root ->
+        cancellationCheck()
+        root.listFiles()?.forEach { it.deleteRecursively() }
     }
+    return (before - roots.sumOf(::cacheTreeSize)).coerceAtLeast(0)
+}
+
+private fun cacheTreeSize(file: File): Long = when {
+    !file.exists() -> 0
+    file.isFile -> file.length()
+    else -> file.listFiles()?.sumOf(::cacheTreeSize) ?: 0
 }

@@ -40,6 +40,8 @@
 
 \- Onboarding
 
+\- Settings
+
 
 
 \---
@@ -49,8 +51,6 @@
 \## Next
 
 
-
-\- Settings
 
 \- About
 

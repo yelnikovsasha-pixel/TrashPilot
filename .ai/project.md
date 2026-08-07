@@ -31,12 +31,13 @@
   empty/loading/error states, saved detail selection, and scan-history confirmation reset.
 - Room schema version 4 adds explicit report-metric availability, scanned bytes, APK/Other totals,
   and large/social file counts through non-destructive `1 -> 2 -> 3 -> 4` migrations.
-- `core/settings` owns persisted theme preferences, DataStore language selection, and a versioned metadata-only
-  backup codec. `features/settings` owns the seven Settings destinations and local document
-  picker flows for diagnostics, backup, and restore.
+- `core/settings` owns persisted theme preferences, DataStore language selection, truthful
+  permission-state mapping, reset-action rules, and a versioned metadata-only backup codec.
+  `features/settings` owns the six production Settings destinations, Android settings handoffs,
+  separate Reports/Trash DNA/cache controls, and local document picker flows.
 - Preferences DataStore 1.2.1 stores the selected locale and migrates the legacy
   `trashpilot-settings` SharedPreferences language key on upgrade.
-- Android resources provide complete 904-key catalogs for all 25 supported app languages.
+- Android resources provide complete 934-key catalogs for all 25 supported app languages.
   `tools/generate_locale_drafts.mjs` reproduces the automated draft catalogs and
   `tools/verify_locales.mjs` checks XML structure, exact key parity, formatting-token parity,
   and probable long English fallbacks.

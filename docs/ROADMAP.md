@@ -12,6 +12,8 @@
   manual review, Android-confirmed deletion, and verified recovered-byte history.
 - Production Onboarding: three honest first-launch steps, versioned local completion persistence,
   deterministic startup routing, and contextual-permission education without permission prompts.
+- Production Settings: persistent theme and language, truthful Android-owned access states,
+  separate local-history/cache controls, and a non-mutating onboarding preview route.
 
 ## Next
 

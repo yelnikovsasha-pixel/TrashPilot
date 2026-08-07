@@ -57,10 +57,20 @@
 - Storage trend charts normalize only values from recorded sessions and never seed demo,
   forecast, interpolated, or synthetic points.
 - Settings uses private SharedPreferences for theme and Preferences DataStore for language;
-  Activity recreation applies locale changes immediately. Backup/restore uses explicit Android document pickers and a versioned
-  text format so no storage permission or cloud service is required.
+  Activity recreation applies locale and theme changes immediately. Backup/restore uses explicit
+  Android document pickers and a versioned text format so no storage permission or cloud service
+  is required. Existing values and the system-default first-install behavior are preserved.
+- Settings presents media, audio, Usage Access, and persisted SAF access as factual Android-owned
+  states, never as app-controlled switches. Opening Settings requests no permission; review actions
+  hand off only to resolvable public Android settings intents.
+- Reports history clearing deletes only report-producing scan/cache-scan/cleanup rows. Trash DNA
+  reset records its existing cutoff and preserves shared history rows. TrashPilot cache clearing
+  deletes only measured app-private cache children and reports measured bytes.
+- View introduction reuses the production onboarding UI through a separate navigation route,
+  returns to Settings, and does not mutate first-launch completion.
 - Privacy Policy and Terms are bundled offline in the app. Feedback is the only Settings action
-  that intentionally hands off to an external app; Pro remains disabled with no purchase flow.
+  that intentionally hands off to a non-system external app; no purchase or decorative Pro control
+  is exposed.
 - Stabilization disables Android Auto Backup to preserve the offline/no-cloud contract.
   Metadata restore now replaces Room history transactionally so a failed insert cannot leave a
   partially restored database.

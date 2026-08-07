@@ -13,7 +13,8 @@
 - Figma design system covers foundations, components, patterns, screens, and prototype flows.
 - Planned screens: Splash, Home, Scanner, Results, Privacy, and Settings.
 - Splash implementation: white Material 3 surface with centered TP mark, TrashPilot wordmark, and tagline; fades in over 700ms and routes to Home after 2 seconds.
-- Settings is an accessible placeholder route with a top app bar, back navigation, and temporary explanatory copy.
+- Settings is a production route with grouped Appearance, Language, Privacy & Permissions,
+  Data & History, Introduction, and About destinations.
 - Home shows Storage as `Not scanned yet` until real on-device scan data exists; no percentages or illustrative storage values are displayed.
 - Scan immediately analyzes shared-storage records Android exposes through MediaStore, shows
   foreground progress, and navigates to Results. The system folder picker remains only as a
@@ -60,12 +61,13 @@
 - Settings Figma Overview: node `60:2`; Appearance: `60:3`; Language: `60:4`;
   Data & Storage: `60:5`; Privacy: `60:6`; About: `60:7`; Pro Upgrade: `60:8`,
   all on page `18:2` and validated as 412 × 917 frames.
-- Settings provides local theme and language preferences, app-only cache/history controls,
-  metadata-only backup/restore and diagnostics, bundled policy/terms copy, feedback handoff,
-  version information, and an honest unavailable Pro preview.
+- Settings provides persistent System/Light/Dark theme and app-language selection, truthful
+  Android-owned access states, separate Reports/Trash DNA/app-cache controls, metadata-only
+  backup/restore and diagnostics, onboarding preview, bundled policy/terms copy, feedback
+  handoff, and version information. It contains no fake toggle or purchase preview.
 - Settings Language node `60:4` supports 25 locales plus System language, native-name search,
   immediate locale application, and DataStore-backed selection.
-- The complete UI string catalog now contains 381 identical keys in English plus 24 localized
+- The complete UI string catalog now contains 934 identical keys in English plus 24 localized
   resource directories: Spanish, Brazilian Portuguese, French, German, Italian, Polish,
   Ukrainian, Russian, Turkish, Arabic, Hindi, Bengali, Indonesian, Vietnamese, Thai, Japanese,
   Korean, Simplified Chinese, Traditional Chinese, Dutch, Swedish, Czech, Romanian, and Greek.

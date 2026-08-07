@@ -5,7 +5,11 @@ import android.content.res.Resources
 import android.os.LocaleList
 import java.util.Locale
 
-enum class ThemePreference { SYSTEM, LIGHT, DARK }
+enum class ThemePreference { SYSTEM, LIGHT, DARK;
+    companion object {
+        fun fromStoredName(value: String?): ThemePreference = entries.firstOrNull { it.name == value } ?: SYSTEM
+    }
+}
 
 enum class LanguagePreference(val tag: String, val label: String) {
     SYSTEM("", "System language"),
@@ -45,7 +49,7 @@ class SettingsPreferences(context: Context) {
     private val preferences = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE)
 
     var theme: ThemePreference
-        get() = enumValueOrDefault(preferences.getString(KEY_THEME, null), ThemePreference.SYSTEM)
+        get() = ThemePreference.fromStoredName(preferences.getString(KEY_THEME, null))
         set(value) { preferences.edit().putString(KEY_THEME, value.name).apply() }
 
     fun exportValues(language: LanguagePreference): Map<String, String> = mapOf(
@@ -54,12 +58,9 @@ class SettingsPreferences(context: Context) {
     )
 
     fun restoreValues(values: Map<String, String>): LanguagePreference {
-        theme = enumValueOrDefault(values[KEY_THEME], ThemePreference.SYSTEM)
+        theme = ThemePreference.fromStoredName(values[KEY_THEME])
         return LanguagePreference.fromStoredName(values[KEY_LANGUAGE])
     }
-
-    private inline fun <reified T : Enum<T>> enumValueOrDefault(value: String?, default: T): T =
-        enumValues<T>().firstOrNull { it.name == value } ?: default
 
     private companion object {
         const val FILE_NAME = "trashpilot-settings"
