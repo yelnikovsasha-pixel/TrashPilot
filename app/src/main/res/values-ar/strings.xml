@@ -888,4 +888,20 @@
     <string name="photo_quality_close">يغلق</string>
     <string name="photo_quality_thumbnail_description">معاينة %1$s</string>
     <string name="photo_quality_thumbnail_unavailable">المعاينة غير متاحة</string>
+    <string name="onboarding_welcome_message">السيطرة على التخزين الخاص بك. يساعدك TrashPilot على فهم جهازك وتنظيفه باستخدام التحليل المحلي الحقيقي.</string>
+    <string name="onboarding_real_analysis">تحليل التخزين الحقيقي</string>
+    <string name="onboarding_you_choose">اخترت ما يتم حذفه</string>
+    <string name="onboarding_no_automatic_deletion">لا يوجد حذف تلقائي</string>
+    <string name="onboarding_privacy_title">جهازك. البيانات الخاصة بك.</string>
+    <string name="onboarding_privacy_message">يتم إجراء تحليل التنظيف محليًا على هذا الجهاز. TrashPilot لا يقوم بتحميل ملفاتك الشخصية للتنظيف أو التحليل.</string>
+    <string name="onboarding_local_analysis">يبقى التحليل على هذا الجهاز</string>
+    <string name="onboarding_no_upload">لا يتم تحميل الملفات الشخصية للتحليل</string>
+    <string name="onboarding_control">لا يتم حذف ملفاتك تلقائيًا أبدًا</string>
+    <string name="onboarding_access_title">الوصول فقط عند الحاجة</string>
+    <string name="onboarding_access_message">قد يطلب TrashPilot من Android الوصول عندما تحتاج إحدى الميزات إلى فحص الصور أو مقاطع الفيديو أو الملفات أو التطبيقات أو معلومات التخزين.</string>
+    <string name="onboarding_contextual_permissions">يتم طلب الأذونات بواسطة الميزة التي تختارها</string>
+    <string name="onboarding_android_controls">يتحكم Android في ما يمكن لـ TrashPilot الوصول إليه</string>
+    <string name="onboarding_change_later">يمكنك تغيير الأذونات لاحقًا في إعدادات Android</string>
+    <string name="onboarding_continue">يكمل</string>
+    <string name="onboarding_start">يبدأ</string>
 </resources>

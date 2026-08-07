@@ -888,4 +888,20 @@
     <string name="photo_quality_close">Закрити</string>
     <string name="photo_quality_thumbnail_description">Попередній перегляд %1$s</string>
     <string name="photo_quality_thumbnail_unavailable">Попередній перегляд недоступний</string>
+    <string name="onboarding_welcome_message">Візьміть під контроль своє сховище. TrashPilot допоможе вам зрозуміти та очистити свій пристрій за допомогою реального локального аналізу.</string>
+    <string name="onboarding_real_analysis">Аналіз реального зберігання</string>
+    <string name="onboarding_you_choose">Ви вибираєте, що буде видалено</string>
+    <string name="onboarding_no_automatic_deletion">Немає автоматичного видалення</string>
+    <string name="onboarding_privacy_title">Ваш пристрій. Ваші дані.</string>
+    <string name="onboarding_privacy_message">Аналіз очищення відбувається локально на цьому пристрої. TrashPilot не завантажує ваші особисті файли для очищення чи аналізу.</string>
+    <string name="onboarding_local_analysis">Аналіз залишається на цьому пристрої</string>
+    <string name="onboarding_no_upload">Особисті файли не завантажуються для аналізу</string>
+    <string name="onboarding_control">Ваші файли ніколи не видаляються автоматично</string>
+    <string name="onboarding_access_title">Доступ лише за потреби</string>
+    <string name="onboarding_access_message">TrashPilot може попросити Android надати доступ, коли функція потребує перевірки фотографій, відео, файлів, програм або інформації про зберігання.</string>
+    <string name="onboarding_contextual_permissions">Вибрана вами функція запитує дозволи</string>
+    <string name="onboarding_android_controls">Android контролює, до чого TrashPilot може отримати доступ</string>
+    <string name="onboarding_change_later">Ви можете змінити дозволи пізніше в налаштуваннях Android</string>
+    <string name="onboarding_continue">Продовжити</string>
+    <string name="onboarding_start">старт</string>
 </resources>

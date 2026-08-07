@@ -223,3 +223,14 @@
   high-key, graphic, or soft-focus images can be false positives and always require manual review.
 - No item starts selected. Android-confirmed deletion is verified URI-by-URI; only verified missing
   records and their recorded bytes update Results and shared cleanup history.
+
+## Production Onboarding
+
+- After the existing Splash, first launch shows exactly three lightweight steps: Welcome, Privacy,
+  and Access only when needed. No permissions are requested and no bottom navigation is shown.
+- Start writes a versioned flag to private SharedPreferences before navigating to Home. Completion
+  survives process death, app restart, and updates; clearing app data naturally resets it.
+- Onboarding is removed from the back stack after completion. A non-UI reset method exists only for
+  development/tests, leaving room for a future intentional “View introduction” entry point.
+- Permissions remain contextual to the selected feature and under Android control; onboarding never
+  requests root, broad storage access, or unrelated permissions.

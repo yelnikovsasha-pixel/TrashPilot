@@ -888,4 +888,20 @@
     <string name="photo_quality_close">Kapalı</string>
     <string name="photo_quality_thumbnail_description">%1$s önizlemesi</string>
     <string name="photo_quality_thumbnail_unavailable">Önizleme kullanılamıyor</string>
+    <string name="onboarding_welcome_message">Depolama alanınızın kontrolünü elinize alın. TrashPilot, gerçek yerel analizleri kullanarak cihazınızı anlamanıza ve temizlemenize yardımcı olur.</string>
+    <string name="onboarding_real_analysis">Gerçek depolama analizi</string>
+    <string name="onboarding_you_choose">Neyin silineceğini siz seçersiniz</string>
+    <string name="onboarding_no_automatic_deletion">Otomatik silme yok</string>
+    <string name="onboarding_privacy_title">Cihazınız. Verileriniz.</string>
+    <string name="onboarding_privacy_message">Temizleme analizi bu cihazda yerel olarak gerçekleşir. TrashPilot kişisel dosyalarınızı temizlik veya analiz amacıyla yüklemez.</string>
+    <string name="onboarding_local_analysis">Analiz bu cihazda kalır</string>
+    <string name="onboarding_no_upload">Kişisel dosyalar analiz için yüklenmez</string>
+    <string name="onboarding_control">Dosyalarınız hiçbir zaman otomatik olarak silinmez</string>
+    <string name="onboarding_access_title">Yalnızca ihtiyaç duyulduğunda erişin</string>
+    <string name="onboarding_access_message">TrashPilot, bir özelliğin fotoğrafları, videoları, dosyaları, uygulamaları veya depolama bilgilerini incelemesi gerektiğinde Android\'den erişim isteyebilir.</string>
+    <string name="onboarding_contextual_permissions">Seçtiğiniz özelliğe göre izinler istenir</string>
+    <string name="onboarding_android_controls">Android, TrashPilot\'ın neye erişebileceğini kontrol eder</string>
+    <string name="onboarding_change_later">İzinleri daha sonra Android ayarlarından değiştirebilirsiniz</string>
+    <string name="onboarding_continue">Devam etmek</string>
+    <string name="onboarding_start">Başlangıç</string>
 </resources>

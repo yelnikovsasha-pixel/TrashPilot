@@ -888,4 +888,20 @@
     <string name="photo_quality_close">Blízko</string>
     <string name="photo_quality_thumbnail_description">Náhled %1$s</string>
     <string name="photo_quality_thumbnail_unavailable">Náhled není k dispozici</string>
+    <string name="onboarding_welcome_message">Převezměte kontrolu nad svým úložištěm. TrashPilot vám pomůže porozumět a vyčistit vaše zařízení pomocí skutečné místní analýzy.</string>
+    <string name="onboarding_real_analysis">Analýza skutečného úložiště</string>
+    <string name="onboarding_you_choose">Vy si vyberete, co bude smazáno</string>
+    <string name="onboarding_no_automatic_deletion">Žádné automatické mazání</string>
+    <string name="onboarding_privacy_title">Vaše zařízení. Vaše data.</string>
+    <string name="onboarding_privacy_message">Analýza čištění probíhá lokálně na tomto zařízení. TrashPilot nenahrává vaše osobní soubory k čištění nebo analýze.</string>
+    <string name="onboarding_local_analysis">Analýza zůstává na tomto zařízení</string>
+    <string name="onboarding_no_upload">Osobní soubory se k analýze neodesílají</string>
+    <string name="onboarding_control">Vaše soubory nejsou nikdy automaticky smazány</string>
+    <string name="onboarding_access_title">Přístup pouze v případě potřeby</string>
+    <string name="onboarding_access_message">TrashPilot může požádat Android o přístup, když funkce potřebuje zkontrolovat fotografie, videa, soubory, aplikace nebo informace o úložišti.</string>
+    <string name="onboarding_contextual_permissions">Oprávnění vyžaduje funkce, kterou si vyberete</string>
+    <string name="onboarding_android_controls">Android řídí, k čemu má TrashPilot přístup</string>
+    <string name="onboarding_change_later">Oprávnění můžete později změnit v nastavení Androidu</string>
+    <string name="onboarding_continue">Pokračovat</string>
+    <string name="onboarding_start">Start</string>
 </resources>

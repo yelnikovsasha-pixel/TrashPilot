@@ -888,4 +888,20 @@
     <string name="photo_quality_close">बंद करना</string>
     <string name="photo_quality_thumbnail_description">%1$s का पूर्वावलोकन</string>
     <string name="photo_quality_thumbnail_unavailable">पूर्वावलोकन अनुपलब्ध</string>
+    <string name="onboarding_welcome_message">अपने भंडारण पर नियंत्रण रखें. TrashPilot वास्तविक स्थानीय विश्लेषण का उपयोग करके आपके डिवाइस को समझने और साफ़ करने में आपकी सहायता करता है।</string>
+    <string name="onboarding_real_analysis">वास्तविक भंडारण विश्लेषण</string>
+    <string name="onboarding_you_choose">आप चुनें कि क्या हटाया जाए</string>
+    <string name="onboarding_no_automatic_deletion">कोई स्वचालित विलोपन नहीं</string>
+    <string name="onboarding_privacy_title">आपका डिवाइस। आपका डेटा.</string>
+    <string name="onboarding_privacy_message">सफाई विश्लेषण इस उपकरण पर स्थानीय रूप से होता है। TrashPilot आपकी व्यक्तिगत फ़ाइलों को सफाई या विश्लेषण के लिए अपलोड नहीं करता है।</string>
+    <string name="onboarding_local_analysis">विश्लेषण इसी डिवाइस पर रहता है</string>
+    <string name="onboarding_no_upload">व्यक्तिगत फ़ाइलें विश्लेषण के लिए अपलोड नहीं की जाती हैं</string>
+    <string name="onboarding_control">आपकी फ़ाइलें कभी भी स्वचालित रूप से हटाई नहीं जातीं</string>
+    <string name="onboarding_access_title">जरूरत पड़ने पर ही प्रवेश करें</string>
+    <string name="onboarding_access_message">जब किसी फीचर को फोटो, वीडियो, फाइल, ऐप्स या स्टोरेज जानकारी का निरीक्षण करने की आवश्यकता होती है तो TrashPilot एंड्रॉइड से एक्सेस मांग सकता है।</string>
+    <string name="onboarding_contextual_permissions">आपके द्वारा चुनी गई सुविधा द्वारा अनुमतियाँ मांगी जाती हैं</string>
+    <string name="onboarding_android_controls">Android नियंत्रित करता है कि TrashPilot किस तक पहुंच सकता है</string>
+    <string name="onboarding_change_later">आप बाद में Android सेटिंग में अनुमतियाँ बदल सकते हैं</string>
+    <string name="onboarding_continue">जारी रखना</string>
+    <string name="onboarding_start">शुरू</string>
 </resources>

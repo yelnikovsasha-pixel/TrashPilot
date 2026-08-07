@@ -888,4 +888,20 @@
     <string name="photo_quality_close">Vicino</string>
     <string name="photo_quality_thumbnail_description">Anteprima di %1$s</string>
     <string name="photo_quality_thumbnail_unavailable">Anteprima non disponibile</string>
+    <string name="onboarding_welcome_message">Prendi il controllo del tuo spazio di archiviazione. TrashPilot ti aiuta a comprendere e pulire il tuo dispositivo utilizzando un\'analisi locale reale.</string>
+    <string name="onboarding_real_analysis">Analisi dello stoccaggio reale</string>
+    <string name="onboarding_you_choose">Scegli tu cosa viene eliminato</string>
+    <string name="onboarding_no_automatic_deletion">Nessuna cancellazione automatica</string>
+    <string name="onboarding_privacy_title">Il tuo dispositivo. I tuoi dati.</string>
+    <string name="onboarding_privacy_message">L\'analisi della pulizia avviene localmente su questo dispositivo. TrashPilot non carica i tuoi file personali per la pulizia o l\'analisi.</string>
+    <string name="onboarding_local_analysis">L\'analisi rimane su questo dispositivo</string>
+    <string name="onboarding_no_upload">I file personali non vengono caricati per l\'analisi</string>
+    <string name="onboarding_control">I tuoi file non vengono mai eliminati automaticamente</string>
+    <string name="onboarding_access_title">Accedi solo quando necessario</string>
+    <string name="onboarding_access_message">TrashPilot potrebbe richiedere l\'accesso ad Android quando una funzionalità deve controllare foto, video, file, app o informazioni di archiviazione.</string>
+    <string name="onboarding_contextual_permissions">Le autorizzazioni sono richieste dalla funzionalità scelta</string>
+    <string name="onboarding_android_controls">Android controlla a cosa può accedere TrashPilot</string>
+    <string name="onboarding_change_later">Puoi modificare le autorizzazioni in un secondo momento nelle impostazioni Android</string>
+    <string name="onboarding_continue">Continuare</string>
+    <string name="onboarding_start">Inizio</string>
 </resources>

@@ -888,4 +888,20 @@
     <string name="photo_quality_close">Fermer</string>
     <string name="photo_quality_thumbnail_description">Aperçu de %1$s</string>
     <string name="photo_quality_thumbnail_unavailable">Aperçu indisponible</string>
+    <string name="onboarding_welcome_message">Prenez le contrôle de votre stockage. TrashPilot vous aide à comprendre et à nettoyer votre appareil à l\'aide d\'une véritable analyse locale.</string>
+    <string name="onboarding_real_analysis">Analyse du stockage réel</string>
+    <string name="onboarding_you_choose">Vous choisissez ce qui est supprimé</string>
+    <string name="onboarding_no_automatic_deletion">Pas de suppression automatique</string>
+    <string name="onboarding_privacy_title">Votre appareil. Vos données.</string>
+    <string name="onboarding_privacy_message">L\'analyse du nettoyage s\'effectue localement sur cet appareil. TrashPilot ne télécharge pas vos fichiers personnels pour le nettoyage ou l\'analyse.</string>
+    <string name="onboarding_local_analysis">L\'analyse reste sur cet appareil</string>
+    <string name="onboarding_no_upload">Les fichiers personnels ne sont pas téléchargés pour analyse</string>
+    <string name="onboarding_control">Vos fichiers ne sont jamais supprimés automatiquement</string>
+    <string name="onboarding_access_title">Accès uniquement en cas de besoin</string>
+    <string name="onboarding_access_message">TrashPilot peut demander l\'accès à Android lorsqu\'une fonctionnalité doit inspecter des photos, des vidéos, des fichiers, des applications ou des informations de stockage.</string>
+    <string name="onboarding_contextual_permissions">Les autorisations sont demandées par la fonctionnalité que vous choisissez</string>
+    <string name="onboarding_android_controls">Android contrôle ce à quoi TrashPilot peut accéder</string>
+    <string name="onboarding_change_later">Vous pouvez modifier les autorisations ultérieurement dans les paramètres Android</string>
+    <string name="onboarding_continue">Continuer</string>
+    <string name="onboarding_start">Commencer</string>
 </resources>

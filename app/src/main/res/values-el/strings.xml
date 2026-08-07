@@ -888,4 +888,20 @@
     <string name="photo_quality_close">Κοντά</string>
     <string name="photo_quality_thumbnail_description">Προεπισκόπηση του %1$s</string>
     <string name="photo_quality_thumbnail_unavailable">Η προεπισκόπηση δεν είναι διαθέσιμη</string>
+    <string name="onboarding_welcome_message">Πάρτε τον έλεγχο του αποθηκευτικού χώρου σας. Το TrashPilot σάς βοηθά να κατανοήσετε και να καθαρίσετε τη συσκευή σας χρησιμοποιώντας πραγματική τοπική ανάλυση.</string>
+    <string name="onboarding_real_analysis">Πραγματική ανάλυση αποθήκευσης</string>
+    <string name="onboarding_you_choose">Εσείς επιλέγετε τι θα διαγραφεί</string>
+    <string name="onboarding_no_automatic_deletion">Χωρίς αυτόματη διαγραφή</string>
+    <string name="onboarding_privacy_title">Η συσκευή σας. Τα δεδομένα σας.</string>
+    <string name="onboarding_privacy_message">Η ανάλυση καθαρισμού πραγματοποιείται τοπικά σε αυτήν τη συσκευή. Το TrashPilot δεν ανεβάζει τα προσωπικά σας αρχεία για καθαρισμό ή ανάλυση.</string>
+    <string name="onboarding_local_analysis">Η ανάλυση παραμένει σε αυτήν τη συσκευή</string>
+    <string name="onboarding_no_upload">Τα προσωπικά αρχεία δεν μεταφορτώνονται για ανάλυση</string>
+    <string name="onboarding_control">Τα αρχεία σας δεν διαγράφονται ποτέ αυτόματα</string>
+    <string name="onboarding_access_title">Πρόσβαση μόνο όταν χρειάζεται</string>
+    <string name="onboarding_access_message">Το TrashPilot μπορεί να ζητήσει από το Android πρόσβαση όταν μια λειτουργία χρειάζεται να επιθεωρήσει φωτογραφίες, βίντεο, αρχεία, εφαρμογές ή πληροφορίες αποθήκευσης.</string>
+    <string name="onboarding_contextual_permissions">Τα δικαιώματα ζητούνται από τη δυνατότητα που επιλέγετε</string>
+    <string name="onboarding_android_controls">Το Android ελέγχει το περιεχόμενο που έχει πρόσβαση η TrashPilot</string>
+    <string name="onboarding_change_later">Μπορείτε να αλλάξετε τα δικαιώματα αργότερα στις ρυθμίσεις Android</string>
+    <string name="onboarding_continue">Συνεχίζω</string>
+    <string name="onboarding_start">Αρχή</string>
 </resources>

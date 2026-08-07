@@ -891,4 +891,20 @@
     <string name="photo_quality_close">Close</string>
     <string name="photo_quality_thumbnail_description">Preview of %1$s</string>
     <string name="photo_quality_thumbnail_unavailable">Preview unavailable</string>
+    <string name="onboarding_welcome_message">Take control of your storage. TrashPilot helps you understand and clean your device using real local analysis.</string>
+    <string name="onboarding_real_analysis">Real storage analysis</string>
+    <string name="onboarding_you_choose">You choose what gets deleted</string>
+    <string name="onboarding_no_automatic_deletion">No automatic deletion</string>
+    <string name="onboarding_privacy_title">Your device. Your data.</string>
+    <string name="onboarding_privacy_message">Cleaning analysis happens locally on this device. TrashPilot does not upload your personal files for cleaning or analysis.</string>
+    <string name="onboarding_local_analysis">Analysis stays on this device</string>
+    <string name="onboarding_no_upload">Personal files are not uploaded for analysis</string>
+    <string name="onboarding_control">Your files are never deleted automatically</string>
+    <string name="onboarding_access_title">Access only when needed</string>
+    <string name="onboarding_access_message">TrashPilot may ask Android for access when a feature needs to inspect photos, videos, files, apps, or storage information.</string>
+    <string name="onboarding_contextual_permissions">Permissions are requested by the feature you choose</string>
+    <string name="onboarding_android_controls">Android controls what TrashPilot can access</string>
+    <string name="onboarding_change_later">You can change permissions later in Android settings</string>
+    <string name="onboarding_continue">Continue</string>
+    <string name="onboarding_start">Start</string>
 </resources>

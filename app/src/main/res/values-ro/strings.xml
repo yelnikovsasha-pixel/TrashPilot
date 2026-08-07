@@ -888,4 +888,20 @@
     <string name="photo_quality_close">Aproape</string>
     <string name="photo_quality_thumbnail_description">Previzualizare a %1$s</string>
     <string name="photo_quality_thumbnail_unavailable">Previzualizare indisponibilă</string>
+    <string name="onboarding_welcome_message">Preia controlul asupra stocării tale. TrashPilot vă ajută să înțelegeți și să vă curățați dispozitivul folosind o analiză locală reală.</string>
+    <string name="onboarding_real_analysis">Analiză de stocare reală</string>
+    <string name="onboarding_you_choose">Tu alegi ce se șterge</string>
+    <string name="onboarding_no_automatic_deletion">Fără ștergere automată</string>
+    <string name="onboarding_privacy_title">Dispozitivul dvs. Datele dvs.</string>
+    <string name="onboarding_privacy_message">Analiza de curățare are loc local pe acest dispozitiv. TrashPilot nu încarcă fișierele dvs. personale pentru curățare sau analiză.</string>
+    <string name="onboarding_local_analysis">Analiza rămâne pe acest dispozitiv</string>
+    <string name="onboarding_no_upload">Fișierele personale nu sunt încărcate pentru analiză</string>
+    <string name="onboarding_control">Fișierele dvs. nu sunt niciodată șterse automat</string>
+    <string name="onboarding_access_title">Accesați numai atunci când este necesar</string>
+    <string name="onboarding_access_message">TrashPilot poate solicita acces Android atunci când o funcție trebuie să inspecteze fotografii, videoclipuri, fișiere, aplicații sau informații de stocare.</string>
+    <string name="onboarding_contextual_permissions">Permisiunile sunt solicitate de funcția pe care o alegeți</string>
+    <string name="onboarding_android_controls">Android controlează ceea ce poate accesa TrashPilot</string>
+    <string name="onboarding_change_later">Puteți modifica permisiunile mai târziu în setările Android</string>
+    <string name="onboarding_continue">Continua</string>
+    <string name="onboarding_start">Început</string>
 </resources>

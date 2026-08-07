@@ -888,4 +888,20 @@
     <string name="photo_quality_close">Dichtbij</string>
     <string name="photo_quality_thumbnail_description">Voorbeeld van %1$s</string>
     <string name="photo_quality_thumbnail_unavailable">Voorbeeld niet beschikbaar</string>
+    <string name="onboarding_welcome_message">Neem de controle over uw opslag. TrashPilot helpt u uw apparaat te begrijpen en op te schonen met behulp van echte lokale analyse.</string>
+    <string name="onboarding_real_analysis">Echte opslaganalyse</string>
+    <string name="onboarding_you_choose">Jij kiest wat wordt verwijderd</string>
+    <string name="onboarding_no_automatic_deletion">Geen automatische verwijdering</string>
+    <string name="onboarding_privacy_title">Jouw apparaat. Jouw gegevens.</string>
+    <string name="onboarding_privacy_message">Reinigingsanalyse gebeurt lokaal op dit apparaat. TrashPilot uploadt uw persoonlijke bestanden niet voor opschoning of analyse.</string>
+    <string name="onboarding_local_analysis">Analyse blijft op dit apparaat staan</string>
+    <string name="onboarding_no_upload">Persoonlijke bestanden worden niet geüpload voor analyse</string>
+    <string name="onboarding_control">Uw bestanden worden nooit automatisch verwijderd</string>
+    <string name="onboarding_access_title">Alleen toegang wanneer dat nodig is</string>
+    <string name="onboarding_access_message">TrashPilot kan Android om toegang vragen wanneer een functie foto\'s, video\'s, bestanden, apps of opslaginformatie moet inspecteren.</string>
+    <string name="onboarding_contextual_permissions">Machtigingen worden gevraagd door de functie die u kiest</string>
+    <string name="onboarding_android_controls">Android bepaalt waartoe TrashPilot toegang heeft</string>
+    <string name="onboarding_change_later">Je kunt de rechten later wijzigen in de Android-instellingen</string>
+    <string name="onboarding_continue">Doorgaan</string>
+    <string name="onboarding_start">Begin</string>
 </resources>

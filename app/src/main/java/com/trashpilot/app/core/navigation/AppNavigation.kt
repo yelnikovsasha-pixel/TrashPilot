@@ -44,6 +44,11 @@ import com.trashpilot.app.features.downloads.DownloadsCleanerScreen
 import com.trashpilot.app.features.emptyfolders.EmptyFoldersCleanerScreen
 import com.trashpilot.app.features.screenshots.ScreenshotsCleanerScreen
 import com.trashpilot.app.features.photoquality.PhotoQualityAnalyzerScreen
+import com.trashpilot.app.core.onboarding.OnboardingPreferences
+import com.trashpilot.app.core.onboarding.StartupDestination
+import com.trashpilot.app.core.onboarding.startupDestination
+import com.trashpilot.app.core.onboarding.completeOnboarding
+import com.trashpilot.app.features.onboarding.OnboardingScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -53,6 +58,7 @@ fun AppNavigation() {
     val historyRepository = remember(context) {
         TrashDnaRepository(TrashDnaDatabase.get(context).trashDnaDao())
     }
+    val onboardingPreferences = remember(context) { OnboardingPreferences(context) }
     val scope = rememberCoroutineScope()
     var latestScan by remember { mutableStateOf<StorageScanResult?>(null) }
     var selectedCategory by remember { mutableStateOf<FileCategory?>(null) }
@@ -63,11 +69,13 @@ fun AppNavigation() {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
-            TrashPilotBottomBar(currentRoute = currentRoute) { route ->
-                if (route != currentRoute) {
-                    navController.navigate(route) {
-                        popUpTo("home") { inclusive = false }
-                        launchSingleTop = true
+            if (currentRoute != "splash" && currentRoute != "onboarding") {
+                TrashPilotBottomBar(currentRoute = currentRoute) { route ->
+                    if (route != currentRoute) {
+                        navController.navigate(route) {
+                            popUpTo("home") { inclusive = false }
+                            launchSingleTop = true
+                        }
                     }
                 }
             }
@@ -81,8 +89,24 @@ fun AppNavigation() {
         composable("splash") {
             SplashScreen(
                 onFinished = {
-                    navController.navigate("home") {
+                    val destination = when (startupDestination(onboardingPreferences.isCompleted())) {
+                        StartupDestination.ONBOARDING -> "onboarding"
+                        StartupDestination.HOME -> "home"
+                    }
+                    navController.navigate(destination) {
                         popUpTo("splash") { inclusive = true }
+                    }
+                }
+            )
+        }
+        composable("onboarding") {
+            OnboardingScreen(
+                onComplete = {
+                    if (completeOnboarding(onboardingPreferences) == StartupDestination.HOME) {
+                        navController.navigate("home") {
+                            popUpTo("onboarding") { inclusive = true }
+                            launchSingleTop = true
+                        }
                     }
                 }
             )

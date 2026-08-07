@@ -1,6 +1,7 @@
 # project
 - Single-module Android app (com.trashpilot.app) using Kotlin, Jetpack Compose, Material 3, and Navigation Compose; min SDK 24, compile/target SDK 36. MainActivity applies TrashPilotTheme and AppNavigation currently displays SplashScreen.
-- Navigation uses Navigation Compose with splash as the start destination, followed by Home, Scanner, Results, Privacy, Reports, and Settings destinations.
+- Navigation uses Navigation Compose with splash as the start destination. Splash routes first-time
+  installs to the three-step Onboarding flow and completed installs to Home.
 - Home is a Material 3 screen sourced only from Figma `XyDczeNnzEw5DmApIXuXTz` node `1:65`,
   with a blue concentric brand lockup, one 200 dp double-ring SCAN action, a real-data phone
   storage card, five vertical feature cards, and persistent bottom navigation.
@@ -35,7 +36,7 @@
   picker flows for diagnostics, backup, and restore.
 - Preferences DataStore 1.2.1 stores the selected locale and migrates the legacy
   `trashpilot-settings` SharedPreferences language key on upgrade.
-- Android resources provide complete 888-key catalogs for all 25 supported app languages.
+- Android resources provide complete 904-key catalogs for all 25 supported app languages.
   `tools/generate_locale_drafts.mjs` reproduces the automated draft catalogs and
   `tools/verify_locales.mjs` checks XML structure, exact key parity, formatting-token parity,
   and probable long English fallbacks.
@@ -84,3 +85,5 @@
 - `core/photoquality` owns conservative thresholds, sampled luminance/Laplacian metrics,
   objective classification, filtering, sorting, selection, and deletion accounting.
   `features/photoquality` owns permission-aware analysis, transparent review, and confirmed deletion.
+- `core/onboarding` owns versioned local completion state and deterministic startup routing.
+  `features/onboarding` owns the short Welcome, Privacy, and contextual Access presentation.

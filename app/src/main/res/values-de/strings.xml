@@ -888,4 +888,20 @@
     <string name="photo_quality_close">Schließen</string>
     <string name="photo_quality_thumbnail_description">Vorschau von %1$s</string>
     <string name="photo_quality_thumbnail_unavailable">Vorschau nicht verfügbar</string>
+    <string name="onboarding_welcome_message">Übernehmen Sie die Kontrolle über Ihren Speicher. TrashPilot hilft Ihnen, Ihr Gerät mithilfe einer echten lokalen Analyse zu verstehen und zu reinigen.</string>
+    <string name="onboarding_real_analysis">Echte Speicheranalyse</string>
+    <string name="onboarding_you_choose">Sie entscheiden, was gelöscht wird</string>
+    <string name="onboarding_no_automatic_deletion">Kein automatisches Löschen</string>
+    <string name="onboarding_privacy_title">Ihr Gerät. Ihre Daten.</string>
+    <string name="onboarding_privacy_message">Die Reinigungsanalyse erfolgt lokal auf diesem Gerät. TrashPilot lädt Ihre persönlichen Dateien nicht zur Bereinigung oder Analyse hoch.</string>
+    <string name="onboarding_local_analysis">Die Analyse bleibt auf diesem Gerät</string>
+    <string name="onboarding_no_upload">Persönliche Dateien werden nicht zur Analyse hochgeladen</string>
+    <string name="onboarding_control">Ihre Dateien werden niemals automatisch gelöscht</string>
+    <string name="onboarding_access_title">Zugriff nur bei Bedarf</string>
+    <string name="onboarding_access_message">TrashPilot bittet Android möglicherweise um Zugriff, wenn eine Funktion Fotos, Videos, Dateien, Apps oder Speicherinformationen überprüfen muss.</string>
+    <string name="onboarding_contextual_permissions">Berechtigungen werden von der von Ihnen ausgewählten Funktion angefordert</string>
+    <string name="onboarding_android_controls">Android steuert, worauf TrashPilot zugreifen kann</string>
+    <string name="onboarding_change_later">Sie können die Berechtigungen später in den Android-Einstellungen ändern</string>
+    <string name="onboarding_continue">Weitermachen</string>
+    <string name="onboarding_start">Start</string>
 </resources>

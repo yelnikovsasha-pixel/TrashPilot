@@ -888,4 +888,20 @@
     <string name="photo_quality_close">近い</string>
     <string name="photo_quality_thumbnail_description">%1$s のプレビュー</string>
     <string name="photo_quality_thumbnail_unavailable">プレビューは利用できません</string>
+    <string name="onboarding_welcome_message">ストレージを管理しましょう。 TrashPilot は、実際のローカル分析を使用してデバイスを理解し、クリーンアップするのに役立ちます。</string>
+    <string name="onboarding_real_analysis">実ストレージ分析</string>
+    <string name="onboarding_you_choose">何を削除するかはあなたが選択します</string>
+    <string name="onboarding_no_automatic_deletion">自動削除はありません</string>
+    <string name="onboarding_privacy_title">あなたのデバイス。あなたのデータ。</string>
+    <string name="onboarding_privacy_message">クリーニング分析はこのデバイス上でローカルに行われます。 TrashPilot は、クリーニングや分析のために個人ファイルをアップロードしません。</string>
+    <string name="onboarding_local_analysis">分析はこのデバイス上に残ります</string>
+    <string name="onboarding_no_upload">個人ファイルは分析のためにアップロードされません</string>
+    <string name="onboarding_control">ファイルが自動的に削除されることはありません</string>
+    <string name="onboarding_access_title">必要なときだけアクセス</string>
+    <string name="onboarding_access_message">TrashPilot は、機能が写真、ビデオ、ファイル、アプリ、またはストレージ情報を検査する必要がある場合に、Android にアクセスを要求する場合があります。</string>
+    <string name="onboarding_contextual_permissions">選択した機能によって権限が要求されます</string>
+    <string name="onboarding_android_controls">Android は TrashPilot がアクセスできるものを制御します</string>
+    <string name="onboarding_change_later">後で Android 設定で権限を変更できます</string>
+    <string name="onboarding_continue">続く</string>
+    <string name="onboarding_start">始める</string>
 </resources>

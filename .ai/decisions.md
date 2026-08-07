@@ -122,3 +122,9 @@
 - Pixel metrics use a maximum 256-pixel MediaStore thumbnail. This bounds memory and I/O but can
   produce false positives for intentional night, bright, graphic, low-detail, or soft-focus work.
   The UI explains this and never exposes an overall quality score or automatic recommendation.
+- Startup retains Splash, then resolves synchronously from a versioned private onboarding preference
+  to either Onboarding or Home. A successful final-step write is required before Home navigation,
+  and onboarding is removed from the back stack once complete.
+- Onboarding is limited to Welcome, Privacy, and contextual Access. It contains no permission
+  launcher: every Android permission remains requested only by the feature the user actively opens.
+  Splash and Onboarding intentionally omit the app-wide bottom navigation.

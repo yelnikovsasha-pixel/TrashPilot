@@ -888,4 +888,20 @@
     <string name="photo_quality_close">Menutup</string>
     <string name="photo_quality_thumbnail_description">Pratinjau %1$s</string>
     <string name="photo_quality_thumbnail_unavailable">Pratinjau tidak tersedia</string>
+    <string name="onboarding_welcome_message">Kendalikan penyimpanan Anda. TrashPilot membantu Anda memahami dan membersihkan perangkat Anda menggunakan analisis lokal nyata.</string>
+    <string name="onboarding_real_analysis">Analisis penyimpanan nyata</string>
+    <string name="onboarding_you_choose">Anda memilih apa yang akan dihapus</string>
+    <string name="onboarding_no_automatic_deletion">Tidak ada penghapusan otomatis</string>
+    <string name="onboarding_privacy_title">Perangkat Anda. Data Anda.</string>
+    <string name="onboarding_privacy_message">Analisis pembersihan dilakukan secara lokal di perangkat ini. TrashPilot tidak mengunggah file pribadi Anda untuk dibersihkan atau dianalisis.</string>
+    <string name="onboarding_local_analysis">Analisis tetap ada di perangkat ini</string>
+    <string name="onboarding_no_upload">File pribadi tidak diunggah untuk dianalisis</string>
+    <string name="onboarding_control">File Anda tidak pernah terhapus secara otomatis</string>
+    <string name="onboarding_access_title">Akses hanya bila diperlukan</string>
+    <string name="onboarding_access_message">TrashPilot mungkin meminta akses Android ketika suatu fitur perlu memeriksa foto, video, file, aplikasi, atau informasi penyimpanan.</string>
+    <string name="onboarding_contextual_permissions">Izin diminta oleh fitur yang Anda pilih</string>
+    <string name="onboarding_android_controls">Android mengontrol apa yang TrashPilot dapat akses</string>
+    <string name="onboarding_change_later">Anda dapat mengubah izin nanti di pengaturan Android</string>
+    <string name="onboarding_continue">Melanjutkan</string>
+    <string name="onboarding_start">Awal</string>
 </resources>

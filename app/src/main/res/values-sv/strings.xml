@@ -888,4 +888,20 @@
     <string name="photo_quality_close">Nära</string>
     <string name="photo_quality_thumbnail_description">Förhandsvisning av %1$s</string>
     <string name="photo_quality_thumbnail_unavailable">Förhandsgranskning inte tillgänglig</string>
+    <string name="onboarding_welcome_message">Ta kontroll över din lagring. TrashPilot hjälper dig att förstå och rengöra din enhet med hjälp av verklig lokal analys.</string>
+    <string name="onboarding_real_analysis">Verklig lagringsanalys</string>
+    <string name="onboarding_you_choose">Du väljer vad som ska raderas</string>
+    <string name="onboarding_no_automatic_deletion">Ingen automatisk radering</string>
+    <string name="onboarding_privacy_title">Din enhet. Dina data.</string>
+    <string name="onboarding_privacy_message">Rengöringsanalys sker lokalt på den här enheten. TrashPilot laddar inte upp dina personliga filer för rengöring eller analys.</string>
+    <string name="onboarding_local_analysis">Analysen stannar på den här enheten</string>
+    <string name="onboarding_no_upload">Personliga filer laddas inte upp för analys</string>
+    <string name="onboarding_control">Dina filer raderas aldrig automatiskt</string>
+    <string name="onboarding_access_title">Tillgång endast när det behövs</string>
+    <string name="onboarding_access_message">TrashPilot kan be Android om åtkomst när en funktion behöver inspektera foton, videor, filer, appar eller lagringsinformation.</string>
+    <string name="onboarding_contextual_permissions">Behörigheter begärs av den funktion du väljer</string>
+    <string name="onboarding_android_controls">Android styr vad TrashPilot kan komma åt</string>
+    <string name="onboarding_change_later">Du kan ändra behörigheter senare i Android-inställningarna</string>
+    <string name="onboarding_continue">Fortsätta</string>
+    <string name="onboarding_start">Start</string>
 </resources>

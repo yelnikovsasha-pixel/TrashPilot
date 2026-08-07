@@ -888,4 +888,20 @@
     <string name="photo_quality_close">Đóng</string>
     <string name="photo_quality_thumbnail_description">Xem trước %1$s</string>
     <string name="photo_quality_thumbnail_unavailable">Xem trước không có sẵn</string>
+    <string name="onboarding_welcome_message">Kiểm soát việc lưu trữ của bạn. TrashPilot giúp bạn hiểu và dọn dẹp thiết bị của mình bằng phân tích cục bộ thực tế.</string>
+    <string name="onboarding_real_analysis">Phân tích lưu trữ thực</string>
+    <string name="onboarding_you_choose">Bạn chọn những gì sẽ bị xóa</string>
+    <string name="onboarding_no_automatic_deletion">Không tự động xóa</string>
+    <string name="onboarding_privacy_title">Thiết bị của bạn. Dữ liệu của bạn.</string>
+    <string name="onboarding_privacy_message">Phân tích làm sạch diễn ra cục bộ trên thiết bị này. TrashPilot không tải lên các tệp cá nhân của bạn để làm sạch hoặc phân tích.</string>
+    <string name="onboarding_local_analysis">Phân tích vẫn còn trên thiết bị này</string>
+    <string name="onboarding_no_upload">Các tập tin cá nhân không được tải lên để phân tích</string>
+    <string name="onboarding_control">Các tập tin của bạn không bao giờ bị xóa tự động</string>
+    <string name="onboarding_access_title">Chỉ truy cập khi cần thiết</string>
+    <string name="onboarding_access_message">TrashPilot có thể yêu cầu Android cấp quyền truy cập khi một tính năng cần kiểm tra ảnh, video, tệp, ứng dụng hoặc thông tin bộ nhớ.</string>
+    <string name="onboarding_contextual_permissions">Quyền được yêu cầu bởi tính năng bạn chọn</string>
+    <string name="onboarding_android_controls">Android kiểm soát những gì TrashPilot có thể truy cập</string>
+    <string name="onboarding_change_later">Bạn có thể thay đổi quyền sau trong cài đặt Android</string>
+    <string name="onboarding_continue">Tiếp tục</string>
+    <string name="onboarding_start">Bắt đầu</string>
 </resources>

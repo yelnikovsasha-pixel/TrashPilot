@@ -888,4 +888,20 @@
     <string name="photo_quality_close">关闭</string>
     <string name="photo_quality_thumbnail_description">%1$s 预览</string>
     <string name="photo_quality_thumbnail_unavailable">预览不可用</string>
+    <string name="onboarding_welcome_message">掌控您的存储。 TrashPilot 使用真实的本地分析帮助您了解和清理您的设备。</string>
+    <string name="onboarding_real_analysis">真实存储分析</string>
+    <string name="onboarding_you_choose">您选择要删除的内容</string>
+    <string name="onboarding_no_automatic_deletion">没有自动删除</string>
+    <string name="onboarding_privacy_title">你的设备。你的数据。</string>
+    <string name="onboarding_privacy_message">清洁分析在此设备上本地进行。 TrashPilot 不会上传您的个人文件进行清理或分析。</string>
+    <string name="onboarding_local_analysis">分析保留在此设备上</string>
+    <string name="onboarding_no_upload">不会上传个人文件进行分析</string>
+    <string name="onboarding_control">您的文件永远不会自动删除</string>
+    <string name="onboarding_access_title">仅在需要时访问</string>
+    <string name="onboarding_access_message">当某个功能需要检查照片、视频、文件、应用程序或存储信息时，TrashPilot 可能会要求 Android 进行访问。</string>
+    <string name="onboarding_contextual_permissions">您选择的功能会请求权限</string>
+    <string name="onboarding_android_controls">Android 控制 TrashPilot 可以访问的内容</string>
+    <string name="onboarding_change_later">您可以稍后在 Android 设置中更改权限</string>
+    <string name="onboarding_continue">继续</string>
+    <string name="onboarding_start">开始</string>
 </resources>

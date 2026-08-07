@@ -10,7 +10,9 @@
   explicit selection, Android-confirmed deletion, and verified recovered-byte history.
 - Photo Quality Analyzer: offline sampled technical measurements, transparent objective reasons,
   manual review, Android-confirmed deletion, and verified recovered-byte history.
+- Production Onboarding: three honest first-launch steps, versioned local completion persistence,
+  deterministic startup routing, and contextual-permission education without permission prompts.
 
 ## Next
 
-- Onboarding and production polish
+- Production polish

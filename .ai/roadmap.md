@@ -38,6 +38,8 @@
 
 \- Photo Quality Analyzer
 
+\- Onboarding
+
 
 
 \---
@@ -47,8 +49,6 @@
 \## Next
 
 
-
-\- Onboarding
 
 \- Settings
 
