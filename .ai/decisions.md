@@ -109,3 +109,9 @@
 - Empty-folder cleanup history stores successful folder count in `emptyFolderCount` and always
   stores zero reclaimable/reclaimed bytes; Reports associates that count without treating it as
   recovered storage.
+- Screenshot discovery queries MediaStore Images and requires a recognized screenshot directory
+  signal from `RELATIVE_PATH` or bucket metadata. A screenshot-like filename or image dimensions
+  alone are insufficient; uncertain images remain excluded.
+- Screenshot previews use Android thumbnail APIs and never decode full-resolution list images.
+  Android 14 selected-photo access is presented as partial coverage. Deletion uses
+  `MediaStore.createDeleteRequest` where required and counts only URIs verified absent afterward.

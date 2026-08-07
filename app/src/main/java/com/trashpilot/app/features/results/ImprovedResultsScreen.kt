@@ -24,6 +24,7 @@ import androidx.compose.material.icons.outlined.Forum
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material.icons.outlined.Android
 import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.outlined.Screenshot
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
@@ -52,6 +53,7 @@ import com.trashpilot.app.core.storage.ScannedFile
 import com.trashpilot.app.core.storage.SocialMediaAnalyzer
 import com.trashpilot.app.core.storage.StorageScanResult
 import com.trashpilot.app.core.storage.formatBytes
+import com.trashpilot.app.core.screenshots.isConfidentScreenshotPath
 import com.trashpilot.app.ui.components.TrashPilotBrandHeader
 import com.trashpilot.app.ui.components.TrashPilotFeatureCard
 import com.trashpilot.app.ui.components.TrashPilotHomeCard
@@ -77,7 +79,8 @@ fun ImprovedResultsScreen(
     onOpenHiddenFiles: () -> Unit,
     onOpenApkManager: () -> Unit,
     onOpenDownloads: () -> Unit,
-    onOpenEmptyFolders: () -> Unit
+    onOpenEmptyFolders: () -> Unit,
+    onOpenScreenshots: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -95,8 +98,8 @@ fun ImprovedResultsScreen(
                 title = stringResource(R.string.results_nothing_found_title),
                 body = stringResource(R.string.results_nothing_found_body),
                 onBack = onBack,
-                actionLabel = stringResource(R.string.empty_folders_title),
-                onAction = onOpenEmptyFolders,
+                actionLabel = stringResource(R.string.screenshots_title),
+                onAction = onOpenScreenshots,
                 secondaryAction = true
             )
             is ResultsUiState.Error -> ResultsStateMessage(
@@ -116,7 +119,8 @@ fun ImprovedResultsScreen(
                 onOpenHiddenFiles = onOpenHiddenFiles,
                 onOpenApkManager = onOpenApkManager,
                 onOpenDownloads = onOpenDownloads,
-                onOpenEmptyFolders = onOpenEmptyFolders
+                onOpenEmptyFolders = onOpenEmptyFolders,
+                onOpenScreenshots = onOpenScreenshots
             )
         }
     }
@@ -133,7 +137,8 @@ private fun ResultsContent(
     onOpenHiddenFiles: () -> Unit,
     onOpenApkManager: () -> Unit,
     onOpenDownloads: () -> Unit,
-    onOpenEmptyFolders: () -> Unit
+    onOpenEmptyFolders: () -> Unit,
+    onOpenScreenshots: () -> Unit
 ) {
     val overview = remember(result) { result.toResultsOverview() }
     val listState = remember(result) { LazyListState() }
@@ -182,6 +187,15 @@ private fun ResultsContent(
                 )
             )
             Spacer(Modifier.height(TrashPilotSpacing.Standard))
+        }
+        item {
+            ResultCategoryCard(
+                icon = Icons.Outlined.Screenshot,
+                title = stringResource(R.string.screenshots_title),
+                subtitle = stringResource(R.string.results_local_category_subtitle),
+                value = stringResource(R.string.results_count_and_size, fileCountText(overview.screenshotCount), formatBytes(overview.screenshotBytes)),
+                onClick = onOpenScreenshots
+            )
         }
         item {
             ResultCategoryCard(
@@ -520,7 +534,9 @@ internal data class ResultsOverview(
     val socialFiles: List<ScannedFile>,
     val socialBytes: Long,
     val apkFileCount: Int,
-    val downloadFileCount: Int
+    val downloadFileCount: Int,
+    val screenshotCount: Int,
+    val screenshotBytes: Long
 )
 
 internal fun StorageScanResult.toResultsOverview(): ResultsOverview {
@@ -546,9 +562,17 @@ internal fun StorageScanResult.toResultsOverview(): ResultsOverview {
         socialFiles = socialFiles,
         socialBytes = socialFiles.sumOf(ScannedFile::sizeBytes),
         apkFileCount = files.count { it.name.endsWith(".apk", ignoreCase = true) },
-        downloadFileCount = files.count { file -> file.category == FileCategory.DOWNLOADS }
+        downloadFileCount = files.count { file -> file.category == FileCategory.DOWNLOADS },
+        screenshotCount = files.count(::isScreenshotFile),
+        screenshotBytes = files.filter(::isScreenshotFile).sumOf(ScannedFile::sizeBytes)
     )
 }
+
+private fun isScreenshotFile(file: ScannedFile): Boolean = isConfidentScreenshotPath(
+    file.relativePath,
+    file.relativePath.replace('\\', '/').substringBeforeLast('/', "").substringAfterLast('/'),
+    file.name
+)
 
 private const val LARGE_FILE_MIN_BYTES = 100L * 1024L * 1024L
 

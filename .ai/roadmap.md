@@ -34,6 +34,8 @@
 
 \- Empty Folders Cleaner
 
+\- Screenshots Cleaner
+
 
 
 \---
@@ -43,8 +45,6 @@
 \## Next
 
 
-
-\- Screenshots Cleaner
 
 \- Photo Quality Analyzer
 

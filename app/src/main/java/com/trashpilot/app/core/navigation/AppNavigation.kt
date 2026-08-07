@@ -42,6 +42,7 @@ import com.trashpilot.app.features.hiddenfiles.HiddenFilesManagerScreen
 import com.trashpilot.app.features.apkmanager.ApkManagerScreen
 import com.trashpilot.app.features.downloads.DownloadsCleanerScreen
 import com.trashpilot.app.features.emptyfolders.EmptyFoldersCleanerScreen
+import com.trashpilot.app.features.screenshots.ScreenshotsCleanerScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -147,7 +148,8 @@ fun AppNavigation() {
                 onOpenHiddenFiles = { navController.navigate("hidden-files-manager") },
                 onOpenApkManager = { navController.navigate("apk-manager") },
                 onOpenDownloads = { navController.navigate("downloads-cleaner") },
-                onOpenEmptyFolders = { navController.navigate("empty-folders-cleaner") }
+                onOpenEmptyFolders = { navController.navigate("empty-folders-cleaner") },
+                onOpenScreenshots = { navController.navigate("screenshots-cleaner") }
             )
         }
         composable("large-files-manager") {
@@ -202,6 +204,24 @@ fun AppNavigation() {
                         scope.launch {
                             historyRepository.recordEmptyFoldersCleanup(source, deletedCount, failedCount)
                         }
+                    }
+                }
+            )
+        }
+        composable("screenshots-cleaner") {
+            ScreenshotsCleanerScreen(
+                onBack = { navController.popBackStack() },
+                onDeleted = { deletedUris, report ->
+                    val source = latestScan
+                    if (source != null) {
+                        val remaining = source.files.filterNot { it.uri in deletedUris }
+                        latestScan = source.copy(
+                            files = remaining,
+                            scannedFileCount = remaining.size,
+                            categoryBytes = FileCategory.entries.associateWith { category -> remaining.filter { it.category == category }.sumOf { it.sizeBytes } },
+                            disposableCandidates = source.disposableCandidates.filterNot { it.uri in deletedUris }
+                        )
+                        scope.launch { historyRepository.recordScreenshotsCleanup(source, report) }
                     }
                 }
             )

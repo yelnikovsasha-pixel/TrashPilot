@@ -9,6 +9,7 @@ import com.trashpilot.app.core.storage.SocialMediaAnalyzer
 import com.trashpilot.app.core.storage.DuplicateCleaningReport
 import com.trashpilot.app.core.cache.CacheSnapshot
 import com.trashpilot.app.core.cache.CacheCleaningReport
+import com.trashpilot.app.core.screenshots.isConfidentScreenshotPath
 
 interface HistoryRepository {
     suspend fun loadTrashDnaHistory(): List<TrashDnaSessionEntity>
@@ -172,6 +173,12 @@ class TrashDnaRepository(private val dao: TrashDnaDao) : HistoryRepository {
         )
     }
 
+    suspend fun recordScreenshotsCleanup(
+        scan: StorageScanResult,
+        report: DuplicateCleaningReport,
+        timestampMillis: Long = System.currentTimeMillis()
+    ) = recordDuplicateCleanup(scan, report, timestampMillis)
+
     suspend fun recordCacheCleanup(
         report: CacheCleaningReport,
         timestampMillis: Long = System.currentTimeMillis()
@@ -249,8 +256,7 @@ class TrashDnaRepository(private val dao: TrashDnaDao) : HistoryRepository {
     ): Long = get(category)?.sumOf { it.sizeBytes } ?: 0
 
     private fun isScreenshot(file: com.trashpilot.app.core.storage.ScannedFile): Boolean =
-        file.relativePath.replace('\\', '/').split('/').any { it.equals("Screenshots", true) } ||
-            file.name.startsWith("Screenshot", true)
+        isConfidentScreenshotPath(file.relativePath, file.relativePath.replace('\\', '/').substringBeforeLast('/', "").substringAfterLast('/'), file.name)
 
     private fun isHidden(file: com.trashpilot.app.core.storage.ScannedFile): Boolean =
         file.relativePath.replace('\\', '/').split('/').any { it.startsWith(".") }

@@ -202,3 +202,12 @@
   empty subtrees collapse to the highest safe directory so deletion requests never overlap.
 - Deletion requires selection and confirmation, uses `DocumentsContract.deleteDocument`, verifies
   absence, rescans the granted tree, records the successful folder count, and records zero bytes.
+
+## Screenshots Cleaner
+
+- Scan Results opens a MediaStore-backed Screenshots Cleaner for accessible images in confidently
+  recognized screenshot folders. Filename and dimensions alone never qualify an image.
+- Discovery is cancellable and progressive. The screen presents real thumbnails and metadata,
+  search, deterministic sorting, manual selection, exact selected bytes, and a detail preview.
+- Full and Android 14 selected-photo access are distinguished. Android-confirmed deletion is
+  verified against MediaStore, and only confirmed missing records update Results and shared history.
