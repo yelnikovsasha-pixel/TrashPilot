@@ -23,6 +23,7 @@ import androidx.compose.material.icons.outlined.FolderOff
 import androidx.compose.material.icons.outlined.Forum
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material.icons.outlined.Android
+import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
@@ -74,7 +75,8 @@ fun ImprovedResultsScreen(
     onOpenDuplicates: () -> Unit,
     onOpenLargeFiles: () -> Unit,
     onOpenHiddenFiles: () -> Unit,
-    onOpenApkManager: () -> Unit
+    onOpenApkManager: () -> Unit,
+    onOpenDownloads: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -92,8 +94,8 @@ fun ImprovedResultsScreen(
                 title = stringResource(R.string.results_nothing_found_title),
                 body = stringResource(R.string.results_nothing_found_body),
                 onBack = onBack,
-                actionLabel = stringResource(R.string.results_scan_again),
-                onAction = onScanAgain,
+                actionLabel = stringResource(R.string.downloads_cleaner_title),
+                onAction = onOpenDownloads,
                 secondaryAction = true
             )
             is ResultsUiState.Error -> ResultsStateMessage(
@@ -111,7 +113,8 @@ fun ImprovedResultsScreen(
                 onOpenDuplicates = onOpenDuplicates,
                 onOpenLargeFiles = onOpenLargeFiles,
                 onOpenHiddenFiles = onOpenHiddenFiles,
-                onOpenApkManager = onOpenApkManager
+                onOpenApkManager = onOpenApkManager,
+                onOpenDownloads = onOpenDownloads
             )
         }
     }
@@ -126,7 +129,8 @@ private fun ResultsContent(
     onOpenDuplicates: () -> Unit,
     onOpenLargeFiles: () -> Unit,
     onOpenHiddenFiles: () -> Unit,
-    onOpenApkManager: () -> Unit
+    onOpenApkManager: () -> Unit,
+    onOpenDownloads: () -> Unit
 ) {
     val overview = remember(result) { result.toResultsOverview() }
     val listState = remember(result) { LazyListState() }
@@ -175,6 +179,15 @@ private fun ResultsContent(
                 )
             )
             Spacer(Modifier.height(TrashPilotSpacing.Standard))
+        }
+        item {
+            ResultCategoryCard(
+                icon = Icons.Outlined.Download,
+                title = stringResource(R.string.downloads_cleaner_title),
+                subtitle = stringResource(R.string.results_local_category_subtitle),
+                value = fileCountText(overview.downloadFileCount),
+                onClick = onOpenDownloads
+            )
         }
         item {
             ResultCategoryCard(
@@ -507,7 +520,8 @@ internal data class ResultsOverview(
     val emptyFolderCandidates: List<com.trashpilot.app.core.quickclean.DisposableCandidate>,
     val socialFiles: List<ScannedFile>,
     val socialBytes: Long,
-    val apkFileCount: Int
+    val apkFileCount: Int,
+    val downloadFileCount: Int
 )
 
 internal fun StorageScanResult.toResultsOverview(): ResultsOverview {
@@ -532,7 +546,8 @@ internal fun StorageScanResult.toResultsOverview(): ResultsOverview {
         emptyFolderCandidates = emptyFolderCandidates,
         socialFiles = socialFiles,
         socialBytes = socialFiles.sumOf(ScannedFile::sizeBytes),
-        apkFileCount = files.count { it.name.endsWith(".apk", ignoreCase = true) }
+        apkFileCount = files.count { it.name.endsWith(".apk", ignoreCase = true) },
+        downloadFileCount = files.count { file -> file.category == FileCategory.DOWNLOADS }
     )
 }
 

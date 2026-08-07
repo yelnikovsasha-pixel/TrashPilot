@@ -142,6 +142,12 @@ class TrashDnaRepository(private val dao: TrashDnaDao) : HistoryRepository {
         timestampMillis: Long = System.currentTimeMillis()
     ) = recordDuplicateCleanup(scan, report, timestampMillis)
 
+    suspend fun recordDownloadsCleanup(
+        scan: StorageScanResult,
+        report: DuplicateCleaningReport,
+        timestampMillis: Long = System.currentTimeMillis()
+    ) = recordDuplicateCleanup(scan, report, timestampMillis)
+
     suspend fun recordCacheCleanup(
         report: CacheCleaningReport,
         timestampMillis: Long = System.currentTimeMillis()

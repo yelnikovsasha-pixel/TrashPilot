@@ -99,3 +99,6 @@
   remains disabled and shared semantic roles remain the UI contract.
 - APK metadata uses only `PackageManager.getPackageArchiveInfo` against a temporary private-cache
   copy of a user-accessible file; the copy is removed immediately after parsing.
+- Downloads Cleaner reuses the foreground MediaStore and SAF scanners and requests no new
+  permission. Download membership comes only from the real Download/Downloads path exposed by
+  Android. Reclaimed bytes are the sizes of verified successful deletions only.

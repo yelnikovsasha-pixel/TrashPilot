@@ -182,3 +182,13 @@
 - Metadata is parsed with public `PackageManager` archive APIs from a cancellable temporary
   app-cache copy. Parse failures remain visible as unreadable APKs and never block discovery.
 - Deletion uses Android confirmation/SAF APIs and records only successful deleted bytes.
+
+## Downloads Cleaner
+
+- Scan Results opens Downloads Cleaner even when the active scan has no cleanup candidates.
+- Accessible Download/Downloads entries stream from MediaStore or a user-selected SAF tree.
+  Search, type filtering, five deterministic sorts, selection, and category totals use only
+  discovered metadata; no file starts selected.
+- MediaStore deletion uses Android's system confirmation and verifies the affected URIs afterward.
+  SAF deletion uses per-document results. Only verified successes update the active scan and the
+  shared Reports/Trash DNA cleanup history.
