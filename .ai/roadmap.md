@@ -36,6 +36,8 @@
 
 \- Screenshots Cleaner
 
+\- Photo Quality Analyzer
+
 
 
 \---
@@ -45,8 +47,6 @@
 \## Next
 
 
-
-\- Photo Quality Analyzer
 
 \- Onboarding
 

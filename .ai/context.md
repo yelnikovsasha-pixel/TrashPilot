@@ -211,3 +211,15 @@
   search, deterministic sorting, manual selection, exact selected bytes, and a detail preview.
 - Full and Android 14 selected-photo access are distinguished. Android-confirmed deletion is
   verified against MediaStore, and only confirmed missing records update Results and shared history.
+
+## Photo Quality Analyzer
+
+- Results opens an offline MediaStore image analyzer. Images are sampled through Android thumbnail
+  APIs at no more than 256 pixels per side; originals are never copied, uploaded, or fully retained.
+- A photo is flagged only for recorded dimensions below one megapixel or a 720-pixel short side,
+  sampled Laplacian variance below 45, sampled mean luminance below 35 with at least 85% of pixels
+  at or below 55, or mean luminance above 225 with at least 85% at or above 210.
+- Blur, darkness, and brightness are explicitly labeled as technical heuristics. Intentional night,
+  high-key, graphic, or soft-focus images can be false positives and always require manual review.
+- No item starts selected. Android-confirmed deletion is verified URI-by-URI; only verified missing
+  records and their recorded bytes update Results and shared cleanup history.

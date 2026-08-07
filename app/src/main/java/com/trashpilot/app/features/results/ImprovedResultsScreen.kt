@@ -25,6 +25,7 @@ import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material.icons.outlined.Android
 import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Screenshot
+import androidx.compose.material.icons.outlined.PhotoLibrary
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
@@ -80,7 +81,8 @@ fun ImprovedResultsScreen(
     onOpenApkManager: () -> Unit,
     onOpenDownloads: () -> Unit,
     onOpenEmptyFolders: () -> Unit,
-    onOpenScreenshots: () -> Unit
+    onOpenScreenshots: () -> Unit,
+    onOpenPhotoQuality: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -98,8 +100,8 @@ fun ImprovedResultsScreen(
                 title = stringResource(R.string.results_nothing_found_title),
                 body = stringResource(R.string.results_nothing_found_body),
                 onBack = onBack,
-                actionLabel = stringResource(R.string.screenshots_title),
-                onAction = onOpenScreenshots,
+                actionLabel = stringResource(R.string.photo_quality_title),
+                onAction = onOpenPhotoQuality,
                 secondaryAction = true
             )
             is ResultsUiState.Error -> ResultsStateMessage(
@@ -120,7 +122,8 @@ fun ImprovedResultsScreen(
                 onOpenApkManager = onOpenApkManager,
                 onOpenDownloads = onOpenDownloads,
                 onOpenEmptyFolders = onOpenEmptyFolders,
-                onOpenScreenshots = onOpenScreenshots
+                onOpenScreenshots = onOpenScreenshots,
+                onOpenPhotoQuality = onOpenPhotoQuality
             )
         }
     }
@@ -138,7 +141,8 @@ private fun ResultsContent(
     onOpenApkManager: () -> Unit,
     onOpenDownloads: () -> Unit,
     onOpenEmptyFolders: () -> Unit,
-    onOpenScreenshots: () -> Unit
+    onOpenScreenshots: () -> Unit,
+    onOpenPhotoQuality: () -> Unit
 ) {
     val overview = remember(result) { result.toResultsOverview() }
     val listState = remember(result) { LazyListState() }
@@ -195,6 +199,15 @@ private fun ResultsContent(
                 subtitle = stringResource(R.string.results_local_category_subtitle),
                 value = stringResource(R.string.results_count_and_size, fileCountText(overview.screenshotCount), formatBytes(overview.screenshotBytes)),
                 onClick = onOpenScreenshots
+            )
+        }
+        item {
+            ResultCategoryCard(
+                icon = Icons.Outlined.PhotoLibrary,
+                title = stringResource(R.string.photo_quality_title),
+                subtitle = stringResource(R.string.photo_quality_results_subtitle),
+                value = fileCountText(result.files.count { it.category == FileCategory.IMAGES }),
+                onClick = onOpenPhotoQuality
             )
         }
         item {

@@ -115,3 +115,10 @@
 - Screenshot previews use Android thumbnail APIs and never decode full-resolution list images.
   Android 14 selected-photo access is presented as partial coverage. Deletion uses
   `MediaStore.createDeleteRequest` where required and counts only URIs verified absent afterward.
+- Photo Quality Analyzer is a deterministic technical tool, not semantic or AI image judgment.
+  Its centralized conservative defaults are: below 1,000,000 pixels or a 720-pixel short side;
+  Laplacian variance below 45 for “Possibly blurry”; mean luminance below 35 plus 85% at or below
+  55 for “Very dark”; and mean above 225 plus 85% at or above 210 for “Very bright”.
+- Pixel metrics use a maximum 256-pixel MediaStore thumbnail. This bounds memory and I/O but can
+  produce false positives for intentional night, bright, graphic, low-detail, or soft-focus work.
+  The UI explains this and never exposes an overall quality score or automatic recommendation.

@@ -43,6 +43,7 @@ import com.trashpilot.app.features.apkmanager.ApkManagerScreen
 import com.trashpilot.app.features.downloads.DownloadsCleanerScreen
 import com.trashpilot.app.features.emptyfolders.EmptyFoldersCleanerScreen
 import com.trashpilot.app.features.screenshots.ScreenshotsCleanerScreen
+import com.trashpilot.app.features.photoquality.PhotoQualityAnalyzerScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -149,7 +150,8 @@ fun AppNavigation() {
                 onOpenApkManager = { navController.navigate("apk-manager") },
                 onOpenDownloads = { navController.navigate("downloads-cleaner") },
                 onOpenEmptyFolders = { navController.navigate("empty-folders-cleaner") },
-                onOpenScreenshots = { navController.navigate("screenshots-cleaner") }
+                onOpenScreenshots = { navController.navigate("screenshots-cleaner") },
+                onOpenPhotoQuality = { navController.navigate("photo-quality-analyzer") }
             )
         }
         composable("large-files-manager") {
@@ -222,6 +224,24 @@ fun AppNavigation() {
                             disposableCandidates = source.disposableCandidates.filterNot { it.uri in deletedUris }
                         )
                         scope.launch { historyRepository.recordScreenshotsCleanup(source, report) }
+                    }
+                }
+            )
+        }
+        composable("photo-quality-analyzer") {
+            PhotoQualityAnalyzerScreen(
+                onBack = { navController.popBackStack() },
+                onDeleted = { deletedUris, report ->
+                    val source = latestScan
+                    if (source != null) {
+                        val remaining = source.files.filterNot { it.uri in deletedUris }
+                        latestScan = source.copy(
+                            files = remaining,
+                            scannedFileCount = remaining.size,
+                            categoryBytes = FileCategory.entries.associateWith { category -> remaining.filter { it.category == category }.sumOf { it.sizeBytes } },
+                            disposableCandidates = source.disposableCandidates.filterNot { it.uri in deletedUris }
+                        )
+                        scope.launch { historyRepository.recordPhotoQualityCleanup(source, report) }
                     }
                 }
             )
