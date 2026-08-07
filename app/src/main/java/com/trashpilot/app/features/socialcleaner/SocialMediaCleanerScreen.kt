@@ -162,7 +162,7 @@ fun SocialMediaCleanerScreen(
         }
     }
 
-    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.social_cleaner_title), onBack = onBack) }) { padding ->
+    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.results_label_social_media), onBack = onBack) }) { padding ->
         when (val current = state) {
             SocialCleanerState.LoadingApps -> TrashPilotLoadingState(stringResource(R.string.social_cleaner_loading_apps), stringResource(R.string.social_cleaner_loading_apps_body), Modifier.fillMaxSize().padding(padding))
             SocialCleanerState.NoApps -> TrashPilotEmptyState(stringResource(R.string.social_cleaner_no_apps_title), stringResource(R.string.social_cleaner_no_apps_body), Modifier.fillMaxSize().padding(padding).padding(TrashPilotSpacing.Screen))

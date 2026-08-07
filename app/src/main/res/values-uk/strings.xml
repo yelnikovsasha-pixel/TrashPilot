@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">Ліцензія Apache 2.0</string>
     <string name="about_licenses_notice">Назви та ліцензії відображають бібліотеки середовища виконання, оголошені цією збіркою. Авторські права залишаються за учасниками кожного проекту.</string>
     <string name="about_settings_body">Інформація про продукт, конфіденційність і версію</string>
+    <string name="results_files_found">Файли знайдено</string>
+    <string name="results_review_quick_clean">Огляд Quick Clean</string>
+    <string name="results_review_categories">Огляд за категоріями</string>
+    <string name="results_group_apps">програми</string>
+    <string name="results_group_apps_body">Кеш програми та доступні соціальні мережі</string>
+    <string name="results_group_photos">Фотографії</string>
+    <string name="results_group_photos_body">Скріншоти, дублікати та технічний огляд фото</string>
+    <string name="results_group_files">Файли</string>
+    <string name="results_group_files_body">Великі файли, завантаження, інсталятори та папки</string>
+    <string name="results_open_review">Відкритий огляд</string>
+    <string name="results_label_app_cache">Кеш програми</string>
+    <string name="results_label_social_media">Соціальні мережі</string>
+    <string name="results_label_screenshots">Скріншоти</string>
+    <string name="results_label_duplicates">Дублікати</string>
+    <string name="results_label_photo_review">Фото огляд</string>
+    <string name="results_label_large_files">Великі файли</string>
+    <string name="results_label_downloads">Завантаження</string>
+    <string name="results_label_apk_installers">Інсталятори APK</string>
+    <string name="results_label_hidden_files">Приховані файли</string>
+    <string name="results_label_empty_folders">Порожні папки</string>
+    <string name="results_app_cache_body">Перегляньте статистику кешу, доступну для Android</string>
+    <string name="results_screenshots_body">Перегляньте доступні знімки екрана</string>
+    <string name="results_empty_folders_body">Перед видаленням перевірте доступні папки</string>
 </resources>

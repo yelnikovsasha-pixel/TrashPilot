@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">Licencia Apache 2.0</string>
     <string name="about_licenses_notice">Los nombres y las licencias reflejan las bibliotecas de tiempo de ejecución declaradas por esta compilación. Los derechos de autor pertenecen a los contribuyentes de cada proyecto.</string>
     <string name="about_settings_body">Información sobre el producto, la privacidad y la versión</string>
+    <string name="results_files_found">Archivos encontrados</string>
+    <string name="results_review_quick_clean">Revisar Quick Clean</string>
+    <string name="results_review_categories">Revisar por categoría</string>
+    <string name="results_group_apps">Aplicaciones</string>
+    <string name="results_group_apps_body">Caché de aplicaciones y redes sociales accesibles</string>
+    <string name="results_group_photos">Fotos</string>
+    <string name="results_group_photos_body">Capturas de pantalla, duplicados y revisión de fotografías técnicas.</string>
+    <string name="results_group_files">Archivos</string>
+    <string name="results_group_files_body">Archivos grandes, descargas, instaladores y carpetas.</string>
+    <string name="results_open_review">Abrir revisión</string>
+    <string name="results_label_app_cache">Caché de aplicaciones</string>
+    <string name="results_label_social_media">redes sociales</string>
+    <string name="results_label_screenshots">Capturas de pantalla</string>
+    <string name="results_label_duplicates">Duplicados</string>
+    <string name="results_label_photo_review">Revisión de fotos</string>
+    <string name="results_label_large_files">Archivos grandes</string>
+    <string name="results_label_downloads">Descargas</string>
+    <string name="results_label_apk_installers">Instaladores de APK</string>
+    <string name="results_label_hidden_files">Archivos ocultos</string>
+    <string name="results_label_empty_folders">Carpetas vacias</string>
+    <string name="results_app_cache_body">Revisar las estadísticas de caché que Android pone a disposición</string>
+    <string name="results_screenshots_body">Revisar capturas de pantalla accesibles</string>
+    <string name="results_empty_folders_body">Verifique las carpetas accesibles antes de eliminarlas</string>
 </resources>

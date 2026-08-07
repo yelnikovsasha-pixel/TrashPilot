@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">阿帕契許可證 2.0</string>
     <string name="about_licenses_notice">名稱和許可證反映了此建置聲明的運行時庫。版權歸每個項目的貢獻者所有。</string>
     <string name="about_settings_body">產品、隱私和版本信息</string>
+    <string name="results_files_found">找到文件</string>
+    <string name="results_review_quick_clean">評論 Quick Clean</string>
+    <string name="results_review_categories">按類別評論</string>
+    <string name="results_group_apps">應用程式</string>
+    <string name="results_group_apps_body">應用程式快取和可訪問的社交媒體</string>
+    <string name="results_group_photos">照片</string>
+    <string name="results_group_photos_body">螢幕截圖、副本和技術照片審查</string>
+    <string name="results_group_files">文件</string>
+    <string name="results_group_files_body">大檔案、下載、安裝程式和資料夾</string>
+    <string name="results_open_review">公開審查</string>
+    <string name="results_label_app_cache">應用程式緩存</string>
+    <string name="results_label_social_media">社群媒體</string>
+    <string name="results_label_screenshots">截圖</string>
+    <string name="results_label_duplicates">重複項</string>
+    <string name="results_label_photo_review">照片回顧</string>
+    <string name="results_label_large_files">大文件</string>
+    <string name="results_label_downloads">下載</string>
+    <string name="results_label_apk_installers">APK安裝程序</string>
+    <string name="results_label_hidden_files">隱藏文件</string>
+    <string name="results_label_empty_folders">空資料夾</string>
+    <string name="results_app_cache_body">查看 Android 提供的快取統計信息</string>
+    <string name="results_screenshots_body">查看可訪問的螢幕截圖</string>
+    <string name="results_empty_folders_body">刪除之前驗證可存取的資料夾</string>
 </resources>

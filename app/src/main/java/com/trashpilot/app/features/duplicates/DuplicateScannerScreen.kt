@@ -64,7 +64,7 @@ fun DuplicateScannerScreen(
         }
     }
 
-    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.duplicate_scanner_title), onBack = onBack) }) { padding ->
+    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.results_label_duplicates), onBack = onBack) }) { padding ->
         when (val current = state) {
             is DuplicateState.Scanning -> DuplicateLoading(current.progress, Modifier.padding(padding))
             is DuplicateState.Error -> TrashPilotErrorState(

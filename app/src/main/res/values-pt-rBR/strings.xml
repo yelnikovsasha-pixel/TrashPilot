@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">Licença Apache 2.0</string>
     <string name="about_licenses_notice">Os nomes e licenças refletem as bibliotecas de tempo de execução declaradas por esta compilação. Os direitos autorais permanecem com os contribuidores de cada projeto.</string>
     <string name="about_settings_body">Informações sobre produto, privacidade e versão</string>
+    <string name="results_files_found">Arquivos encontrados</string>
+    <string name="results_review_quick_clean">Revisão Quick Clean</string>
+    <string name="results_review_categories">Revisão por categoria</string>
+    <string name="results_group_apps">Aplicativos</string>
+    <string name="results_group_apps_body">Cache de aplicativos e mídias sociais acessíveis</string>
+    <string name="results_group_photos">Fotos</string>
+    <string name="results_group_photos_body">Capturas de tela, duplicatas e revisão técnica de fotos</string>
+    <string name="results_group_files">Arquivos</string>
+    <string name="results_group_files_body">Arquivos grandes, downloads, instaladores e pastas</string>
+    <string name="results_open_review">Abrir revisão</string>
+    <string name="results_label_app_cache">Cache do aplicativo</string>
+    <string name="results_label_social_media">Redes sociais</string>
+    <string name="results_label_screenshots">Capturas de tela</string>
+    <string name="results_label_duplicates">Duplicatas</string>
+    <string name="results_label_photo_review">Revisão de fotos</string>
+    <string name="results_label_large_files">Arquivos grandes</string>
+    <string name="results_label_downloads">Transferências</string>
+    <string name="results_label_apk_installers">Instaladores de APK</string>
+    <string name="results_label_hidden_files">Arquivos ocultos</string>
+    <string name="results_label_empty_folders">Pastas vazias</string>
+    <string name="results_app_cache_body">Revise as estatísticas de cache que o Android disponibiliza</string>
+    <string name="results_screenshots_body">Revise as capturas de tela acessíveis</string>
+    <string name="results_empty_folders_body">Verifique as pastas acessíveis antes da remoção</string>
 </resources>

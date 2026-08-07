@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">Licence Apache 2.0</string>
     <string name="about_licenses_notice">Les noms et les licences reflètent les bibliothèques d\'exécution déclarées par cette version. Le droit d’auteur reste la propriété des contributeurs de chaque projet.</string>
     <string name="about_settings_body">Informations sur le produit, la confidentialité et la version</string>
+    <string name="results_files_found">Fichiers trouvés</string>
+    <string name="results_review_quick_clean">Revoir Quick Clean</string>
+    <string name="results_review_categories">Examen par catégorie</string>
+    <string name="results_group_apps">Applications</string>
+    <string name="results_group_apps_body">Cache d\'application et réseaux sociaux accessibles</string>
+    <string name="results_group_photos">Photos</string>
+    <string name="results_group_photos_body">Captures d\'écran, doublons et revue technique des photos</string>
+    <string name="results_group_files">Fichiers</string>
+    <string name="results_group_files_body">Fichiers volumineux, téléchargements, programmes d\'installation et dossiers</string>
+    <string name="results_open_review">Ouvrir l\'examen</string>
+    <string name="results_label_app_cache">Cache d\'application</string>
+    <string name="results_label_social_media">Réseaux sociaux</string>
+    <string name="results_label_screenshots">Captures d\'écran</string>
+    <string name="results_label_duplicates">Doublons</string>
+    <string name="results_label_photo_review">Revue de photos</string>
+    <string name="results_label_large_files">Fichiers volumineux</string>
+    <string name="results_label_downloads">Téléchargements</string>
+    <string name="results_label_apk_installers">Installateurs d\'APK</string>
+    <string name="results_label_hidden_files">Fichiers cachés</string>
+    <string name="results_label_empty_folders">Dossiers vides</string>
+    <string name="results_app_cache_body">Examiner les statistiques de cache mises à disposition par Android</string>
+    <string name="results_screenshots_body">Examiner les captures d\'écran accessibles</string>
+    <string name="results_empty_folders_body">Vérifier les dossiers accessibles avant la suppression</string>
 </resources>

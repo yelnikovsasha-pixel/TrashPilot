@@ -2,11 +2,15 @@
 - Use Compose and Material 3; enable edge-to-edge; select dynamic color on Android 12+ with local light/dark fallback; keep the first release splash-only while future flows follow the Figma system and its offline-first, no-fake-claims privacy stance.
 - Splash flow decision: use a 700ms fade-in, hold for 2 seconds, then navigate with NavHost from splash to Home.
 - Home decision: show `Not scanned yet` before the first scan, launch Scanner from the 168 dp circular primary action, and show real device totals after a completed scan.
-- Home information architecture uses Storage, Trash DNA, Privacy Monitor, and Reports cards; Settings remains a bottom-navigation destination rather than a content card.
-- Home evolution keeps SCAN dominant and makes Quick Clean, Trash DNA, Privacy Monitor, and Reports
-  equal secondary actions. Storage progress appears only after a real scan; trust statements are
-  factual and never imply background scanning or automatic deletion.
-- Bottom navigation exposes the planned Home, Privacy, Reports, and Settings information architecture; unfinished destinations use clear placeholder copy.
+- Top-level information architecture is Home, Privacy, Reports, and Settings. Home keeps SCAN
+  dominant, then real storage, Quick Clean, Trash DNA, and Privacy Monitor; Reports and Settings
+  are not duplicated as Home feature cards.
+- The primary product flow is SCAN -> Results -> Review -> Confirm -> Clean. Every successful
+  scan reaches Results, including a zero-candidate scan, because Results also provides truthful
+  deeper-review destinations without inventing totals.
+- Results groups review destinations as Apps (App cache, Social media), Photos (Screenshots,
+  Duplicates, Photo review), and Files (Large files, Downloads, APK installers, Hidden files,
+  Empty folders). Internal implementation names and algorithms remain unchanged.
 - Keep AndroidX dependencies on API 36.1-compatible versions until the project intentionally adopts compile SDK 37.
 - Scanner starts immediately with a foreground MediaStore query of the shared-storage records
   Android exposes to TrashPilot; it does not request `MANAGE_EXTERNAL_STORAGE`.
@@ -19,9 +23,9 @@
   Quick Clean is the sole deletion path and operates only on manually selected disposable URIs.
 - Results keeps all accessible file metadata for category drill-down, while deriving the ten
   largest files on demand. File URIs are stored as strings to keep sorting logic platform-neutral.
-- The scan/results flow has explicit Scanning, Results, Nothing Found, and genuine Error states.
-  A successful scan reaches Results only after finalization; zero-attention scans use the positive
-  Nothing Found presentation rather than rendering zero-valued category cards.
+- The scan/results flow has explicit Scanning, Results, and genuine Error states. A finalized scan
+  always reaches the grouped Results hub; unavailable totals are omitted and deeper tools use an
+  honest Open review or Run analysis affordance.
 - Scanner work is owned by a composition coroutine. Both visible and system Back leave the
   foreground scan safely and cancel ongoing traversal instead of trapping the user.
 - Quick Clean starts Review with nothing selected, requires a separate confirmation dialog, and

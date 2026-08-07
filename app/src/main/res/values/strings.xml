@@ -967,4 +967,27 @@
     <string name="about_license_kotlin">Kotlin and kotlinx.coroutines</string>
     <string name="about_license_apache_2">Apache License 2.0</string>
     <string name="about_licenses_notice">Names and licenses reflect the runtime libraries declared by this build. Copyright remains with each project’s contributors.</string>
+    <string name="results_files_found">Files found</string>
+    <string name="results_review_quick_clean">Review Quick Clean</string>
+    <string name="results_review_categories">Review by category</string>
+    <string name="results_group_apps">Apps</string>
+    <string name="results_group_apps_body">App cache and accessible social media</string>
+    <string name="results_group_photos">Photos</string>
+    <string name="results_group_photos_body">Screenshots, duplicates and technical photo review</string>
+    <string name="results_group_files">Files</string>
+    <string name="results_group_files_body">Large files, downloads, installers and folders</string>
+    <string name="results_open_review">Open review</string>
+    <string name="results_label_app_cache">App cache</string>
+    <string name="results_label_social_media">Social media</string>
+    <string name="results_label_screenshots">Screenshots</string>
+    <string name="results_label_duplicates">Duplicates</string>
+    <string name="results_label_photo_review">Photo review</string>
+    <string name="results_label_large_files">Large files</string>
+    <string name="results_label_downloads">Downloads</string>
+    <string name="results_label_apk_installers">APK installers</string>
+    <string name="results_label_hidden_files">Hidden files</string>
+    <string name="results_label_empty_folders">Empty folders</string>
+    <string name="results_app_cache_body">Review cache statistics Android makes available</string>
+    <string name="results_screenshots_body">Review accessible screenshots</string>
+    <string name="results_empty_folders_body">Verify accessible folders before removal</string>
 </resources>

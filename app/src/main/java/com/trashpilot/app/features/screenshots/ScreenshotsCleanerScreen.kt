@@ -133,7 +133,7 @@ fun ScreenshotsCleanerScreen(onBack: () -> Unit, onDeleted: (Set<String>, Duplic
         if (full || selectedOnly) scan(!full && selectedOnly) else permissionLauncher.launch(screenshotPermissions())
     }
 
-    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.screenshots_title), onBack = onBack) }) { padding ->
+    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.results_label_screenshots), onBack = onBack) }) { padding ->
         when (val current = state) {
             ScreenshotState.Preparing -> TrashPilotLoadingState(stringResource(R.string.screenshots_preparing), stringResource(R.string.screenshots_local_only), Modifier.fillMaxSize().padding(padding))
             ScreenshotState.PermissionDenied -> TrashPilotErrorState(stringResource(R.string.screenshots_permission_title), stringResource(R.string.screenshots_permission_body), Modifier.fillMaxSize().padding(padding).padding(TrashPilotSpacing.Screen), stringResource(R.string.screenshots_try_again), { permissionLauncher.launch(screenshotPermissions()) })

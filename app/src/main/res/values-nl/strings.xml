@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">Apache-licentie 2.0</string>
     <string name="about_licenses_notice">Namen en licenties weerspiegelen de runtimebibliotheken die door deze build zijn gedeclareerd. Het auteursrecht blijft berusten bij de bijdragers van elk project.</string>
     <string name="about_settings_body">Product-, privacy- en versie-informatie</string>
+    <string name="results_files_found">Bestanden gevonden</string>
+    <string name="results_review_quick_clean">Bekijk Quick Clean</string>
+    <string name="results_review_categories">Beoordeling per categorie</string>
+    <string name="results_group_apps">Apps</string>
+    <string name="results_group_apps_body">App-cache en toegankelijke sociale media</string>
+    <string name="results_group_photos">Foto\'s</string>
+    <string name="results_group_photos_body">Screenshots, duplicaten en technische fotobeoordeling</string>
+    <string name="results_group_files">Bestanden</string>
+    <string name="results_group_files_body">Grote bestanden, downloads, installatieprogramma\'s en mappen</string>
+    <string name="results_open_review">Beoordeling openen</string>
+    <string name="results_label_app_cache">App-cache</string>
+    <string name="results_label_social_media">Sociale media</string>
+    <string name="results_label_screenshots">Schermafbeeldingen</string>
+    <string name="results_label_duplicates">Duplicaten</string>
+    <string name="results_label_photo_review">Foto recensie</string>
+    <string name="results_label_large_files">Grote bestanden</string>
+    <string name="results_label_downloads">Downloads</string>
+    <string name="results_label_apk_installers">APK-installatieprogramma\'s</string>
+    <string name="results_label_hidden_files">Verborgen bestanden</string>
+    <string name="results_label_empty_folders">Lege mappen</string>
+    <string name="results_app_cache_body">Bekijk cachestatistieken die Android beschikbaar stelt</string>
+    <string name="results_screenshots_body">Bekijk toegankelijke schermafbeeldingen</string>
+    <string name="results_empty_folders_body">Controleer toegankelijke mappen voordat u deze verwijdert</string>
 </resources>

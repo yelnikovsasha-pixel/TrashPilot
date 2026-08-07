@@ -27,7 +27,6 @@ import com.trashpilot.app.features.splash.SplashScreen
 import com.trashpilot.app.core.storage.StorageScanResult
 import com.trashpilot.app.features.results.ImprovedResultsScreen
 import com.trashpilot.app.features.results.ResultsUiState
-import com.trashpilot.app.features.results.hasReviewableItems
 import com.trashpilot.app.features.results.CategoryFilesScreen
 import com.trashpilot.app.features.socialcleaner.SocialMediaCleanerScreen
 import com.trashpilot.app.core.storage.FileCategory
@@ -120,13 +119,13 @@ fun AppNavigation() {
         }
         composable("home") {
             HomeScreen(
-                onScan = { navController.navigate("scanner") },
+                onScan = { navController.navigate(homeActionRoute(HomeAction.SCAN, latestScan != null)) },
                 onOpenQuickClean = {
-                    navController.navigate("cache-analyzer")
+                    selectedCleanUris = emptySet()
+                    navController.navigate(homeActionRoute(HomeAction.QUICK_CLEAN, latestScan != null))
                 },
-                onOpenTrashDna = { navController.navigate("trash-dna") },
-                onOpenPrivacy = { navController.navigate("privacy") },
-                onOpenSettings = { navController.navigate("settings") },
+                onOpenTrashDna = { navController.navigate(homeActionRoute(HomeAction.TRASH_DNA, latestScan != null)) },
+                onOpenPrivacy = { navController.navigate(homeActionRoute(HomeAction.PRIVACY, latestScan != null)) },
                 latestScan = latestScan
             )
         }
@@ -150,19 +149,13 @@ fun AppNavigation() {
         composable("results") {
             ImprovedResultsScreen(
                 state = latestScan?.let { result ->
-                    val reviewable = result.hasReviewableItems()
                     Log.d(
                         "TrashPilotScan",
                         "Results model files=${result.files.size} " +
                             "bytes=${result.files.sumOf { it.sizeBytes }} " +
-                            "candidates=${result.disposableCandidates.size} " +
-                            "reviewable=$reviewable"
+                            "candidates=${result.disposableCandidates.size}"
                     )
-                    if (reviewable) {
-                        ResultsUiState.Results(result)
-                    } else {
-                        ResultsUiState.NothingFound(result)
-                    }
+                    ResultsUiState.Results(result)
                 } ?: ResultsUiState.Error(),
                 onBack = { navController.popBackStack("home", inclusive = false) },
                 onScanAgain = { navController.navigate("scanner") },
@@ -174,18 +167,19 @@ fun AppNavigation() {
                     selectedCategory = category
                     navController.navigate("category-files")
                 },
-                onOpenSocialMedia = { navController.navigate("social-media-files") },
-                onOpenDuplicates = { navController.navigate("duplicate-scanner") },
-                onOpenLargeFiles = { navController.navigate("large-files-manager") },
-                onOpenHiddenFiles = { navController.navigate("hidden-files-manager") },
-                onOpenApkManager = { navController.navigate("apk-manager") },
-                onOpenDownloads = { navController.navigate("downloads-cleaner") },
-                onOpenEmptyFolders = { navController.navigate("empty-folders-cleaner") },
-                onOpenScreenshots = { navController.navigate("screenshots-cleaner") },
-                onOpenPhotoQuality = { navController.navigate("photo-quality-analyzer") }
+                onOpenCache = { navController.navigate(ReviewFeature.APP_CACHE.route) },
+                onOpenSocialMedia = { navController.navigate(ReviewFeature.SOCIAL_MEDIA.route) },
+                onOpenDuplicates = { navController.navigate(ReviewFeature.DUPLICATES.route) },
+                onOpenLargeFiles = { navController.navigate(ReviewFeature.LARGE_FILES.route) },
+                onOpenHiddenFiles = { navController.navigate(ReviewFeature.HIDDEN_FILES.route) },
+                onOpenApkManager = { navController.navigate(ReviewFeature.APK_INSTALLERS.route) },
+                onOpenDownloads = { navController.navigate(ReviewFeature.DOWNLOADS.route) },
+                onOpenEmptyFolders = { navController.navigate(ReviewFeature.EMPTY_FOLDERS.route) },
+                onOpenScreenshots = { navController.navigate(ReviewFeature.SCREENSHOTS.route) },
+                onOpenPhotoQuality = { navController.navigate(ReviewFeature.PHOTO_REVIEW.route) }
             )
         }
-        composable("large-files-manager") {
+        composable(ReviewFeature.LARGE_FILES.route) {
             LargeFilesManagerScreen(
                 onBack = { navController.popBackStack() },
                 onFilesDeleted = { updated, report ->
@@ -195,7 +189,7 @@ fun AppNavigation() {
                 }
             )
         }
-        composable("hidden-files-manager") {
+        composable(ReviewFeature.HIDDEN_FILES.route) {
             HiddenFilesManagerScreen(
                 onBack = { navController.popBackStack() },
                 onFilesDeleted = { updated, report ->
@@ -205,7 +199,7 @@ fun AppNavigation() {
                 }
             )
         }
-        composable("apk-manager") {
+        composable(ReviewFeature.APK_INSTALLERS.route) {
             ApkManagerScreen(
                 onBack = { navController.popBackStack() },
                 onFilesDeleted = { updated, report ->
@@ -215,7 +209,7 @@ fun AppNavigation() {
                 }
             )
         }
-        composable("downloads-cleaner") {
+        composable(ReviewFeature.DOWNLOADS.route) {
             DownloadsCleanerScreen(
                 onBack = { navController.popBackStack() },
                 onFilesDeleted = { updated, report ->
@@ -225,7 +219,7 @@ fun AppNavigation() {
                 }
             )
         }
-        composable("empty-folders-cleaner") {
+        composable(ReviewFeature.EMPTY_FOLDERS.route) {
             EmptyFoldersCleanerScreen(
                 onBack = { navController.popBackStack() },
                 onFoldersDeleted = { deletedUris, deletedCount, failedCount ->
@@ -241,7 +235,7 @@ fun AppNavigation() {
                 }
             )
         }
-        composable("screenshots-cleaner") {
+        composable(ReviewFeature.SCREENSHOTS.route) {
             ScreenshotsCleanerScreen(
                 onBack = { navController.popBackStack() },
                 onDeleted = { deletedUris, report ->
@@ -259,7 +253,7 @@ fun AppNavigation() {
                 }
             )
         }
-        composable("photo-quality-analyzer") {
+        composable(ReviewFeature.PHOTO_REVIEW.route) {
             PhotoQualityAnalyzerScreen(
                 onBack = { navController.popBackStack() },
                 onDeleted = { deletedUris, report ->
@@ -277,7 +271,7 @@ fun AppNavigation() {
                 }
             )
         }
-        composable("duplicate-scanner") {
+        composable(ReviewFeature.DUPLICATES.route) {
             val result = latestScan
             if (result != null) {
                 DuplicateScannerScreen(
@@ -290,7 +284,7 @@ fun AppNavigation() {
                     }
                 )
             } else PlaceholderDestinationScreen(
-                title = R.string.duplicate_scanner_title,
+                title = R.string.results_label_duplicates,
                 message = R.string.results_missing,
                 onBack = { navController.popBackStack() }
             )
@@ -301,7 +295,11 @@ fun AppNavigation() {
                 QuickCleanScreen(
                     scanResult = result,
                     onBack = { navController.popBackStack() },
-                    onDone = { navController.popBackStack("results", inclusive = false) },
+                    onDone = {
+                        if (!navController.popBackStack("results", inclusive = false)) {
+                            navController.popBackStack()
+                        }
+                    },
                     initialSelectedUris = selectedCleanUris,
                     onCleaningComplete = { report ->
                         scope.launch { historyRepository.recordCleanup(result, report) }
@@ -315,7 +313,7 @@ fun AppNavigation() {
                 )
             }
         }
-        composable("cache-analyzer") {
+        composable(ReviewFeature.APP_CACHE.route) {
             RealCacheAnalyzerScreen(
                 onBack = { navController.popBackStack() },
                 onCacheScan = { snapshot ->
@@ -343,7 +341,7 @@ fun AppNavigation() {
                 )
             }
         }
-        composable("social-media-files") {
+        composable(ReviewFeature.SOCIAL_MEDIA.route) {
             SocialMediaCleanerScreen(
                 onBack = { navController.popBackStack() },
                 onFilesDeleted = { updated, report ->

@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">Giấy phép Apache 2.0</string>
     <string name="about_licenses_notice">Tên và giấy phép phản ánh các thư viện thời gian chạy được bản dựng này khai báo. Bản quyền vẫn thuộc về những người đóng góp của mỗi dự án.</string>
     <string name="about_settings_body">Thông tin về sản phẩm, quyền riêng tư và phiên bản</string>
+    <string name="results_files_found">Đã tìm thấy tệp</string>
+    <string name="results_review_quick_clean">Đánh giá Quick Clean</string>
+    <string name="results_review_categories">Đánh giá theo danh mục</string>
+    <string name="results_group_apps">Ứng dụng</string>
+    <string name="results_group_apps_body">Bộ nhớ đệm ứng dụng và phương tiện truyền thông xã hội có thể truy cập</string>
+    <string name="results_group_photos">Ảnh</string>
+    <string name="results_group_photos_body">Ảnh chụp màn hình, bản sao và đánh giá ảnh kỹ thuật</string>
+    <string name="results_group_files">Tập tin</string>
+    <string name="results_group_files_body">Tệp lớn, nội dung tải xuống, trình cài đặt và thư mục</string>
+    <string name="results_open_review">Đánh giá mở</string>
+    <string name="results_label_app_cache">Bộ đệm ứng dụng</string>
+    <string name="results_label_social_media">Truyền thông xã hội</string>
+    <string name="results_label_screenshots">Ảnh chụp màn hình</string>
+    <string name="results_label_duplicates">trùng lặp</string>
+    <string name="results_label_photo_review">Đánh giá ảnh</string>
+    <string name="results_label_large_files">Tệp lớn</string>
+    <string name="results_label_downloads">Tải xuống</string>
+    <string name="results_label_apk_installers">Trình cài đặt APK</string>
+    <string name="results_label_hidden_files">Tập tin ẩn</string>
+    <string name="results_label_empty_folders">Thư mục trống</string>
+    <string name="results_app_cache_body">Xem lại số liệu thống kê bộ đệm mà Android cung cấp</string>
+    <string name="results_screenshots_body">Xem lại ảnh chụp màn hình có thể truy cập</string>
+    <string name="results_empty_folders_body">Xác minh các thư mục có thể truy cập trước khi xóa</string>
 </resources>

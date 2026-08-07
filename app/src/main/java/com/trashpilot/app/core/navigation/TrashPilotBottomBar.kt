@@ -66,14 +66,9 @@ fun TrashPilotBottomBar(
         tonalElevation = TrashPilotElevation.None,
         windowInsets = WindowInsets(0, 0, 0, 0)
     ) {
+        val selectedParent = topLevelParent(currentRoute)
         bottomDestinations.forEach { destination ->
-            val selected = currentRoute == destination.route ||
-                (destination.route == "settings" && currentRoute == "about") ||
-                (destination.route == "home" && currentRoute in setOf(
-                    "splash", "scanner", "results", "quick-clean", "category-files", "trash-dna",
-                    "duplicate-scanner", "cache-analyzer", "large-files-manager", "hidden-files-manager",
-                    "social-media-files", "apk-manager"
-                ))
+            val selected = destination.route == selectedParent.route
             NavigationBarItem(
                 modifier = Modifier.weight(1f),
                 selected = selected,
@@ -139,8 +134,7 @@ private fun HomeBottomBar(
             windowInsets = WindowInsets(0, 0, 0, 0)
         ) {
             bottomDestinations.forEach { destination ->
-                val selected = destination.route == "home" &&
-                    currentRoute in setOf("home", "results")
+                val selected = destination.route == topLevelParent(currentRoute).route
                 NavigationBarItem(
                     modifier = Modifier.weight(1f),
                     selected = selected,

@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">Lisensi Apache 2.0</string>
     <string name="about_licenses_notice">Nama dan lisensi mencerminkan pustaka runtime yang dideklarasikan oleh build ini. Hak cipta tetap berada pada kontributor masing-masing proyek.</string>
     <string name="about_settings_body">Informasi produk, privasi, dan versi</string>
+    <string name="results_files_found">File ditemukan</string>
+    <string name="results_review_quick_clean">Tinjau Quick Clean</string>
+    <string name="results_review_categories">Tinjau berdasarkan kategori</string>
+    <string name="results_group_apps">Aplikasi</string>
+    <string name="results_group_apps_body">Cache aplikasi dan media sosial yang dapat diakses</string>
+    <string name="results_group_photos">Foto</string>
+    <string name="results_group_photos_body">Tangkapan layar, duplikat, dan tinjauan foto teknis</string>
+    <string name="results_group_files">File</string>
+    <string name="results_group_files_body">File besar, unduhan, penginstal, dan folder</string>
+    <string name="results_open_review">Buka ulasan</string>
+    <string name="results_label_app_cache">Tembolok aplikasi</string>
+    <string name="results_label_social_media">media sosial</string>
+    <string name="results_label_screenshots">Tangkapan layar</string>
+    <string name="results_label_duplicates">Duplikat</string>
+    <string name="results_label_photo_review">Ulasan foto</string>
+    <string name="results_label_large_files">File besar</string>
+    <string name="results_label_downloads">Unduhan</string>
+    <string name="results_label_apk_installers">pemasang APK</string>
+    <string name="results_label_hidden_files">File tersembunyi</string>
+    <string name="results_label_empty_folders">Folder kosong</string>
+    <string name="results_app_cache_body">Tinjau statistik cache yang disediakan Android</string>
+    <string name="results_screenshots_body">Tinjau tangkapan layar yang dapat diakses</string>
+    <string name="results_empty_folders_body">Verifikasi folder yang dapat diakses sebelum penghapusan</string>
 </resources>

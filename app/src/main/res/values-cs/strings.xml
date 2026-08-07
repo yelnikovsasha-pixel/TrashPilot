@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">Licence Apache 2.0</string>
     <string name="about_licenses_notice">Názvy a licence odrážejí runtime knihovny deklarované tímto sestavením. Autorská práva zůstávají u přispěvatelů každého projektu.</string>
     <string name="about_settings_body">Informace o produktu, soukromí a verzi</string>
+    <string name="results_files_found">Soubory nalezeny</string>
+    <string name="results_review_quick_clean">Recenze Quick Clean</string>
+    <string name="results_review_categories">Recenze podle kategorie</string>
+    <string name="results_group_apps">Aplikace</string>
+    <string name="results_group_apps_body">Mezipaměť aplikace a přístupná sociální média</string>
+    <string name="results_group_photos">Fotografie</string>
+    <string name="results_group_photos_body">Snímky obrazovky, duplikáty a technická fotorecenze</string>
+    <string name="results_group_files">Soubory</string>
+    <string name="results_group_files_body">Velké soubory, soubory ke stažení, instalační programy a složky</string>
+    <string name="results_open_review">Otevřít recenzi</string>
+    <string name="results_label_app_cache">Mezipaměť aplikace</string>
+    <string name="results_label_social_media">Sociální média</string>
+    <string name="results_label_screenshots">Snímky obrazovky</string>
+    <string name="results_label_duplicates">Duplikáty</string>
+    <string name="results_label_photo_review">Fotorecenze</string>
+    <string name="results_label_large_files">Velké soubory</string>
+    <string name="results_label_downloads">Stahování</string>
+    <string name="results_label_apk_installers">Instalační programy APK</string>
+    <string name="results_label_hidden_files">Skryté soubory</string>
+    <string name="results_label_empty_folders">Prázdné složky</string>
+    <string name="results_app_cache_body">Kontrola statistik mezipaměti, kterou Android zpřístupňuje</string>
+    <string name="results_screenshots_body">Prohlédněte si dostupné snímky obrazovky</string>
+    <string name="results_empty_folders_body">Před odebráním ověřte přístupné složky</string>
 </resources>

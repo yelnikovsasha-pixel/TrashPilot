@@ -120,7 +120,7 @@ fun PhotoQualityAnalyzerScreen(onBack: () -> Unit, onDeleted: (Set<String>, Dupl
         if (full || partial) analyze(!full && partial) else permissionLauncher.launch(photoPermissions())
     }
 
-    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.photo_quality_title), onBack = onBack) }) { padding ->
+    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.results_label_photo_review), onBack = onBack) }) { padding ->
         when (val current = state) {
             AnalyzerState.Preparing -> TrashPilotLoadingState(stringResource(R.string.photo_quality_preparing), stringResource(R.string.photo_quality_transparency), Modifier.fillMaxSize().padding(padding))
             AnalyzerState.PermissionDenied -> TrashPilotErrorState(stringResource(R.string.photo_quality_permission_title), stringResource(R.string.photo_quality_permission_body), Modifier.fillMaxSize().padding(padding).padding(TrashPilotSpacing.Screen), stringResource(R.string.photo_quality_try_again), { permissionLauncher.launch(photoPermissions()) })

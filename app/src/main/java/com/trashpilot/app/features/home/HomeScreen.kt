@@ -24,9 +24,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AutoAwesome
 import androidx.compose.material.icons.outlined.CleaningServices
 import androidx.compose.material.icons.outlined.Folder
-import androidx.compose.material.icons.outlined.Lightbulb
 import androidx.compose.material.icons.outlined.Security
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -64,7 +62,6 @@ fun HomeScreen(
     onOpenQuickClean: () -> Unit,
     onOpenTrashDna: () -> Unit,
     onOpenPrivacy: () -> Unit,
-    onOpenSettings: () -> Unit,
     latestScan: StorageScanResult? = null
 ) {
     LazyColumn(
@@ -122,21 +119,6 @@ fun HomeScreen(
                 body = stringResource(R.string.home_privacy_body),
                 icon = Icons.Outlined.Security,
                 onClick = onOpenPrivacy
-            )
-        }
-        item {
-            HomeFeatureCard(
-                title = stringResource(R.string.home_motivation_title),
-                body = stringResource(R.string.home_motivation_body),
-                icon = Icons.Outlined.Lightbulb
-            )
-        }
-        item {
-            HomeFeatureCard(
-                title = stringResource(R.string.nav_settings),
-                body = stringResource(R.string.home_settings_body),
-                icon = Icons.Outlined.Settings,
-                onClick = onOpenSettings
             )
         }
     }

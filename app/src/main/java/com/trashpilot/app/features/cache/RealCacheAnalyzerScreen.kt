@@ -86,7 +86,7 @@ fun RealCacheAnalyzerScreen(
     }
 
     Scaffold(
-        topBar = { TrashPilotTopAppBar(stringResource(R.string.cache_analyzer_title), onBack = onBack) }
+        topBar = { TrashPilotTopAppBar(stringResource(R.string.results_label_app_cache), onBack = onBack) }
     ) { padding ->
         when (val current = state) {
             CacheUiState.Checking -> Unit

@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">ترخيص أباتشي 2.0</string>
     <string name="about_licenses_notice">تعكس الأسماء والتراخيص مكتبات وقت التشغيل المعلن عنها بواسطة هذا الإصدار. تظل حقوق الطبع والنشر مع المساهمين في كل مشروع.</string>
     <string name="about_settings_body">معلومات المنتج والخصوصية والإصدار</string>
+    <string name="results_files_found">تم العثور على الملفات</string>
+    <string name="results_review_quick_clean">مراجعة Quick Clean</string>
+    <string name="results_review_categories">المراجعة حسب الفئة</string>
+    <string name="results_group_apps">تطبيقات</string>
+    <string name="results_group_apps_body">ذاكرة التخزين المؤقت للتطبيق ووسائل التواصل الاجتماعي التي يمكن الوصول إليها</string>
+    <string name="results_group_photos">صور</string>
+    <string name="results_group_photos_body">لقطات الشاشة والنسخ المكررة ومراجعة الصور الفنية</string>
+    <string name="results_group_files">ملفات</string>
+    <string name="results_group_files_body">الملفات الكبيرة والتنزيلات والمثبتات والمجلدات</string>
+    <string name="results_open_review">مراجعة مفتوحة</string>
+    <string name="results_label_app_cache">ذاكرة التخزين المؤقت للتطبيق</string>
+    <string name="results_label_social_media">وسائل التواصل الاجتماعي</string>
+    <string name="results_label_screenshots">لقطات الشاشة</string>
+    <string name="results_label_duplicates">التكرارات</string>
+    <string name="results_label_photo_review">مراجعة الصور</string>
+    <string name="results_label_large_files">ملفات كبيرة</string>
+    <string name="results_label_downloads">التنزيلات</string>
+    <string name="results_label_apk_installers">مثبتات APK</string>
+    <string name="results_label_hidden_files">الملفات المخفية</string>
+    <string name="results_label_empty_folders">المجلدات الفارغة</string>
+    <string name="results_app_cache_body">مراجعة إحصائيات ذاكرة التخزين المؤقت التي يوفرها Android</string>
+    <string name="results_screenshots_body">مراجعة لقطات الشاشة التي يمكن الوصول إليها</string>
+    <string name="results_empty_folders_body">تحقق من المجلدات التي يمكن الوصول إليها قبل الإزالة</string>
 </resources>

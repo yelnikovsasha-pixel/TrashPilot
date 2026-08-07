@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">Apache Lisansı 2.0</string>
     <string name="about_licenses_notice">Adlar ve lisanslar, bu yapı tarafından bildirilen çalışma zamanı kitaplıklarını yansıtır. Telif hakkı her projeye katkıda bulunanlarda kalır.</string>
     <string name="about_settings_body">Ürün, gizlilik ve sürüm bilgileri</string>
+    <string name="results_files_found">Bulunan dosyalar</string>
+    <string name="results_review_quick_clean">Quick Clean\'ı inceleyin</string>
+    <string name="results_review_categories">Kategoriye göre inceleme</string>
+    <string name="results_group_apps">Uygulamalar</string>
+    <string name="results_group_apps_body">Uygulama önbelleği ve erişilebilir sosyal medya</string>
+    <string name="results_group_photos">Fotoğraflar</string>
+    <string name="results_group_photos_body">Ekran görüntüleri, kopyalar ve teknik fotoğraf incelemesi</string>
+    <string name="results_group_files">Dosyalar</string>
+    <string name="results_group_files_body">Büyük dosyalar, indirmeler, yükleyiciler ve klasörler</string>
+    <string name="results_open_review">İncelemeyi aç</string>
+    <string name="results_label_app_cache">Uygulama önbelleği</string>
+    <string name="results_label_social_media">Sosyal medya</string>
+    <string name="results_label_screenshots">Ekran görüntüleri</string>
+    <string name="results_label_duplicates">Kopyalar</string>
+    <string name="results_label_photo_review">Fotoğraf incelemesi</string>
+    <string name="results_label_large_files">Büyük dosyalar</string>
+    <string name="results_label_downloads">İndirilenler</string>
+    <string name="results_label_apk_installers">APK yükleyicileri</string>
+    <string name="results_label_hidden_files">Gizli dosyalar</string>
+    <string name="results_label_empty_folders">Boş klasörler</string>
+    <string name="results_app_cache_body">Android\'in kullanıma sunduğu önbellek istatistiklerini inceleyin</string>
+    <string name="results_screenshots_body">Erişilebilir ekran görüntülerini inceleyin</string>
+    <string name="results_empty_folders_body">Kaldırmadan önce erişilebilir klasörleri doğrulayın</string>
 </resources>

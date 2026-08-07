@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">Άδεια χρήσης Apache 2.0</string>
     <string name="about_licenses_notice">Τα ονόματα και οι άδειες αντανακλούν τις βιβλιοθήκες χρόνου εκτέλεσης που δηλώνονται από αυτήν την έκδοση. Τα πνευματικά δικαιώματα παραμένουν στους συντελεστές κάθε έργου.</string>
     <string name="about_settings_body">Πληροφορίες προϊόντος, απορρήτου και έκδοσης</string>
+    <string name="results_files_found">Βρέθηκαν αρχεία</string>
+    <string name="results_review_quick_clean">Αξιολόγηση Quick Clean</string>
+    <string name="results_review_categories">Αξιολόγηση ανά κατηγορία</string>
+    <string name="results_group_apps">Εφαρμογές</string>
+    <string name="results_group_apps_body">Προσωρινή μνήμη εφαρμογών και προσβάσιμα μέσα κοινωνικής δικτύωσης</string>
+    <string name="results_group_photos">Φωτογραφίες</string>
+    <string name="results_group_photos_body">Στιγμιότυπα οθόνης, διπλότυπα και τεχνική ανασκόπηση φωτογραφιών</string>
+    <string name="results_group_files">Αρχεία</string>
+    <string name="results_group_files_body">Μεγάλα αρχεία, λήψεις, προγράμματα εγκατάστασης και φακέλους</string>
+    <string name="results_open_review">Ανοίξτε την κριτική</string>
+    <string name="results_label_app_cache">Προσωρινή μνήμη εφαρμογών</string>
+    <string name="results_label_social_media">Μέσα κοινωνικής δικτύωσης</string>
+    <string name="results_label_screenshots">Στιγμιότυπα οθόνης</string>
+    <string name="results_label_duplicates">Αντίγραφα</string>
+    <string name="results_label_photo_review">Κριτική φωτογραφίας</string>
+    <string name="results_label_large_files">Μεγάλα αρχεία</string>
+    <string name="results_label_downloads">Λήψεις</string>
+    <string name="results_label_apk_installers">Εγκαταστάτες APK</string>
+    <string name="results_label_hidden_files">Κρυφά αρχεία</string>
+    <string name="results_label_empty_folders">Κενοί φάκελοι</string>
+    <string name="results_app_cache_body">Ελέγξτε τα στατιστικά στοιχεία της προσωρινής μνήμης που διαθέτει το Android</string>
+    <string name="results_screenshots_body">Ελέγξτε τα προσβάσιμα στιγμιότυπα οθόνης</string>
+    <string name="results_empty_folders_body">Επαληθεύστε τους προσβάσιμους φακέλους πριν από την αφαίρεση</string>
 </resources>

@@ -2,11 +2,9 @@
 - Single-module Android app (com.trashpilot.app) using Kotlin, Jetpack Compose, Material 3, and Navigation Compose; min SDK 24, compile/target SDK 36. MainActivity applies TrashPilotTheme and AppNavigation currently displays SplashScreen.
 - Navigation uses Navigation Compose with splash as the start destination. Splash routes first-time
   installs to the three-step Onboarding flow and completed installs to Home.
-- Home is a Material 3 screen sourced only from Figma `XyDczeNnzEw5DmApIXuXTz` node `1:65`,
-  with a blue concentric brand lockup, one 200 dp double-ring SCAN action, a real-data phone
-  storage card, five vertical feature cards, and persistent bottom navigation.
-- The evolved Home keeps the approved blue hero identity and uses a compact real-data Storage card,
-  a two-by-two Quick Clean/Trash DNA/Privacy Monitor/Reports action grid, and a concise trust card.
+- Home is a Material 3 screen sourced from Figma `XyDczeNnzEw5DmApIXuXTz` node `1:65`,
+  preserving its blue concentric brand lockup and SCAN hero while reducing secondary navigation
+  to real storage, Quick Clean, Trash DNA, and Privacy Monitor.
 - Compose Material Icons Extended supplies monochrome icons for Home cards and navigation.
 - `core/storage` owns immediate read-only MediaStore scanning, fallback document-tree scanning,
   file categorization, byte formatting, and immutable scan models. Scanner and Results UI live
@@ -37,7 +35,7 @@
   separate Reports/Trash DNA/cache controls, and local document picker flows.
 - Preferences DataStore 1.2.1 stores the selected locale and migrates the legacy
   `trashpilot-settings` SharedPreferences language key on upgrade.
-- Android resources provide complete 964-key catalogs for all 25 supported app languages.
+- Android resources provide complete 987-key catalogs for all 25 supported app languages.
   `tools/generate_locale_drafts.mjs` reproduces the automated draft catalogs and
   `tools/verify_locales.mjs` checks XML structure, exact key parity, formatting-token parity,
   and probable long English fallbacks.
@@ -92,3 +90,6 @@
   About navigation models. `features/about` owns the dedicated product/privacy screen, bundled
   policy presentation, verified runtime-library notices, and links back to existing Settings and
   onboarding destinations.
+- `core/navigation/InformationArchitecture.kt` is the single map for four top-level destinations,
+  the Apps/Photos/Files review hierarchy, deep-route parent selection, and honest Quick Clean
+  startup routing. Mature cleaner implementations and their deletion rules remain unchanged.

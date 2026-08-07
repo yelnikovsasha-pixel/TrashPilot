@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">아파치 라이센스 2.0</string>
     <string name="about_licenses_notice">이름과 라이센스는 이 빌드에서 선언된 런타임 라이브러리를 반영합니다. 저작권은 각 프로젝트의 기여자에게 있습니다.</string>
     <string name="about_settings_body">제품, 개인 정보 보호 및 버전 정보</string>
+    <string name="results_files_found">파일을 찾았습니다.</string>
+    <string name="results_review_quick_clean">검토 Quick Clean</string>
+    <string name="results_review_categories">카테고리별 리뷰</string>
+    <string name="results_group_apps">앱</string>
+    <string name="results_group_apps_body">앱 캐시 및 접근 가능한 소셜 미디어</string>
+    <string name="results_group_photos">사진</string>
+    <string name="results_group_photos_body">스크린샷, 사본 및 기술 사진 검토</string>
+    <string name="results_group_files">파일</string>
+    <string name="results_group_files_body">대용량 파일, 다운로드, 설치 프로그램 및 폴더</string>
+    <string name="results_open_review">리뷰 열기</string>
+    <string name="results_label_app_cache">앱 캐시</string>
+    <string name="results_label_social_media">소셜 미디어</string>
+    <string name="results_label_screenshots">스크린샷</string>
+    <string name="results_label_duplicates">중복</string>
+    <string name="results_label_photo_review">사진 리뷰</string>
+    <string name="results_label_large_files">대용량 파일</string>
+    <string name="results_label_downloads">다운로드</string>
+    <string name="results_label_apk_installers">APK 설치 프로그램</string>
+    <string name="results_label_hidden_files">숨겨진 파일</string>
+    <string name="results_label_empty_folders">빈 폴더</string>
+    <string name="results_app_cache_body">Android에서 제공하는 캐시 통계를 검토하세요.</string>
+    <string name="results_screenshots_body">접근 가능한 스크린샷 검토</string>
+    <string name="results_empty_folders_body">제거하기 전에 액세스 가능한 폴더를 확인하세요.</string>
 </resources>

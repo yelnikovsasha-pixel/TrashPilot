@@ -95,7 +95,7 @@ fun EmptyFoldersCleanerScreen(
         }
     }
 
-    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.empty_folders_title), onBack = onBack) }) { padding ->
+    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.results_label_empty_folders), onBack = onBack) }) { padding ->
         when (val current = status) {
             EmptyFolderState.AccessRequired -> TrashPilotEmptyState(stringResource(R.string.empty_folders_access_title), stringResource(R.string.empty_folders_access_body), Modifier.fillMaxSize().padding(padding).padding(TrashPilotSpacing.Screen), stringResource(R.string.empty_folders_choose_folder), { folderPicker.launch(null) })
             EmptyFolderState.PermissionDenied -> TrashPilotErrorState(stringResource(R.string.empty_folders_denied_title), stringResource(R.string.empty_folders_denied_body), Modifier.fillMaxSize().padding(padding).padding(TrashPilotSpacing.Screen), stringResource(R.string.empty_folders_choose_folder), { folderPicker.launch(null) })

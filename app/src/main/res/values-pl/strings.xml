@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">Licencja Apache 2.0</string>
     <string name="about_licenses_notice">Nazwy i licencje odzwierciedlają biblioteki wykonawcze zadeklarowane w tej kompilacji. Prawa autorskie pozostają własnością autorów każdego projektu.</string>
     <string name="about_settings_body">Informacje o produkcie, prywatności i wersji</string>
+    <string name="results_files_found">Znaleziono pliki</string>
+    <string name="results_review_quick_clean">Przejrzyj Quick Clean</string>
+    <string name="results_review_categories">Przegląd według kategorii</string>
+    <string name="results_group_apps">Aplikacje</string>
+    <string name="results_group_apps_body">Pamięć podręczna aplikacji i dostępne media społecznościowe</string>
+    <string name="results_group_photos">Zdjęcia</string>
+    <string name="results_group_photos_body">Zrzuty ekranu, duplikaty i przegląd zdjęć technicznych</string>
+    <string name="results_group_files">Akta</string>
+    <string name="results_group_files_body">Duże pliki, pliki do pobrania, instalatory i foldery</string>
+    <string name="results_open_review">Otwórz recenzję</string>
+    <string name="results_label_app_cache">Pamięć podręczna aplikacji</string>
+    <string name="results_label_social_media">Media społecznościowe</string>
+    <string name="results_label_screenshots">Zrzuty ekranu</string>
+    <string name="results_label_duplicates">Duplikaty</string>
+    <string name="results_label_photo_review">Recenzja zdjęć</string>
+    <string name="results_label_large_files">Duże pliki</string>
+    <string name="results_label_downloads">Pliki do pobrania</string>
+    <string name="results_label_apk_installers">Instalatory APK</string>
+    <string name="results_label_hidden_files">Ukryte pliki</string>
+    <string name="results_label_empty_folders">Puste foldery</string>
+    <string name="results_app_cache_body">Przejrzyj statystyki pamięci podręcznej udostępnione przez Androida</string>
+    <string name="results_screenshots_body">Przejrzyj dostępne zrzuty ekranu</string>
+    <string name="results_empty_folders_body">Przed usunięciem sprawdź dostępne foldery</string>
 </resources>

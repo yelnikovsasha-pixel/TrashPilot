@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">অ্যাপাচি লাইসেন্স 2.0</string>
     <string name="about_licenses_notice">নাম এবং লাইসেন্স এই বিল্ড দ্বারা ঘোষিত রানটাইম লাইব্রেরি প্রতিফলিত করে। কপিরাইট প্রতিটি প্রকল্পের অবদানকারীদের সাথে থাকে।</string>
     <string name="about_settings_body">পণ্য, গোপনীয়তা এবং সংস্করণ তথ্য</string>
+    <string name="results_files_found">ফাইল পাওয়া গেছে</string>
+    <string name="results_review_quick_clean">Quick Clean পর্যালোচনা করুন</string>
+    <string name="results_review_categories">বিভাগ দ্বারা পর্যালোচনা</string>
+    <string name="results_group_apps">অ্যাপস</string>
+    <string name="results_group_apps_body">অ্যাপ ক্যাশে এবং অ্যাক্সেসযোগ্য সামাজিক মিডিয়া</string>
+    <string name="results_group_photos">ফটো</string>
+    <string name="results_group_photos_body">স্ক্রিনশট, ডুপ্লিকেট এবং প্রযুক্তিগত ফটো পর্যালোচনা</string>
+    <string name="results_group_files">ফাইল</string>
+    <string name="results_group_files_body">বড় ফাইল, ডাউনলোড, ইনস্টলার এবং ফোল্ডার</string>
+    <string name="results_open_review">পর্যালোচনা খুলুন</string>
+    <string name="results_label_app_cache">অ্যাপ ক্যাশে</string>
+    <string name="results_label_social_media">সোশ্যাল মিডিয়া</string>
+    <string name="results_label_screenshots">স্ক্রিনশট</string>
+    <string name="results_label_duplicates">ডুপ্লিকেট</string>
+    <string name="results_label_photo_review">ছবির পর্যালোচনা</string>
+    <string name="results_label_large_files">বড় ফাইল</string>
+    <string name="results_label_downloads">ডাউনলোড</string>
+    <string name="results_label_apk_installers">APK ইনস্টলার</string>
+    <string name="results_label_hidden_files">লুকানো ফাইল</string>
+    <string name="results_label_empty_folders">খালি ফোল্ডার</string>
+    <string name="results_app_cache_body">অ্যান্ড্রয়েড উপলব্ধ করে ক্যাশে পরিসংখ্যান পর্যালোচনা করুন</string>
+    <string name="results_screenshots_body">অ্যাক্সেসযোগ্য স্ক্রিনশট পর্যালোচনা করুন</string>
+    <string name="results_empty_folders_body">অপসারণের আগে অ্যাক্সেসযোগ্য ফোল্ডার যাচাই করুন</string>
 </resources>

@@ -152,7 +152,7 @@ fun ApkManagerScreen(
         else permissionLauncher.launch(permissions.toTypedArray())
     }
 
-    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.apk_manager_title), onBack = onBack) }) { padding ->
+    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.results_label_apk_installers), onBack = onBack) }) { padding ->
         when (val current = state) {
             ApkManagerState.Preparing -> TrashPilotLoadingState(stringResource(R.string.apk_manager_preparing), stringResource(R.string.apk_manager_preparing_body), Modifier.fillMaxSize().padding(padding))
             ApkManagerState.PermissionDenied -> TrashPilotErrorState(stringResource(R.string.apk_manager_permission_title), stringResource(R.string.apk_manager_permission_body), Modifier.fillMaxSize().padding(padding).padding(TrashPilotSpacing.Screen), stringResource(R.string.apk_manager_choose_folder), { folderLauncher.launch(null) })

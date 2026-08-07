@@ -41,7 +41,7 @@ import java.util.Date
 @Composable
 fun DownloadsCleanerScreen(onBack: () -> Unit, onFilesDeleted: (StorageScanResult, DuplicateCleaningReport) -> Unit) {
     val context = LocalContext.current
-    val rootName = stringResource(R.string.downloads_cleaner_title)
+    val rootName = stringResource(R.string.results_label_downloads)
     val unknownName = stringResource(R.string.reports_result_unknown)
     val mediaScanner = remember { MediaStoreStorageScanner(context.contentResolver, rootName, unknownName) }
     val treeScanner = remember { DocumentTreeStorageScanner(context.contentResolver, rootName, unknownName) }
@@ -139,7 +139,7 @@ fun DownloadsCleanerScreen(onBack: () -> Unit, onFilesDeleted: (StorageScanResul
         else permissions.launch(required.toTypedArray())
     }
 
-    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.downloads_cleaner_title), onBack = onBack) }) { padding ->
+    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.results_label_downloads), onBack = onBack) }) { padding ->
         when (val current = state) {
             DownloadState.Preparing -> TrashPilotLoadingState(stringResource(R.string.downloads_preparing), stringResource(R.string.downloads_local_only), Modifier.fillMaxSize().padding(padding))
             DownloadState.AccessRequired -> TrashPilotErrorState(stringResource(R.string.downloads_access_title), stringResource(R.string.downloads_access_body), Modifier.fillMaxSize().padding(padding).padding(TrashPilotSpacing.Screen), stringResource(R.string.downloads_choose_folder), { folder.launch(null) })

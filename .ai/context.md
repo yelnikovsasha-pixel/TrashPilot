@@ -4,7 +4,7 @@
 
 - TrashPilot is a minimal, privacy-first Android cleaning app.
 - Figma principles: offline first, one primary action per screen, and no fake optimization claims.
-- Current UI: Splash routes to a premium Home screen with brand header, circular Scan action, feature cards, and bottom navigation.
+- Current UI: Splash routes through onboarding state to a focused Home screen whose dominant action is SCAN.
 
 ## Design scope
 
@@ -19,10 +19,13 @@
 - Scan immediately analyzes shared-storage records Android exposes through MediaStore, shows
   foreground progress, and navigates to Results. The system folder picker remains only as a
   fallback when Android requires explicit access to a location.
-- Results show device total, used, and free storage; category totals; and up to ten largest accessible files.
+- Results is the cleaning hub. It shows only real active-scan facts, then groups review destinations
+  as Apps, Photos, and Files instead of exposing a flat list of implementation modules.
 - Scanning is read-only. TrashPilot does not upload, collect, automatically delete, or modify files.
-- Home cards are Storage, Trash DNA, Privacy Monitor, and Reports. Settings remains in bottom navigation only.
-- Home bottom navigation links to Home, Privacy, Reports, and Settings; Privacy and Reports currently show honest placeholder destinations.
+- Home contains the brand header, dominant SCAN action, ambient message, real phone-storage card,
+  and Quick Clean, Trash DNA, and Privacy Monitor actions. Reports and Settings are not duplicated.
+- Bottom navigation has four stable top-level destinations: Home, Privacy, Reports, and Settings.
+  Nested cleaner routes retain Home as their selected parent; About retains Settings.
 - Figma Scanner target: node `27:2`; Results target: node `27:3` on `04_Screens`.
 - Results follows Figma node `27:3`: a scrollable 412-wide layout with 24 dp margins,
   a lavender device-storage card, rounded category/file surfaces, and a 52 dp Scan again action.

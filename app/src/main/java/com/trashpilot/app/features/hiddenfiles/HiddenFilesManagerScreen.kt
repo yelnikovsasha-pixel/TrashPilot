@@ -128,7 +128,7 @@ fun HiddenFilesManagerScreen(
         }
     }
 
-    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.hidden_files_manager_title), onBack = onBack) }) { padding ->
+    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.results_label_hidden_files), onBack = onBack) }) { padding ->
         when (val current = status) {
             HiddenScanStatus.AccessRequired -> TrashPilotEmptyState(
                 stringResource(R.string.hidden_files_access_title),

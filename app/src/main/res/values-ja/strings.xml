@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">Apache ライセンス 2.0</string>
     <string name="about_licenses_notice">名前とライセンスは、このビルドで宣言されたランタイム ライブラリを反映しています。著作権は各プロジェクトの貢献者に帰属します。</string>
     <string name="about_settings_body">製品、プライバシー、バージョン情報</string>
+    <string name="results_files_found">ファイルが見つかりました</string>
+    <string name="results_review_quick_clean">Quick Clean を確認してください</string>
+    <string name="results_review_categories">カテゴリ別レビュー</string>
+    <string name="results_group_apps">アプリ</string>
+    <string name="results_group_apps_body">アプリのキャッシュとアクセス可能なソーシャル メディア</string>
+    <string name="results_group_photos">写真</string>
+    <string name="results_group_photos_body">スクリーンショット、複製、技術的な写真のレビュー</string>
+    <string name="results_group_files">ファイル</string>
+    <string name="results_group_files_body">大きなファイル、ダウンロード、インストーラー、フォルダー</string>
+    <string name="results_open_review">オープンレビュー</string>
+    <string name="results_label_app_cache">アプリのキャッシュ</string>
+    <string name="results_label_social_media">ソーシャルメディア</string>
+    <string name="results_label_screenshots">スクリーンショット</string>
+    <string name="results_label_duplicates">重複</string>
+    <string name="results_label_photo_review">フォトレビュー</string>
+    <string name="results_label_large_files">大きなファイル</string>
+    <string name="results_label_downloads">ダウンロード</string>
+    <string name="results_label_apk_installers">APKインストーラー</string>
+    <string name="results_label_hidden_files">隠しファイル</string>
+    <string name="results_label_empty_folders">空のフォルダー</string>
+    <string name="results_app_cache_body">Android が提供するキャッシュ統計を確認する</string>
+    <string name="results_screenshots_body">アクセス可能なスクリーンショットを確認する</string>
+    <string name="results_empty_folders_body">削除する前にアクセス可能なフォルダーを確認してください</string>
 </resources>

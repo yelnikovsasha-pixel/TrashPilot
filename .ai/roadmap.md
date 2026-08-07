@@ -44,6 +44,9 @@
 
 \- About
 
+\- Information Architecture & UX Simplification: SCAN-led Home, four stable top-level
+  destinations, and grouped Apps / Photos / Files Results review.
+
 
 
 \---

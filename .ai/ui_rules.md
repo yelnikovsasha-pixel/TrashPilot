@@ -8,6 +8,18 @@ Global UI Design Rules
 
 Version: 1.0
 
+## Information architecture
+
+- Top level: Home / Privacy / Reports / Settings.
+- Primary flow: SCAN -> Results -> Review -> Confirm -> Clean.
+- Home answers “What do I do now?” with one dominant SCAN action. It may show real storage,
+  ambient messaging, Quick Clean, Trash DNA, and Privacy Monitor, but not duplicate bottom tabs.
+- Results is the cleaning hub with Apps / Photos / Files group pages. Cleaner implementation names
+  stay internal; visible labels use App cache, Photo review, APK installers, and Empty folders.
+- Deep cleaner screens retain Home as their bottom-navigation parent. About retains Settings.
+- Group totals are shown only when backed by the current scan; incompatible values are never
+  combined into a synthetic junk total.
+
 
 
 This document defines the global UI and UX rules for the entire TrashPilot project.

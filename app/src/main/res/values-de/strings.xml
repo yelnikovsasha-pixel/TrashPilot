@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">Apache-Lizenz 2.0</string>
     <string name="about_licenses_notice">Namen und Lizenzen spiegeln die von diesem Build deklarierten Laufzeitbibliotheken wider. Das Urheberrecht verbleibt bei den Mitwirkenden jedes Projekts.</string>
     <string name="about_settings_body">Produkt-, Datenschutz- und Versionsinformationen</string>
+    <string name="results_files_found">Dateien gefunden</string>
+    <string name="results_review_quick_clean">Überprüfen Sie Quick Clean</string>
+    <string name="results_review_categories">Bewertung nach Kategorie</string>
+    <string name="results_group_apps">Apps</string>
+    <string name="results_group_apps_body">App-Cache und zugängliche soziale Medien</string>
+    <string name="results_group_photos">Fotos</string>
+    <string name="results_group_photos_body">Screenshots, Duplikate und technische Fotobewertung</string>
+    <string name="results_group_files">Dateien</string>
+    <string name="results_group_files_body">Große Dateien, Downloads, Installationsprogramme und Ordner</string>
+    <string name="results_open_review">Rezension öffnen</string>
+    <string name="results_label_app_cache">App-Cache</string>
+    <string name="results_label_social_media">Soziale Medien</string>
+    <string name="results_label_screenshots">Screenshots</string>
+    <string name="results_label_duplicates">Duplikate</string>
+    <string name="results_label_photo_review">Fotorezension</string>
+    <string name="results_label_large_files">Große Dateien</string>
+    <string name="results_label_downloads">Downloads</string>
+    <string name="results_label_apk_installers">APK-Installer</string>
+    <string name="results_label_hidden_files">Versteckte Dateien</string>
+    <string name="results_label_empty_folders">Leere Ordner</string>
+    <string name="results_app_cache_body">Überprüfen Sie die Cache-Statistiken, die Android zur Verfügung stellt</string>
+    <string name="results_screenshots_body">Sehen Sie sich barrierefreie Screenshots an</string>
+    <string name="results_empty_folders_body">Überprüfen Sie vor dem Entfernen die zugänglichen Ordner</string>
 </resources>

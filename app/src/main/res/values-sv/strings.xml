@@ -964,4 +964,27 @@
     <string name="about_license_apache_2">Apache-licens 2.0</string>
     <string name="about_licenses_notice">Namn och licenser återspeglar runtime-biblioteken som deklareras av den här versionen. Upphovsrätten förblir hos varje projekts bidragsgivare.</string>
     <string name="about_settings_body">Produkt-, integritets- och versionsinformation</string>
+    <string name="results_files_found">Filer hittades</string>
+    <string name="results_review_quick_clean">Granska Quick Clean</string>
+    <string name="results_review_categories">Granska efter kategori</string>
+    <string name="results_group_apps">Appar</string>
+    <string name="results_group_apps_body">App-cache och tillgängliga sociala medier</string>
+    <string name="results_group_photos">Foton</string>
+    <string name="results_group_photos_body">Skärmdumpar, dubbletter och teknisk bildgranskning</string>
+    <string name="results_group_files">Filer</string>
+    <string name="results_group_files_body">Stora filer, nedladdningar, installationsprogram och mappar</string>
+    <string name="results_open_review">Öppna recension</string>
+    <string name="results_label_app_cache">Appens cache</string>
+    <string name="results_label_social_media">Sociala medier</string>
+    <string name="results_label_screenshots">Skärmdumpar</string>
+    <string name="results_label_duplicates">Dubletter</string>
+    <string name="results_label_photo_review">Fotorecension</string>
+    <string name="results_label_large_files">Stora filer</string>
+    <string name="results_label_downloads">Nedladdningar</string>
+    <string name="results_label_apk_installers">APK-installatörer</string>
+    <string name="results_label_hidden_files">Dolda filer</string>
+    <string name="results_label_empty_folders">Tomma mappar</string>
+    <string name="results_app_cache_body">Granska cachestatistik som Android gör tillgänglig</string>
+    <string name="results_screenshots_body">Granska tillgängliga skärmdumpar</string>
+    <string name="results_empty_folders_body">Verifiera tillgängliga mappar innan de tas bort</string>
 </resources>

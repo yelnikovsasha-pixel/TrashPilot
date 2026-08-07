@@ -191,7 +191,7 @@ fun LargeFilesManagerScreen(
         } else permissionLauncher.launch(permissions.toTypedArray())
     }
 
-    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.large_files_manager_title), onBack = onBack) }) { padding ->
+    Scaffold(topBar = { TrashPilotTopAppBar(stringResource(R.string.results_label_large_files), onBack = onBack) }) { padding ->
         when (val current = status) {
             LargeScanStatus.Preparing -> Unit
             LargeScanStatus.PermissionRequired -> TrashPilotErrorState(
