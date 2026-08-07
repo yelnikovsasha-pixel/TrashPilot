@@ -61,13 +61,23 @@
 - Settings Figma Overview: node `60:2`; Appearance: `60:3`; Language: `60:4`;
   Data & Storage: `60:5`; Privacy: `60:6`; About: `60:7`; Pro Upgrade: `60:8`,
   all on page `18:2` and validated as 412 × 917 frames.
+- The recorded legacy About node `60:7` is no longer present in that Figma file. The current
+  Design System integration exposes only its cover page, so Production About deliberately reuses
+  the implemented Settings cards, top bar, tokens, and icon treatment rather than guessing a
+  missing screen design.
 - Settings provides persistent System/Light/Dark theme and app-language selection, truthful
   Android-owned access states, separate Reports/Trash DNA/app-cache controls, metadata-only
   backup/restore and diagnostics, onboarding preview, bundled policy/terms copy, feedback
   handoff, and version information. It contains no fake toggle or purchase preview.
+- About TrashPilot is a dedicated Settings child destination. It displays the installed package
+  version name/code, concise factual control and privacy statements, the bundled offline policy,
+  local AndroidX/Kotlin runtime notices, and routes to existing permissions and introduction UI.
+  Back returns to Settings and Settings remains selected in bottom navigation.
+  Release preparation still needs a defined legal identity and support contact, plus a decision
+  on whether the target store requires a public Privacy Policy URL in addition to the bundled copy.
 - Settings Language node `60:4` supports 25 locales plus System language, native-name search,
   immediate locale application, and DataStore-backed selection.
-- The complete UI string catalog now contains 934 identical keys in English plus 24 localized
+- The complete UI string catalog now contains 964 identical keys in English plus 24 localized
   resource directories: Spanish, Brazilian Portuguese, French, German, Italian, Polish,
   Ukrainian, Russian, Turkish, Arabic, Hindi, Bengali, Indonesian, Vietnamese, Thai, Japanese,
   Korean, Simplified Chinese, Traditional Chinese, Dutch, Swedish, Czech, Romanian, and Greek.

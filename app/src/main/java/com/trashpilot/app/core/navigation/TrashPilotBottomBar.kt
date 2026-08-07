@@ -68,6 +68,7 @@ fun TrashPilotBottomBar(
     ) {
         bottomDestinations.forEach { destination ->
             val selected = currentRoute == destination.route ||
+                (destination.route == "settings" && currentRoute == "about") ||
                 (destination.route == "home" && currentRoute in setOf(
                     "splash", "scanner", "results", "quick-clean", "category-files", "trash-dna",
                     "duplicate-scanner", "cache-analyzer", "large-files-manager", "hidden-files-manager",

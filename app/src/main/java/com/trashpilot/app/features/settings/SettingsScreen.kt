@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
@@ -55,6 +54,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -80,6 +80,7 @@ import com.trashpilot.app.core.settings.LanguagePreferences
 import com.trashpilot.app.core.settings.SettingsBackup
 import com.trashpilot.app.core.settings.SettingsBackupCodec
 import com.trashpilot.app.core.settings.SettingsPreferences
+import com.trashpilot.app.core.settings.SettingsDestination
 import com.trashpilot.app.core.settings.ThemePreference
 import com.trashpilot.app.core.settings.applyLanguagePreference
 import com.trashpilot.app.core.settings.PermissionAccessState
@@ -103,12 +104,19 @@ import kotlinx.coroutines.withContext
 import java.text.DateFormat
 import java.util.Date
 
-private enum class SettingsPage { OVERVIEW, APPEARANCE, LANGUAGE, DATA, PRIVACY, ABOUT }
+private enum class SettingsPage { OVERVIEW, APPEARANCE, LANGUAGE, DATA, PRIVACY }
 private enum class PolicyKind { PRIVACY, TERMS }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(repository: TrashDnaRepository, onBack: () -> Unit, onViewIntroduction: () -> Unit) {
+fun SettingsScreen(
+    repository: TrashDnaRepository,
+    onBack: () -> Unit,
+    onViewIntroduction: () -> Unit,
+    onOpenAbout: () -> Unit,
+    requestedDestination: SettingsDestination? = null,
+    onDestinationHandled: () -> Unit = {}
+) {
     val context = LocalContext.current
     val preferences = remember { SettingsPreferences(context) }
     val languagePreferences = remember(context) { LanguagePreferences(context.applicationContext) }
@@ -126,6 +134,12 @@ fun SettingsScreen(repository: TrashDnaRepository, onBack: () -> Unit, onViewInt
     var policy by remember { mutableStateOf<PolicyKind?>(null) }
     var pendingDocument by remember { mutableStateOf("") }
     var accessRefresh by remember { mutableIntStateOf(0) }
+    LaunchedEffect(requestedDestination) {
+        if (requestedDestination == SettingsDestination.PRIVACY_PERMISSIONS) {
+            page = SettingsPage.PRIVACY
+            onDestinationHandled()
+        }
+    }
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event -> if (event == Lifecycle.Event.ON_RESUME) accessRefresh++ }
         lifecycleOwner.lifecycle.addObserver(observer)
@@ -210,7 +224,12 @@ fun SettingsScreen(repository: TrashDnaRepository, onBack: () -> Unit, onViewInt
             }
         } else {
             when (page) {
-                SettingsPage.OVERVIEW -> OverviewPage(Modifier.padding(padding), onOpen = { page = it }, onViewIntroduction = onViewIntroduction)
+                SettingsPage.OVERVIEW -> OverviewPage(
+                    Modifier.padding(padding),
+                    onOpen = { page = it },
+                    onViewIntroduction = onViewIntroduction,
+                    onOpenAbout = onOpenAbout
+                )
                 SettingsPage.APPEARANCE -> AppearancePage(
                     modifier = Modifier.padding(padding),
                     selected = preferences.theme,
@@ -261,18 +280,6 @@ fun SettingsScreen(repository: TrashDnaRepository, onBack: () -> Unit, onViewInt
                     onReviewPermissions = { openAndroidSettings(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, "package:${context.packageName}".toUri())) },
                     onReviewUsageAccess = { openAndroidSettings(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)) },
                     onPolicy = { policy = it }
-                )
-                SettingsPage.ABOUT -> AboutPage(
-                    modifier = Modifier.padding(padding),
-                    version = appVersion(context),
-                    onPolicy = { policy = it },
-                    onFeedback = {
-                        val intent = Intent(Intent.ACTION_SENDTO, "mailto:feedback@trashpilot.app".toUri())
-                            .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.settings_feedback_subject))
-                        runCatching { context.startActivity(intent) }.onFailure {
-                            scope.launch { snackbar.showSnackbar(context.getString(R.string.settings_no_email)) }
-                        }
-                    }
                 )
             }
         }
@@ -333,7 +340,12 @@ fun SettingsScreen(repository: TrashDnaRepository, onBack: () -> Unit, onViewInt
 }
 
 @Composable
-private fun OverviewPage(modifier: Modifier, onOpen: (SettingsPage) -> Unit, onViewIntroduction: () -> Unit) {
+private fun OverviewPage(
+    modifier: Modifier,
+    onOpen: (SettingsPage) -> Unit,
+    onViewIntroduction: () -> Unit,
+    onOpenAbout: () -> Unit
+) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = androidx.compose.foundation.layout.PaddingValues(TrashPilotSpacing.Screen),
@@ -345,7 +357,7 @@ private fun OverviewPage(modifier: Modifier, onOpen: (SettingsPage) -> Unit, onV
         item { SettingRow(Icons.Outlined.Lock, stringResource(R.string.settings_privacy_permissions), stringResource(R.string.settings_privacy_permissions_body)) { onOpen(SettingsPage.PRIVACY) } }
         item { SettingRow(Icons.Outlined.Storage, stringResource(R.string.settings_data_history), stringResource(R.string.settings_data_history_body)) { onOpen(SettingsPage.DATA) } }
         item { SettingRow(Icons.Outlined.Info, stringResource(R.string.settings_view_introduction), stringResource(R.string.settings_view_introduction_body), onViewIntroduction) }
-        item { SettingRow(Icons.Outlined.Info, stringResource(R.string.settings_about), stringResource(R.string.settings_about_body)) { onOpen(SettingsPage.ABOUT) } }
+        item { SettingRow(Icons.Outlined.Info, stringResource(R.string.about_title), stringResource(R.string.about_settings_body), onOpenAbout) }
         item { Text(stringResource(R.string.settings_local_preferences), style = MaterialTheme.typography.bodySmall) }
     }
 }
@@ -565,33 +577,6 @@ private fun PrivacyPage(
 }
 
 @Composable
-private fun AboutPage(modifier: Modifier, version: String, onPolicy: (PolicyKind) -> Unit, onFeedback: () -> Unit) {
-    LazyColumn(
-        modifier.fillMaxSize(),
-        contentPadding = androidx.compose.foundation.layout.PaddingValues(TrashPilotSpacing.Screen),
-        verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Standard),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        item {
-            TrashPilotCard(shape = CircleShape, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)) {
-                Column(
-                    Modifier.size(TrashPilotComponentSizes.AboutMark),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(stringResource(R.string.brand_monogram), color = MaterialTheme.colorScheme.onPrimary, style = MaterialTheme.typography.headlineMedium)
-                }
-            }
-        }
-        item { Text(stringResource(R.string.app_name), style = MaterialTheme.typography.headlineSmall) }
-        item { Text(version, color = MaterialTheme.colorScheme.onSurfaceVariant) }
-        item { SettingRow(Icons.Outlined.Description, stringResource(R.string.settings_send_feedback), stringResource(R.string.settings_send_feedback_body), onFeedback) }
-        item { SettingRow(Icons.Outlined.Lock, stringResource(R.string.settings_privacy_policy), stringResource(R.string.settings_stored_app)) { onPolicy(PolicyKind.PRIVACY) } }
-        item { SettingRow(Icons.Outlined.Description, stringResource(R.string.settings_terms), stringResource(R.string.settings_stored_app)) { onPolicy(PolicyKind.TERMS) } }
-    }
-}
-
-@Composable
 private fun SettingRow(icon: ImageVector, title: String, subtitle: String, onClick: () -> Unit) {
     TrashPilotCard(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
@@ -667,7 +652,6 @@ private fun SettingsPage.title(): String = stringResource(when (this) {
     SettingsPage.LANGUAGE -> R.string.settings_language
     SettingsPage.DATA -> R.string.settings_data_history
     SettingsPage.PRIVACY -> R.string.settings_privacy_permissions
-    SettingsPage.ABOUT -> R.string.settings_about
 })
 
 private data class SettingsPermissionSnapshot(

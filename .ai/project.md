@@ -37,7 +37,7 @@
   separate Reports/Trash DNA/cache controls, and local document picker flows.
 - Preferences DataStore 1.2.1 stores the selected locale and migrates the legacy
   `trashpilot-settings` SharedPreferences language key on upgrade.
-- Android resources provide complete 934-key catalogs for all 25 supported app languages.
+- Android resources provide complete 964-key catalogs for all 25 supported app languages.
   `tools/generate_locale_drafts.mjs` reproduces the automated draft catalogs and
   `tools/verify_locales.mjs` checks XML structure, exact key parity, formatting-token parity,
   and probable long English fallbacks.
@@ -88,3 +88,7 @@
   `features/photoquality` owns permission-aware analysis, transparent review, and confirmed deletion.
 - `core/onboarding` owns versioned local completion state and deterministic startup routing.
   `features/onboarding` owns the short Welcome, Privacy, and contextual Access presentation.
+- `core/about` owns runtime version mapping, local destination availability, and deterministic
+  About navigation models. `features/about` owns the dedicated product/privacy screen, bundled
+  policy presentation, verified runtime-library notices, and links back to existing Settings and
+  onboarding destinations.

@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -20,6 +21,8 @@ import com.trashpilot.app.R
 import com.trashpilot.app.features.home.HomeScreen
 import com.trashpilot.app.features.placeholder.PlaceholderDestinationScreen
 import com.trashpilot.app.features.settings.SettingsScreen
+import com.trashpilot.app.features.about.AboutScreen
+import com.trashpilot.app.core.settings.SettingsDestination
 import com.trashpilot.app.features.splash.SplashScreen
 import com.trashpilot.app.core.storage.StorageScanResult
 import com.trashpilot.app.features.results.ImprovedResultsScreen
@@ -63,6 +66,7 @@ fun AppNavigation() {
     var latestScan by remember { mutableStateOf<StorageScanResult?>(null) }
     var selectedCategory by remember { mutableStateOf<FileCategory?>(null) }
     var selectedCleanUris by remember { mutableStateOf(emptySet<String>()) }
+    var requestedSettingsDestination by rememberSaveable { mutableStateOf<SettingsDestination?>(null) }
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
 
@@ -375,6 +379,19 @@ fun AppNavigation() {
             SettingsScreen(
                 repository = historyRepository,
                 onBack = { navController.popBackStack() },
+                onViewIntroduction = { navController.navigate("introduction") },
+                onOpenAbout = { navController.navigate("about") },
+                requestedDestination = requestedSettingsDestination,
+                onDestinationHandled = { requestedSettingsDestination = null }
+            )
+        }
+        composable("about") {
+            AboutScreen(
+                onBack = { navController.popBackStack() },
+                onOpenPermissions = {
+                    requestedSettingsDestination = SettingsDestination.PRIVACY_PERMISSIONS
+                    navController.popBackStack()
+                },
                 onViewIntroduction = { navController.navigate("introduction") }
             )
         }

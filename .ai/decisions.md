@@ -68,6 +68,13 @@
   deletes only measured app-private cache children and reports measured bytes.
 - View introduction reuses the production onboarding UI through a separate navigation route,
   returns to Settings, and does not mutate first-launch completion.
+- About is a dedicated navigation destination under Settings, not an internal Settings page.
+  Version values come from installed package metadata. Its Privacy Policy is the existing bundled
+  offline document; no production URL, support contact, developer address, legal identity, or
+  social account is shown because none is currently defined.
+- Open-source notices are kept local and list only the verified AndroidX, Kotlin, and coroutines
+  runtime families declared by the build with their Apache License 2.0 identifier. No notice UI
+  dependency or external handoff is added.
 - Privacy Policy and Terms are bundled offline in the app. Feedback is the only Settings action
   that intentionally hands off to a non-system external app; no purchase or decorative Pro control
   is exposed.

@@ -14,7 +14,15 @@
   deterministic startup routing, and contextual-permission education without permission prompts.
 - Production Settings: persistent theme and language, truthful Android-owned access states,
   separate local-history/cache controls, and a non-mutating onboarding preview route.
+- About TrashPilot: runtime version information, concise product/privacy principles, bundled
+  offline policy, local open-source notices, and reuse of permission/introduction destinations.
 
 ## Next
 
 - Production polish
+
+## Release information still required
+
+- Decide and document the production legal identity and support contact before store release.
+- Decide whether the bundled offline Privacy Policy is sufficient for the distribution channel;
+  if a public policy URL is required, define and verify it before adding an external About link.

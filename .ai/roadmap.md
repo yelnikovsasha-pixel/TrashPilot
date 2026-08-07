@@ -42,6 +42,8 @@
 
 \- Settings
 
+\- About
+
 
 
 \---
@@ -51,8 +53,6 @@
 \## Next
 
 
-
-\- About
 
 \- Production Polish
 
