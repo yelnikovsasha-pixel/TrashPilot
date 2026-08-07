@@ -32,6 +32,8 @@
 
 \- Downloads Cleaner
 
+\- Empty Folders Cleaner
+
 
 
 \---
@@ -41,8 +43,6 @@
 \## Next
 
 
-
-\- Empty Folders Cleaner
 
 \- Screenshots Cleaner
 

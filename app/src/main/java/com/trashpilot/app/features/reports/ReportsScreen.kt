@@ -259,6 +259,7 @@ private fun ReportDetail(report: ScanReport) {
             DetailSizeRow(R.string.results_hidden_files, report.details.hiddenBytes)
             DetailCountAndSizeRow(R.string.results_large_files, report.details.largeFileCount, report.details.largeFileBytes)
             DetailCountRow(R.string.quick_clean_empty_folders, report.details.emptyFolderCount)
+            DetailCountRow(R.string.empty_folders_removed_report, report.details.emptyFoldersRemoved)
             DetailCountAndSizeRow(R.string.results_social_media, report.details.socialMediaFileCount,
                 report.details.socialMediaBytes)
             report.details.duplicateBytes?.let { DetailSizeRow(R.string.results_duplicates, it) }

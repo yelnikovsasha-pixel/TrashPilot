@@ -148,6 +148,30 @@ class TrashDnaRepository(private val dao: TrashDnaDao) : HistoryRepository {
         timestampMillis: Long = System.currentTimeMillis()
     ) = recordDuplicateCleanup(scan, report, timestampMillis)
 
+    suspend fun recordEmptyFoldersCleanup(
+        scan: StorageScanResult,
+        deletedFolderCount: Int,
+        failedFolderCount: Int,
+        timestampMillis: Long = System.currentTimeMillis()
+    ) {
+        if (deletedFolderCount <= 0) return
+        dao.insert(
+            TrashDnaSessionEntity(
+                sessionType = TrashDnaSessionType.CLEANUP,
+                timestampMillis = timestampMillis,
+                scannedFolderName = scan.selectedRootName,
+                reclaimableBytes = 0,
+                reclaimedBytes = 0,
+                result = if (failedFolderCount == 0) TrashDnaResult.CLEANED else TrashDnaResult.PARTIAL,
+                temporaryBytes = 0,
+                cacheBytes = 0,
+                emptyFolderCount = deletedFolderCount.toLong(),
+                apkLeftoverBytes = 0,
+                logBytes = 0
+            )
+        )
+    }
+
     suspend fun recordCacheCleanup(
         report: CacheCleaningReport,
         timestampMillis: Long = System.currentTimeMillis()

@@ -192,3 +192,13 @@
 - MediaStore deletion uses Android's system confirmation and verifies the affected URIs afterward.
   SAF deletion uses per-document results. Only verified successes update the active scan and the
   shared Reports/Trash DNA cleanup history.
+
+## Empty Folders Cleaner
+
+- Scan Results opens a dedicated SAF-only Empty Folders Cleaner. The user chooses the exact tree;
+  no broad storage, root, hidden API, or `MANAGE_EXTERNAL_STORAGE` access is used.
+- A directory is eligible only when its child query succeeds and every descendant is verified
+  empty. Unreadable, protected, cyclic, stale, or content-bearing branches are excluded. Wholly
+  empty subtrees collapse to the highest safe directory so deletion requests never overlap.
+- Deletion requires selection and confirmation, uses `DocumentsContract.deleteDocument`, verifies
+  absence, rescans the granted tree, records the successful folder count, and records zero bytes.

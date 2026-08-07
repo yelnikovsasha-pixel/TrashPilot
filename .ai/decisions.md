@@ -102,3 +102,10 @@
 - Downloads Cleaner reuses the foreground MediaStore and SAF scanners and requests no new
   permission. Download membership comes only from the real Download/Downloads path exposed by
   Android. Reclaimed bytes are the sizes of verified successful deletions only.
+- Empty-folder discovery is SAF-only and propagates CONTENT or UNKNOWN status upward through the
+  selected tree. The selected root, required top-level media folders, `/data`, `/system`, and
+  TrashPilot-private package paths are never candidates. Explicitly granted Android/data or
+  Android/obb descendants may be inspected only when DocumentsUI actually exposes them.
+- Empty-folder cleanup history stores successful folder count in `emptyFolderCount` and always
+  stores zero reclaimable/reclaimed bytes; Reports associates that count without treating it as
+  recovered storage.

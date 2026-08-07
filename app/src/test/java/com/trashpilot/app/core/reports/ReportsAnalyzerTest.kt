@@ -19,7 +19,7 @@ class ReportsAnalyzerTest {
     fun `summary uses only recorded scan and cleanup values`() {
         val summary = checkNotNull(ReportsAnalyzer.summarize(listOf(
             scan(id = 1, time = 100, scanned = 1_000, images = 700),
-            cleanup(time = 150, reclaimed = 120),
+            cleanup(time = 150, reclaimed = 120, emptyFolders = 2),
             scan(id = 2, time = 200, scanned = 2_000, videos = 1_200),
             cleanup(time = 250, reclaimed = 80)
         )))
@@ -31,6 +31,7 @@ class ReportsAnalyzerTest {
         assertEquals(100L, summary.averageCleanedPerScanBytes)
         assertEquals(listOf(2L, 1L), summary.scans.map { it.id })
         assertEquals(80L, summary.scans[0].cleanedBytes)
+        assertEquals(2L, summary.scans[1].details.emptyFoldersRemoved)
         assertEquals(FileCategory.VIDEOS, summary.scans[0].largestCategory)
     }
 
@@ -58,6 +59,7 @@ class ReportsAnalyzerTest {
         assertEquals(400L, report.details.largeFileBytes)
         assertEquals(2L, report.details.largeFileCount)
         assertEquals(3L, report.details.emptyFolderCount)
+        assertEquals(0L, report.details.emptyFoldersRemoved)
         assertEquals(50L, report.details.socialMediaBytes)
         assertEquals(4L, report.details.socialMediaFileCount)
         assertNull(report.details.duplicateBytes)
@@ -101,7 +103,7 @@ class ReportsAnalyzerTest {
         scanDurationMillis = 500
     )
 
-    private fun cleanup(time: Long, reclaimed: Long) = TrashDnaSessionEntity(
+    private fun cleanup(time: Long, reclaimed: Long, emptyFolders: Long = 0) = TrashDnaSessionEntity(
         sessionType = TrashDnaSessionType.CLEANUP,
         timestampMillis = time,
         scannedFolderName = "Device",
@@ -110,7 +112,7 @@ class ReportsAnalyzerTest {
         result = TrashDnaResult.CLEANED,
         temporaryBytes = 0,
         cacheBytes = 0,
-        emptyFolderCount = 0,
+        emptyFolderCount = emptyFolders,
         apkLeftoverBytes = 0,
         logBytes = 0
     )

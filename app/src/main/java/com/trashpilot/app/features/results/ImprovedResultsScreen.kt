@@ -76,7 +76,8 @@ fun ImprovedResultsScreen(
     onOpenLargeFiles: () -> Unit,
     onOpenHiddenFiles: () -> Unit,
     onOpenApkManager: () -> Unit,
-    onOpenDownloads: () -> Unit
+    onOpenDownloads: () -> Unit,
+    onOpenEmptyFolders: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -94,8 +95,8 @@ fun ImprovedResultsScreen(
                 title = stringResource(R.string.results_nothing_found_title),
                 body = stringResource(R.string.results_nothing_found_body),
                 onBack = onBack,
-                actionLabel = stringResource(R.string.downloads_cleaner_title),
-                onAction = onOpenDownloads,
+                actionLabel = stringResource(R.string.empty_folders_title),
+                onAction = onOpenEmptyFolders,
                 secondaryAction = true
             )
             is ResultsUiState.Error -> ResultsStateMessage(
@@ -114,7 +115,8 @@ fun ImprovedResultsScreen(
                 onOpenLargeFiles = onOpenLargeFiles,
                 onOpenHiddenFiles = onOpenHiddenFiles,
                 onOpenApkManager = onOpenApkManager,
-                onOpenDownloads = onOpenDownloads
+                onOpenDownloads = onOpenDownloads,
+                onOpenEmptyFolders = onOpenEmptyFolders
             )
         }
     }
@@ -130,7 +132,8 @@ private fun ResultsContent(
     onOpenLargeFiles: () -> Unit,
     onOpenHiddenFiles: () -> Unit,
     onOpenApkManager: () -> Unit,
-    onOpenDownloads: () -> Unit
+    onOpenDownloads: () -> Unit,
+    onOpenEmptyFolders: () -> Unit
 ) {
     val overview = remember(result) { result.toResultsOverview() }
     val listState = remember(result) { LazyListState() }
@@ -274,13 +277,9 @@ private fun ResultsContent(
                 value = folderCountText(overview.emptyFolderCount),
                 selected = overview.emptyFolderCandidates.isNotEmpty() &&
                     overview.emptyFolderCandidates.all { it.uri in selectedUris },
-                selectionEnabled = overview.emptyFolderCandidates.isNotEmpty(),
-                showChevron = false,
-                onClick = if (overview.emptyFolderCandidates.isEmpty()) {
-                    null
-                } else {
-                    { toggleCandidates(overview.emptyFolderCandidates) }
-                }
+                selectionEnabled = false,
+                showChevron = true,
+                onClick = onOpenEmptyFolders
             )
         }
         item {

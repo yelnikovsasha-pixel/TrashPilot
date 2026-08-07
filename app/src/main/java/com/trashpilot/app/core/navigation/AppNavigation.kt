@@ -41,6 +41,7 @@ import com.trashpilot.app.features.largefiles.LargeFilesManagerScreen
 import com.trashpilot.app.features.hiddenfiles.HiddenFilesManagerScreen
 import com.trashpilot.app.features.apkmanager.ApkManagerScreen
 import com.trashpilot.app.features.downloads.DownloadsCleanerScreen
+import com.trashpilot.app.features.emptyfolders.EmptyFoldersCleanerScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -145,7 +146,8 @@ fun AppNavigation() {
                 onOpenLargeFiles = { navController.navigate("large-files-manager") },
                 onOpenHiddenFiles = { navController.navigate("hidden-files-manager") },
                 onOpenApkManager = { navController.navigate("apk-manager") },
-                onOpenDownloads = { navController.navigate("downloads-cleaner") }
+                onOpenDownloads = { navController.navigate("downloads-cleaner") },
+                onOpenEmptyFolders = { navController.navigate("empty-folders-cleaner") }
             )
         }
         composable("large-files-manager") {
@@ -185,6 +187,22 @@ fun AppNavigation() {
                     val source = latestScan ?: updated
                     latestScan = updated
                     scope.launch { historyRepository.recordDownloadsCleanup(source, report) }
+                }
+            )
+        }
+        composable("empty-folders-cleaner") {
+            EmptyFoldersCleanerScreen(
+                onBack = { navController.popBackStack() },
+                onFoldersDeleted = { deletedUris, deletedCount, failedCount ->
+                    val source = latestScan
+                    if (source != null) {
+                        latestScan = source.copy(
+                            disposableCandidates = source.disposableCandidates.filterNot { it.uri in deletedUris }
+                        )
+                        scope.launch {
+                            historyRepository.recordEmptyFoldersCleanup(source, deletedCount, failedCount)
+                        }
+                    }
                 }
             )
         }

@@ -29,6 +29,7 @@ data class ScanReportDetails(
     val largeFileBytes: Long?,
     val largeFileCount: Long?,
     val emptyFolderCount: Long?,
+    val emptyFoldersRemoved: Long,
     val socialMediaBytes: Long?,
     val socialMediaFileCount: Long?,
     val duplicateBytes: Long?
@@ -42,10 +43,13 @@ object ReportsAnalyzer {
         val cleanups = history.filter { it.sessionType == TrashDnaSessionType.CLEANUP }
         val reports = scanEntities.mapIndexed { index, scan ->
             val nextScanAt = scanEntities.getOrNull(index + 1)?.timestampMillis ?: Long.MAX_VALUE
-            val cleaned = cleanups.filter {
+            val associatedCleanups = cleanups.filter {
                 it.timestampMillis >= scan.timestampMillis && it.timestampMillis < nextScanAt
-            }.sumOf { it.reclaimedBytes }
-            scan.toReport(cleaned)
+            }
+            scan.toReport(
+                cleanedBytes = associatedCleanups.sumOf { it.reclaimedBytes },
+                emptyFoldersRemoved = associatedCleanups.sumOf { it.emptyFolderCount }
+            )
         }
         val allMetricsRecorded = scanEntities.all { it.reportMetricsRecorded }
         val totalCleaned = reports.sumOf { it.cleanedBytes }
@@ -59,7 +63,7 @@ object ReportsAnalyzer {
         )
     }
 
-    private fun TrashDnaSessionEntity.toReport(cleanedBytes: Long): ScanReport {
+    private fun TrashDnaSessionEntity.toReport(cleanedBytes: Long, emptyFoldersRemoved: Long): ScanReport {
         val recorded = reportMetricsRecorded
         return ScanReport(
             id = id,
@@ -74,6 +78,7 @@ object ReportsAnalyzer {
                 largeFileBytes = largeFileBytes.takeIf { recorded },
                 largeFileCount = largeFileCount.takeIf { recorded },
                 emptyFolderCount = emptyFolderCount.takeIf { recorded },
+                emptyFoldersRemoved = emptyFoldersRemoved,
                 socialMediaBytes = messengerMediaBytes.takeIf { recorded },
                 socialMediaFileCount = socialMediaFileCount.takeIf { recorded },
                 duplicateBytes = null

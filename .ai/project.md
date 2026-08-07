@@ -35,7 +35,7 @@
   picker flows for diagnostics, backup, and restore.
 - Preferences DataStore 1.2.1 stores the selected locale and migrates the legacy
   `trashpilot-settings` SharedPreferences language key on upgrade.
-- Android resources provide complete 752-key catalogs for all 25 supported app languages.
+- Android resources provide complete 790-key catalogs for all 25 supported app languages.
   `tools/generate_locale_drafts.mjs` reproduces the automated draft catalogs and
   `tools/verify_locales.mjs` checks XML structure, exact key parity, formatting-token parity,
   and probable long English fallbacks.
@@ -75,3 +75,6 @@
 - `core/downloads` owns Downloads membership, extension-based presentation categories, summaries,
   search, sorting, selection totals, and successful-deletion accounting. `features/downloads`
   streams real MediaStore or user-granted SAF metadata and owns explicit Android-confirmed deletion.
+- `core/emptyfolders` owns post-order SAF verification, protected-path policy, sorting/search,
+  and verified deletion accounting. `features/emptyfolders` owns explicit tree access, progressive
+  scan states, manual selection, confirmation, and refresh after deletion.
