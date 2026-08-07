@@ -80,7 +80,7 @@
   on whether the target store requires a public Privacy Policy URL in addition to the bundled copy.
 - Settings Language node `60:4` supports 25 locales plus System language, native-name search,
   immediate locale application, and DataStore-backed selection.
-- The complete UI string catalog now contains 964 identical keys in English plus 24 localized
+- The complete UI string catalog now contains 987 identical keys in English plus 24 localized
   resource directories: Spanish, Brazilian Portuguese, French, German, Italian, Polish,
   Ukrainian, Russian, Turkish, Arabic, Hindi, Bengali, Indonesian, Vietnamese, Thai, Japanese,
   Korean, Simplified Chinese, Traditional Chinese, Dutch, Swedish, Czech, Romanian, and Greek.
@@ -112,37 +112,42 @@
 ## Approved visual baseline
 
 - The approved 412 × 917 Home frame is the visual baseline for the complete app.
-- Shared UI uses a fixed light palette, 24 dp page gutters, 24 dp card corners, and an
-  always-visible 80 dp bottom navigation bar.
+- Shared UI uses fixed TrashPilot light/dark schemes, 24 dp page gutters, 24 dp card corners, and
+  one labeled, always-visible 80 dp bottom navigation bar.
 - System bars are immersive so the approved frame coordinates map directly to emulator pixels.
 - Phase 1 centralized the current visual implementation without changing approved output.
   Deterministic 412 × 917 Home, Scanner, and Settings screenshots remained byte-identical.
-- Home visual evolution keeps the approved header, 168 dp SCAN hero, palette, rounded surfaces,
-  whitespace, and persistent navigation while presenting Storage compactly, four secondary quick
-  actions, and three factual local-control assurances.
+- Home visual evolution keeps the approved header, 168 dp SCAN hero, blue accent, rounded surfaces,
+  whitespace, and persistent navigation while presenting Storage, Quick Clean, Trash DNA, and
+  Privacy Monitor beneath SCAN.
 
 
 
 ## Home Ambient Message modernization
 
 - Home uses the approved blue concentric logo, 200 dp double-ring SCAN hero, real-data phone
-  storage card, five vertical feature cards, and Home-only icon navigation treatment.
+  storage card, three secondary feature cards, and the shared labeled navigation treatment.
 - A reusable non-interactive Ambient Message sits beneath SCAN and crossfades localized phrases.
 - Compact validation passed at 412 × 917 for English, German, and Arabic; German remains
   scrollable without clipped controls at 200% font scale.
 
 ## Scan Results Home-language implementation
 
-- Scan Results reuses `TrashPilotBrandHeader`, `TrashPilotHomeCard`,
-  `TrashPilotFeatureCard`, Home color roles, and the Home bottom-navigation treatment.
-- Total scanned bytes, accessible cache, files at least 100 MB, hidden-path bytes, and readable
-  empty-folder count are derived from the active scan only.
-- Social & Messenger Media uses accessible media paths for supported messaging/social apps and
-  opens a read-only detail list. Duplicate hashing is a separate explicit local operation.
-- Results selection is limited to discovered removable cache and empty-folder candidates;
-  `Clean Selected` stays disabled until a candidate category is selected and carries that
-  selection into the existing Quick Clean review.
-- `Clean Selected` is the sole primary action and enters the existing manual Quick Clean review.
+- Scan Results reuses `TrashPilotBrandHeader`, `TrashPilotHomeCard`, and
+  `TrashPilotFeatureCard` with theme-aware roles and the shared bottom navigation.
+- The summary shows only real scanned bytes and discovered file count. Apps, Photos, and Files
+  group cards lead to mature cleaners; unavailable values are omitted rather than shown as zero.
+- Quick Clean is offered only when conservative candidates exist and always starts review with
+  nothing selected. Duplicate analysis also starts with no selected files.
+
+## Production polish validation
+
+- Production polish completed on 2026-08-07. Privacy Monitor resolves its localized error fallback
+  in composition, and `lintDebug` passes without suppression.
+- The primary emulator journey covered onboarding, Home, real scan, grouped Results, App cache,
+  Screenshots, Downloads, Privacy, Reports, Settings, and About without deletion.
+- Home and navigation were revalidated in light/dark, portrait/landscape, 150% font scale, and
+  Arabic RTL. Automated Compose UI navigation coverage remains a release-quality improvement.
 - The foreground scanner reports only stages when their real local analysis begins. Leaving the
   scanner cancels its composition-bound coroutine; Back is never blocked.
 - The default scanner requests Android scoped media-read permissions when no supported media

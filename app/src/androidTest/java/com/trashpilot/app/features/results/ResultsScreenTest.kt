@@ -1,10 +1,6 @@
 package com.trashpilot.app.features.results
 
-import androidx.compose.ui.test.assertIsEnabled
-import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onAllNodesWithText
-import androidx.compose.ui.test.onLast
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.trashpilot.app.core.quickclean.DisposableCandidate
@@ -12,6 +8,7 @@ import com.trashpilot.app.core.quickclean.DisposableCategory
 import com.trashpilot.app.core.storage.StorageScanResult
 import com.trashpilot.app.ui.theme.TrashPilotTheme
 import org.junit.Rule
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class ResultsScreenTest {
@@ -19,23 +16,34 @@ class ResultsScreenTest {
     val composeRule = createComposeRule()
 
     @Test
-    fun cleanSelectedEnablesOnlyAfterRemovableSelection() {
+    fun resultsHubGroupsReviewAndQuickCleanStartsWithoutInlineSelection() {
+        var quickCleanRequested = false
         composeRule.setContent {
             TrashPilotTheme {
-                ResultsScreen(
+                ImprovedResultsScreen(
                     state = ResultsUiState.Results(resultWithCacheCandidate()),
                     onBack = {},
                     onScanAgain = {},
-                    onQuickClean = {},
-                    onOpenCategory = {},
-                    onOpenSocialMedia = {}
+                    onQuickClean = { quickCleanRequested = true },
+                    onOpenCache = {},
+                    onOpenSocialMedia = {},
+                    onOpenDuplicates = {},
+                    onOpenLargeFiles = {},
+                    onOpenHiddenFiles = {},
+                    onOpenApkManager = {},
+                    onOpenDownloads = {},
+                    onOpenEmptyFolders = {},
+                    onOpenScreenshots = {},
+                    onOpenPhotoQuality = {}
                 )
             }
         }
 
-        composeRule.onNodeWithText("Clean Selected").assertIsNotEnabled()
-        composeRule.onAllNodesWithText("App cache").onLast().performClick()
-        composeRule.onNodeWithText("Clean Selected").assertIsEnabled()
+        composeRule.onNodeWithText("Apps").assertExists()
+        composeRule.onNodeWithText("Photos").assertExists()
+        composeRule.onNodeWithText("Files").assertExists()
+        composeRule.onNodeWithText("Review Quick Clean").performClick()
+        composeRule.runOnIdle { assertTrue(quickCleanRequested) }
     }
 
     private fun resultWithCacheCandidate() = StorageScanResult(

@@ -91,7 +91,7 @@ fun TrashPilotBrandHeader(
                     imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
                     contentDescription = stringResource(R.string.navigate_back),
                     modifier = Modifier.size(TrashPilotIconSizes.Standard),
-                    tint = TrashPilotColors.HomeInk
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
         }
@@ -118,7 +118,7 @@ fun TrashPilotBrandHeader(
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = stringResource(R.string.app_name),
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1,
@@ -126,7 +126,7 @@ fun TrashPilotBrandHeader(
             )
             Text(
                 text = stringResource(R.string.home_subtitle),
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodyLarge,
                 maxLines = 1,
                 overflow = TextOverflow.Clip
@@ -151,7 +151,7 @@ fun TrashPilotHomeCard(
                 spotColor = Color.Black.copy(alpha = 0.08f)
             ),
         shape = TrashPilotRadii.CompactCardShape,
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = TrashPilotElevation.None)
     ) {
         Surface(
@@ -159,8 +159,8 @@ fun TrashPilotHomeCard(
                 .fillMaxWidth()
                 .defaultMinSize(minHeight = TrashPilotHomeTokens.FeatureCardHeight),
             shape = TrashPilotRadii.CompactCardShape,
-            color = Color.White,
-            border = BorderStroke(1.dp, TrashPilotColors.HomeOutline)
+            color = MaterialTheme.colorScheme.surface,
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
         ) {
             content()
         }
@@ -213,14 +213,14 @@ fun TrashPilotFeatureCard(
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = title,
-                    color = TrashPilotColors.HomeInk,
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = TrashPilotHomeTokens.FeatureTitleStyle,
                     maxLines = titleMaxLines,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     text = body,
-                    color = TrashPilotColors.HomeTextSecondary,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = TrashPilotHomeTokens.FeatureBodyStyle,
                     maxLines = bodyMaxLines,
                     overflow = TextOverflow.Ellipsis
@@ -672,7 +672,7 @@ fun TrashPilotAmbientMessage(
             Text(
                 text = messages[index],
                 style = TrashPilotHomeTokens.AmbientTextStyle,
-                color = Color.Black.copy(alpha = 0.30f),
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.72f),
                 textAlign = TextAlign.Center,
                 maxLines = 2
             )

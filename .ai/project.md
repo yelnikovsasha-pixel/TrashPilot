@@ -93,3 +93,6 @@
 - `core/navigation/InformationArchitecture.kt` is the single map for four top-level destinations,
   the Apps/Photos/Files review hierarchy, deep-route parent selection, and honest Quick Clean
   startup routing. Mature cleaner implementations and their deletion rules remain unchanged.
+- Production polish uses one labeled bottom bar on every ordinary route, theme-aware shared
+  Home/Results surfaces, and empty initial selection for every cleaner. Privacy Monitor keeps
+  Android-derived states and resolves resource fallbacks through Compose-aware APIs.

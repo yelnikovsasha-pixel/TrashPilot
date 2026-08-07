@@ -35,14 +35,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.trashpilot.app.R
 import com.trashpilot.app.core.storage.StorageScanResult
 import com.trashpilot.app.core.storage.formatBytes
@@ -67,7 +65,7 @@ fun HomeScreen(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White),
+            .background(MaterialTheme.colorScheme.background),
         contentPadding = PaddingValues(
             top = TrashPilotHomeTokens.ScreenTop,
             bottom = TrashPilotHomeTokens.ScreenBottom
@@ -148,18 +146,18 @@ private fun StorageCard(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = TrashPilotSpacing.Large),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Large)
         ) {
             StorageIcon()
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(TrashPilotSpacing.Compact)
             ) {
                 Text(
                     text = stringResource(R.string.home_phone_storage),
-                    color = TrashPilotColors.HomeInk,
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = TrashPilotHomeTokens.FeatureTitleStyle,
                     maxLines = 1
                 )
@@ -170,12 +168,12 @@ private fun StorageCard(
                             .width(TrashPilotHomeTokens.StorageProgressWidth)
                             .height(TrashPilotHomeTokens.StorageProgressHeight),
                         color = TrashPilotColors.HomeBlue,
-                        trackColor = TrashPilotColors.HomeOutline
+                        trackColor = MaterialTheme.colorScheme.outline
                     )
                 } else {
                     Text(
                         text = stringResource(R.string.storage_not_scanned),
-                        color = TrashPilotColors.HomeTextSecondary,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         style = TrashPilotHomeTokens.FeatureBodyStyle,
                         maxLines = 1
                     )
@@ -186,13 +184,13 @@ private fun StorageCard(
                     Row(verticalAlignment = Alignment.Bottom) {
                         Text(
                             text = stringResource(R.string.home_storage_percent, percent),
-                            color = Color.Black,
+                            color = MaterialTheme.colorScheme.onSurface,
                             style = TrashPilotHomeTokens.FeatureTitleStyle
                         )
-                        Spacer(Modifier.width(6.dp))
+                        Spacer(Modifier.width(TrashPilotSpacing.MediumCompact))
                         Text(
                             text = stringResource(R.string.home_storage_used),
-                            color = TrashPilotColors.HomeTextSecondary,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.SemiBold
                         )
@@ -203,7 +201,7 @@ private fun StorageCard(
                             formatBytes((latestScan.totalBytes - latestScan.usedBytes).coerceAtLeast(0L)),
                             formatBytes(latestScan.totalBytes)
                         ),
-                        color = TrashPilotColors.HomeTextSecondary,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         style = TrashPilotHomeTokens.StorageDetailStyle,
                         maxLines = 1
                     )
@@ -216,13 +214,13 @@ private fun StorageCard(
 @Composable
 private fun StorageIcon() {
     Box(
-        modifier = Modifier.size(32.dp),
+        modifier = Modifier.size(TrashPilotHomeTokens.FeatureIconContainer),
         contentAlignment = Alignment.Center
     ) {
         Icon(
             imageVector = Icons.Outlined.Folder,
             contentDescription = null,
-            modifier = Modifier.size(28.dp),
+            modifier = Modifier.size(TrashPilotHomeTokens.StorageIcon),
             tint = TrashPilotColors.HomeBlue
         )
     }

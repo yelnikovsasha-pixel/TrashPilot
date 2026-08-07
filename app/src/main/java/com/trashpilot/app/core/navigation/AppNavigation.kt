@@ -27,7 +27,6 @@ import com.trashpilot.app.features.splash.SplashScreen
 import com.trashpilot.app.core.storage.StorageScanResult
 import com.trashpilot.app.features.results.ImprovedResultsScreen
 import com.trashpilot.app.features.results.ResultsUiState
-import com.trashpilot.app.features.results.CategoryFilesScreen
 import com.trashpilot.app.features.socialcleaner.SocialMediaCleanerScreen
 import com.trashpilot.app.core.storage.FileCategory
 import com.trashpilot.app.features.scanner.ScannerScreen
@@ -63,8 +62,6 @@ fun AppNavigation() {
     val onboardingPreferences = remember(context) { OnboardingPreferences(context) }
     val scope = rememberCoroutineScope()
     var latestScan by remember { mutableStateOf<StorageScanResult?>(null) }
-    var selectedCategory by remember { mutableStateOf<FileCategory?>(null) }
-    var selectedCleanUris by remember { mutableStateOf(emptySet<String>()) }
     var requestedSettingsDestination by rememberSaveable { mutableStateOf<SettingsDestination?>(null) }
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
@@ -121,7 +118,6 @@ fun AppNavigation() {
             HomeScreen(
                 onScan = { navController.navigate(homeActionRoute(HomeAction.SCAN, latestScan != null)) },
                 onOpenQuickClean = {
-                    selectedCleanUris = emptySet()
                     navController.navigate(homeActionRoute(HomeAction.QUICK_CLEAN, latestScan != null))
                 },
                 onOpenTrashDna = { navController.navigate(homeActionRoute(HomeAction.TRASH_DNA, latestScan != null)) },
@@ -159,14 +155,7 @@ fun AppNavigation() {
                 } ?: ResultsUiState.Error(),
                 onBack = { navController.popBackStack("home", inclusive = false) },
                 onScanAgain = { navController.navigate("scanner") },
-                onQuickClean = { selectedUris ->
-                    selectedCleanUris = selectedUris
-                    navController.navigate("quick-clean")
-                },
-                onOpenCategory = { category ->
-                    selectedCategory = category
-                    navController.navigate("category-files")
-                },
+                onQuickClean = { navController.navigate("quick-clean") },
                 onOpenCache = { navController.navigate(ReviewFeature.APP_CACHE.route) },
                 onOpenSocialMedia = { navController.navigate(ReviewFeature.SOCIAL_MEDIA.route) },
                 onOpenDuplicates = { navController.navigate(ReviewFeature.DUPLICATES.route) },
@@ -300,7 +289,6 @@ fun AppNavigation() {
                             navController.popBackStack()
                         }
                     },
-                    initialSelectedUris = selectedCleanUris,
                     onCleaningComplete = { report ->
                         scope.launch { historyRepository.recordCleanup(result, report) }
                     }
@@ -323,23 +311,6 @@ fun AppNavigation() {
                     scope.launch { historyRepository.recordCacheCleanup(report) }
                 }
             )
-        }
-        composable("category-files") {
-            val result = latestScan
-            val category = selectedCategory
-            if (result != null && category != null) {
-                CategoryFilesScreen(
-                    result = result,
-                    category = category,
-                    onBack = { navController.popBackStack() }
-                )
-            } else {
-                PlaceholderDestinationScreen(
-                    title = R.string.results_screen_title,
-                    message = R.string.results_missing,
-                    onBack = { navController.popBackStack() }
-                )
-            }
         }
         composable(ReviewFeature.SOCIAL_MEDIA.route) {
             SocialMediaCleanerScreen(

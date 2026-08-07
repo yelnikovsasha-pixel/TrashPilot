@@ -17,15 +17,16 @@ data class DuplicateGroup(val fingerprint: String, val files: List<ScannedFile>)
         }
             .thenBy { it.uri }
     ) ?: error("A duplicate group cannot be empty")
-    val defaultSelectedFiles: List<ScannedFile> = files.filterNot { it.uri == keptFile.uri }
-    val recoverableBytes: Long = defaultSelectedFiles.sumOf(ScannedFile::sizeBytes)
+    val redundantFiles: List<ScannedFile> = files.filterNot { it.uri == keptFile.uri }
+    val recoverableBytes: Long = redundantFiles.sumOf(ScannedFile::sizeBytes)
 }
 
 data class DuplicateAnalysis(val groups: List<DuplicateGroup>) {
-    val duplicateFileCount: Int = groups.sumOf { it.defaultSelectedFiles.size }
+    val initialSelection: Set<String> = emptySet()
+    val duplicateFileCount: Int = groups.sumOf { it.redundantFiles.size }
     val recoverableBytes: Long = groups.sumOf(DuplicateGroup::recoverableBytes)
     val duplicateBytes: Long get() = recoverableBytes
-    val duplicateFiles: List<ScannedFile> get() = groups.flatMap(DuplicateGroup::defaultSelectedFiles)
+    val duplicateFiles: List<ScannedFile> get() = groups.flatMap(DuplicateGroup::redundantFiles)
 }
 
 data class DuplicateScanProgress(val processedFiles: Int, val totalFiles: Int)

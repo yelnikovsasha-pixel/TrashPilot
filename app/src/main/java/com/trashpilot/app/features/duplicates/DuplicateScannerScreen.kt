@@ -55,7 +55,7 @@ fun DuplicateScannerScreen(
         state = DuplicateState.Scanning(DuplicateScanProgress(0, 0))
         state = try {
             val analysis = analyzer.analyze(scanResult.files) { state = DuplicateState.Scanning(it) }
-            selectedUris = analysis.groups.flatMap { it.defaultSelectedFiles }.mapTo(mutableSetOf()) { it.uri }
+            selectedUris = analysis.initialSelection
             DuplicateState.Ready(analysis)
         } catch (cancelled: CancellationException) {
             throw cancelled
@@ -155,7 +155,9 @@ fun DuplicateScannerScreen(
 }
 
 @Composable private fun CategorySummary(analysis: DuplicateAnalysis) {
-    fun bytes(category: FileCategory) = analysis.groups.sumOf { g -> g.defaultSelectedFiles.filter { it.category == category }.sumOf(ScannedFile::sizeBytes) }
+    fun bytes(category: FileCategory) = analysis.groups.sumOf { group ->
+        group.redundantFiles.filter { it.category == category }.sumOf(ScannedFile::sizeBytes)
+    }
     TrashPilotMetricCard(listOf(
         stringResource(R.string.duplicate_images) to formatBytes(bytes(FileCategory.IMAGES)),
         stringResource(R.string.duplicate_videos) to formatBytes(bytes(FileCategory.VIDEOS)),

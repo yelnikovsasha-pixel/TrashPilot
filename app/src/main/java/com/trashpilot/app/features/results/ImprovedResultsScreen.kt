@@ -75,8 +75,7 @@ fun ImprovedResultsScreen(
     state: ResultsUiState,
     onBack: () -> Unit,
     onScanAgain: () -> Unit,
-    onQuickClean: (Set<String>) -> Unit,
-    @Suppress("UNUSED_PARAMETER") onOpenCategory: (FileCategory) -> Unit,
+    onQuickClean: () -> Unit,
     onOpenCache: () -> Unit,
     onOpenSocialMedia: () -> Unit,
     onOpenDuplicates: () -> Unit,
@@ -91,7 +90,7 @@ fun ImprovedResultsScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         when (state) {
             ResultsUiState.Scanning -> ResultsStateMessage(
@@ -145,7 +144,7 @@ fun ImprovedResultsScreen(
 private fun ResultsContent(
     result: StorageScanResult,
     onBack: () -> Unit,
-    onQuickClean: (Set<String>) -> Unit,
+    onQuickClean: () -> Unit,
     onOpenCache: () -> Unit,
     onOpenSocialMedia: () -> Unit,
     onOpenDuplicates: () -> Unit,
@@ -183,7 +182,7 @@ private fun ResultsContent(
         result = result,
         overview = overview,
         onBack = onBack,
-        onQuickClean = { onQuickClean(emptySet()) },
+        onQuickClean = onQuickClean,
         onOpenGroup = { group = it }
     )
 }
@@ -318,7 +317,7 @@ private fun ResultsGroupPage(
                     end = TrashPilotHomeTokens.CardHorizontalPadding,
                     bottom = TrashPilotSpacing.Standard
                 ),
-                color = TrashPilotColors.HomeTextSecondary
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
         if (group == ReviewGroup.APPS) {
@@ -407,7 +406,7 @@ private fun ResultsLocalReminder() {
             top = TrashPilotSpacing.Standard,
             end = TrashPilotHomeTokens.CardHorizontalPadding
         ),
-        color = TrashPilotColors.HomeTextSecondary,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
         style = MaterialTheme.typography.bodySmall,
         textAlign = TextAlign.Center
     )
@@ -440,7 +439,7 @@ private fun ScanSummaryCard(
         ) {
             Text(
                 text = rootName,
-                color = TrashPilotColors.HomeInk,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = TrashPilotHomeTokens.FeatureTitleStyle,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -467,13 +466,13 @@ private fun SummaryMetric(label: String, value: String) {
         ) {
             Text(
                 text = label,
-                color = TrashPilotColors.HomeTextSecondary,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
                 text = value,
                 modifier = Modifier.fillMaxWidth(),
-                color = TrashPilotColors.HomeInk,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.End
@@ -488,12 +487,12 @@ private fun SummaryMetric(label: String, value: String) {
             Text(
                 text = label,
                 modifier = Modifier.weight(1f),
-                color = TrashPilotColors.HomeTextSecondary,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
                 text = value,
-                color = TrashPilotColors.HomeInk,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.SemiBold
             )
@@ -529,7 +528,7 @@ private fun ResultCategoryCard(
                 if (value.isNotEmpty()) {
                     Text(
                         text = value,
-                        color = TrashPilotColors.HomeTextSecondary,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.SemiBold
                     )
@@ -539,7 +538,7 @@ private fun ResultCategoryCard(
                         imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
                         contentDescription = null,
                         modifier = Modifier.size(TrashPilotSpacing.Screen),
-                        tint = TrashPilotColors.HomeTextSecondary
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
@@ -576,7 +575,7 @@ private fun ResultsStateMessage(
             }
             Text(
                 text = title,
-                color = TrashPilotColors.HomeInk,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center
@@ -584,7 +583,7 @@ private fun ResultsStateMessage(
             Spacer(Modifier.height(TrashPilotSpacing.Medium))
             Text(
                 text = body,
-                color = TrashPilotColors.HomeTextSecondary,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
             )
             if (actionLabel != null && onAction != null) {

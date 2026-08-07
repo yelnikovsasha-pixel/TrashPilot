@@ -57,7 +57,7 @@ import kotlinx.coroutines.withContext
 private sealed interface PrivacyUiState {
     data object Loading : PrivacyUiState
     data class Success(val snapshot: PrivacySnapshot) : PrivacyUiState
-    data class Error(val message: String) : PrivacyUiState
+    data class Error(val detail: String?) : PrivacyUiState
 }
 
 @Composable
@@ -76,7 +76,7 @@ fun PrivacyMonitorScreen(
     LaunchedEffect(Unit) {
         state = runCatching { withContext(Dispatchers.IO) { loader() } }.fold(
             onSuccess = { onSnapshotLoaded(it); PrivacyUiState.Success(it) },
-            onFailure = { PrivacyUiState.Error(it.message ?: context.getString(R.string.privacy_error_android)) }
+            onFailure = { PrivacyUiState.Error(it.message) }
         )
     }
     BackHandler { if (selectedApp != null) selectedApp = null else onBack() }
@@ -88,7 +88,10 @@ fun PrivacyMonitorScreen(
         )
         when (val current = state) {
             PrivacyUiState.Loading -> StateMessage(R.string.privacy_loading_title, R.string.privacy_loading_body)
-            is PrivacyUiState.Error -> StateMessage(R.string.privacy_error_title, body = current.message)
+            is PrivacyUiState.Error -> StateMessage(
+                R.string.privacy_error_title,
+                body = current.detail ?: stringResource(R.string.privacy_error_android)
+            )
             is PrivacyUiState.Success -> selectedApp?.let { AppDetails(it) }
                 ?: AppList(current.snapshot, onAppClick = { selectedApp = it })
         }

@@ -1,12 +1,14 @@
 # conventions
-- Organize code by core, features, and ui/theme; route composables through AppNavigation; apply TrashPilotTheme at the activity root; use MaterialTheme tokens, Compose modifiers, dynamic color when supported, and privacy-conscious offline-first UX copy.
+- Organize code by core, features, and ui/theme; route composables through AppNavigation; apply
+  TrashPilotTheme at the activity root; use the fixed TrashPilot light/dark schemes, MaterialTheme
+  roles, Compose modifiers, and privacy-conscious offline-first UX copy.
 - Splash visuals use a white surface, a Compose-native TP mark, theme typography, and explicit restrained colors; animation and delayed navigation are lifecycle-aware through LaunchedEffect.
 - Before real device data exists, Storage must show `Not scanned yet`; never display fake percentages, capacity figures, or optimization results.
 - Keep Scan as the only visually dominant Home action; navigation actions remain in the Material 3 bottom bar.
 - Home uses Figma file `XyDczeNnzEw5DmApIXuXTz`, node `1:65`, at 412 × 917; older Home nodes
   are obsolete. Home cards use 24 dp horizontal content
-  padding, a fixed 52 dp logo, weighted single-line brand copy, and four equal
-  single-line navigation destinations in an 80 dp bar.
+  padding, weighted brand copy, and the same labeled four-destination 80 dp navigation bar used
+  throughout the app.
 - Home excludes Motivation and Settings cards. Settings remains in bottom navigation; Quick Clean
   is a secondary Home action and remains honest when no scan data exists.
 - Default storage analysis uses foreground MediaStore queries with scoped Android media
@@ -17,9 +19,9 @@
 - Quick Clean candidate rules are intentionally narrow: temporary extensions, files directly
   under cache folders, marked leftover APK names, log files, and readable empty folders.
 - File categories are exclusive. Files inside Download/Downloads are categorized as Downloads before MIME or extension classification.
-- Results category navigation and sorting must operate on current in-memory scan metadata only.
-  Keep the largest-files section capped at ten files; sorting changes their presentation and
-  does not substitute a different set.
+- Results is the review hub: Apps contains App cache and Social media; Photos contains Screenshots,
+  Duplicates, and Photo review; Files contains Large files, Downloads, APK installers, Hidden files,
+  and Empty folders. Show active-scan values only when available and keep self-scanning tools open.
 - A missing document last-modified value is shown honestly as `Date unavailable`.
 - Trash DNA persistence may contain timestamps, selected-folder display names, aggregate
   disposable category totals, reclaimable/reclaimed byte totals, and outcomes only.
@@ -54,6 +56,10 @@
   circular SCAN control, palette, and navigation when refining Home composition.
 - Nested feature pages must handle system back consistently with their app-bar back action.
   Scanner Back remains available and leaving composition cancels its active local traversal.
+- Every cleaner selection starts empty, including Duplicates and Quick Clean. A computed redundant
+  or recoverable set is analysis metadata, never implicit deletion consent.
+- Home-family surfaces and copy use MaterialTheme roles so System/Light/Dark recreation preserves
+  contrast; TrashPilot blue remains the brand accent rather than a separate light-only theme.
 - SAF selection requests and persists both read and write grants. Scanning remains read-only;
   the write grant is consumed only by confirmed Quick Clean deletion of explicitly selected
   disposable documents.

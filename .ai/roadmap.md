@@ -47,6 +47,9 @@
 \- Information Architecture & UX Simplification: SCAN-led Home, four stable top-level
   destinations, and grouped Apps / Photos / Files Results review.
 
+\- Production Polish: unified navigation and theme-aware shared surfaces, manual-selection safety,
+  Privacy Monitor lint compliance, and full non-destructive emulator validation.
+
 
 
 \---
@@ -56,8 +59,6 @@
 \## Next
 
 
-
-\- Production Polish
 
 \- Google Play Release
 

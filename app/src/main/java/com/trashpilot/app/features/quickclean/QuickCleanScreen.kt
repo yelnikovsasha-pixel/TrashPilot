@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -40,16 +41,13 @@ fun QuickCleanScreen(
     scanResult: StorageScanResult,
     onBack: () -> Unit,
     onDone: () -> Unit,
-    initialSelectedUris: Set<String> = emptySet(),
     onCleaningComplete: (CleaningReport) -> Unit = {}
 ) {
     val context = LocalContext.current
     val cleaner = remember(context) { DocumentTreeCleaner(context.contentResolver) }
     val scope = rememberCoroutineScope()
     var step by remember { mutableStateOf(Step.OVERVIEW) }
-    var selectedUris by remember(initialSelectedUris) {
-        mutableStateOf(initialSelectedUris.intersect(scanResult.disposableCandidates.map { it.uri }.toSet()))
-    }
+    var selectedUris by rememberSaveable(scanResult) { mutableStateOf(emptySet<String>()) }
     var report by remember { mutableStateOf<CleaningReport?>(null) }
     var showDialog by remember { mutableStateOf(false) }
     var cleaning by remember { mutableStateOf(false) }

@@ -130,6 +130,7 @@ object TrashPilotHomeTokens {
     val FeatureCardGap = 5.dp
     val FeatureIconContainer = 32.dp
     val FeatureIcon = 22.dp
+    val StorageIcon = 28.dp
     val FeatureContentGap = 17.dp
     val CardRadius = 20.dp
     val CardShadow = 4.dp

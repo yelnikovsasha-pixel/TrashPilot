@@ -20,6 +20,7 @@ class DuplicateAnalysisTest {
 
         assertEquals(1, analysis.duplicateFileCount)
         assertEquals(42, analysis.duplicateBytes)
+        assertEquals(emptySet<String>(), analysis.initialSelection)
     }
 
     @Test
